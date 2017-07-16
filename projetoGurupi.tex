@@ -1,4 +1,4 @@
-\documentclass[12pt,openright,oneside,a4paper,eglish,brazil]{abntex2}
+\documentclass[12pt,openright,oneside,a4paper,english,brazil]{abntex2}
 
 % Pacotes básicos 
 \usepackage{lmodern}			% Usa a fonte Latin Modern			
@@ -9,6 +9,7 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
+\usepackage{amsmath}
 
 % CONFIGURAÇÕES DE PACOTES
 
@@ -261,11 +262,41 @@ Definir um modelo de observação que relacione a imagem de alta resolução às
 
 Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
 
-Sabendo disso, a relação entre uma imagem de alta resolução $\mathbf{x}$ e uma imagem degradada $\mathbf{y}^{(k)}$ é resumida em (\ref{eq:degradation}). Onde $k = 1,2,...,K$, e $K$ é o número total de quadros obtido a partie da cena de alta resolução $\mathbf{x}$.
+Sabendo disso, a relação entre uma imagem de alta resolução $\mathbf{x}$ e uma imagem degradada $\mathbf{y}^{(k)}$ é resumida em (\ref{eq:degradation}). Onde $k = 1,2,...,K$; sendo $K$ o número total de quadros obtidos a partir da cena de alta resolução $\mathbf{x}$.
 
 \begin{equation}
   \label{eq:degradation}
-  \mathbf{y} = \mathbf{Wx} + \mathbf{n}
+  \mathbf{y}^{(k)} = \mathbf{W}^{(k)}\mathbf{x} + \mathbf{n}^{(k)}
+\end{equation}
+
+O ruído, representado por $\mathbf{n}$ é um vetor de variáveis aleatórias Gaussianas independentes de média zero e variância $1/\beta$.
+
+A matriz de sistema $\mathbf{W}$ aplica as transformações de rotação, deslocamento, subamostragem e espalhamento de ponto ao ser multiplicada pela imagem de alta resolução $\mathbf{x}$. Pelas propriedades da multiplicação de matrizes, é natural que as dimensões da matriz do sistema sejam $M \times N$; onde $M$ é o número de pixels da imagem resultante. Também se espera que $N \gg M$.
+
+A matriz $\mathbf{W}$ depende de de três parâmetros de transformação: a largura da função de espalhamento de ponto $\gamma$ um ângulo de rotação $\theta$ e um vetor de deslocamento linear $\mathbf{s}$. Os elementos da matriz são dados por (\ref{eq:wmatrix}) com a função de espalhamento de ponto descrita em (\ref{eq:psf}).
+
+\begin{equation}
+  \label{eq:wmatrix}
+  W^{(k)}_{ji} = \widetilde{W}^{(k)}_{ji} / \sum_{i'} \widetilde{W}^{(k)}_{ji}
+\end{equation}
+
+\begin{equation}
+  \label{eq:psf}
+  \widetilde{W}^{(k)}_{ji} = \exp \left\{- \frac{\|\mathbf{v}_i - \mathbf{u}^{(k)}_j\|^2}{\gamma^2} \right\}
+\end{equation}
+
+Sendo que o vetor $\mathbf{u}^{(k)}_j$ representa o mapeamento 
+
+\begin{equation}
+  \mathbf{u}^{(k)}_j = \mathbf{R}^{(k)}(\mathbf{v}_j-\mathbf{\overline{v}})+\mathbf{\overline{v}}+\mathbf{s}_k
+\end{equation}
+
+\begin{equation}
+  \mathbf{R}^{(k)} = 
+  \begin{pmatrix}
+    \cos \theta_k & \sin \theta_k \\
+    - \sin \theta_k & \cos \theta_k
+  \end{pmatrix}
 \end{equation}
 
 \chapter{Metodologia}
