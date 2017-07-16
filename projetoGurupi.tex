@@ -149,7 +149,9 @@
 %ISSUE: epígrafe
     \vspace*{\fill}
 	\begin{flushright}
-		\textit{O que as suas mãos tiverem que fazer, que o façam com toda a sua força, pois na sepultura, para onde você vai, não há atividade nem planejamento, não há conhecimento nem sabedoria.\\
+		\textit{O que as suas mãos tiverem que fazer, que o façam com toda a sua força,\\
+    pois na sepultura, para onde você vai, não há atividade nem planejamento,\\
+    não há conhecimento nem sabedoria.\\
 Eclesiastes 9:10}
 	\end{flushright}
 \end{epigrafe}
@@ -255,21 +257,26 @@ As abordagens também se diversificaram ao longo dos anos de estudos. Os primeir
 \chapter{Super Resolução Bayesiana}
 \section{Modelo de Observação}
 
-\chapter{Metodologia}
+Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas. O modelo de observação deste trabalho tenta simular cinco tipos de alteração aplicadas por sistemas de aquisição de imagens: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
 
+Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
+
+Sabendo disso, a relação entre uma imagem de alta resolução $\mathbf{x}$ e uma imagem degradada $\mathbf{y}^{(k)}$ é resumida em (\ref{eq:degradation}). Onde $k = 1,2,...,K$, e $K$ é o número total de quadros obtido a partie da cena de alta resolução $\mathbf{x}$.
+
+\begin{equation}
+  \label{eq:degradation}
+  \mathbf{y} = \mathbf{Wx} + \mathbf{n}
+\end{equation}
+
+\chapter{Metodologia}
 \chapter{Resultados}
 
 \chapter{Conclusão}
 
-% ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
-% ----------------------------------------------------------
 \postextual
-% ----------------------------------------------------------
 
-% ----------------------------------------------------------
 % Referências bibliográficas
-% ----------------------------------------------------------
 \bibliographystyle{plain}
 \bibliography{referencias}
 
