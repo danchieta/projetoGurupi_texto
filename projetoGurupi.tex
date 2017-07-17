@@ -285,9 +285,10 @@ A matriz $\mathbf{W}$ depende de de três parâmetros de transformação: a larg
   \widetilde{W}^{(k)}_{ji} = \exp \left\{- \frac{\|\mathbf{v}_i - \mathbf{u}^{(k)}_j\|^2}{\gamma^2} \right\}
 \end{equation}
 
-Sendo que o vetor $\mathbf{u}^{(k)}_j$ representa o centro da função de espalhamento de ponto e mapeia, na imagem de alta resolução, as coordenadas dos pontos que serão representados na imagem de baixa resolução. Estes pontos dependem do fator de subamostragem, do ângulo de rotação e do deslocamento em relação à imagem original.
+Sendo que os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}). Explicando de modo simples, caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução. Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem original é uma combinação dos pontos adjacentes.
 
 \begin{equation}
+  \label{eq:psfcenter}
   \mathbf{u}^{(k)}_j = \mathbf{R}^{(k)}(\mathbf{v}_j-\mathbf{\overline{v}})+\mathbf{\overline{v}}+\mathbf{s}_k
 \end{equation}
 
