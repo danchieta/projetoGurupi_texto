@@ -313,6 +313,18 @@ Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem ori
 
 \chapter{Metodologia}
 
+Distribuição a priori da imagem original.
+\begin{gather}
+	p(\mathbf{x}) = \mathcal{N}(\mathbf{x} | 0, \mathbf{Z}_x) \\ 
+	Z_x(i,j) = A \exp \left\{ - \frac{\|\mathbf{v}_i - \mathbf{v}_j \|^2}{r^2} \right\}
+\end{gather}
+
+\begin{equation}
+	p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{s}_k, \theta_k, \gamma) = 
+	\left(\frac{\beta}{2\pi}\right)^{M/2}
+	\exp \left\{ -\frac{\beta}{2} \| \mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 \right\}
+\end{equation}
+
 \begin{gather}
 	\label{eq:posteriordist}
 	p(\mathbf{x}|\{\mathbf{y}^{(k)},\mathbf{s}_k,\theta_k\}, \gamma) = 
@@ -324,7 +336,9 @@ Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem ori
 Considerando que os parâmetros de deslocamento, rotação e espalhamento de ponto estajam otimizados, os estimadores de máxima verossimilhança dos pixels da imagem $\mathbf{x}$ podem ser encontrados maximizando o numerador em (\ref{eq:posteriordist})
 
 \begin{gather}
-	L(\mathbf{x}) = -\frac{1}{2} \left\{ \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \| + \mathbf{x}^T\mathbf{Z}^{-1}_x\mathbf{x} - KM\mathrm{ln}(\beta) - \mathrm{ln}|\mathbf{Z}_x| \right\}
+	L(\mathbf{x}) = -\frac{1}{2} \left\{ \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \| + \mathbf{x}^T\mathbf{Z}^{-1}_x\mathbf{x} - KM\mathrm{ln}(\beta) - \mathrm{ln}|\mathbf{Z}_x| \right\} \\ 
+	L'(\mathbf{x}) = -\frac{1}{2} \left\{ \sum^K_{k=1} = \mathbf{W}^{(k)T} (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x}) - \mathbf{Z}^T_x\mathbf{x} \right\} \\
+	L''(\mathbf{x}) =  -\frac{1}{2} \left\{\sum^K_{k=1} (\mathbf{W}^{(k)}T\mathbf{W}^{(k)}) - \mathbf{Z}_x \right\}
 \end{gather}
 
 \chapter{Resultados}
