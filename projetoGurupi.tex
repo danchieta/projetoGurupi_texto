@@ -242,15 +242,20 @@ Eclesiastes 9:10}
 
 \chapter{Restauração de Imagens Usando Super-resolução}
 \section{Introdução}
-A disponibilidade de um sistema de aquisição de imagens em alta resolução é um aspecto positivo para todas as aplicações que se beneficiam do uso de imagens digitais. Imagens médicas com boa resolução facilitam o diagnóstico de doenças, por exemplo \cite{park2003super}. No entanto, gerar imagens de alta resolução pode ter um custo elevado, além de apresentar outros inconvenientes dependendo da aplicação. Por exemplo, um sistema de vigilância que gerasse imagens de alta resolução precisaria de robustez computacional e alta capacidade de armazenamento para funcionar continuamente. Sistemas de imagens médicas também enfrentam o dilema de obter imagens melhores sem aumentar a exposição do paciente à radiação \cite{yue2016image}.
+A disponibilidade de um sistema de aquisição de imagens em alta resolução é um aspecto positivo para todas as aplicações que se beneficiam do uso de imagens digitais.
+Imagens médicas com boa resolução facilitam o diagnóstico de doenças, por exemplo \cite{park2003super}.
+No entanto, gerar imagens de alta resolução pode ter um custo elevado, além de apresentar outros inconvenientes dependendo da aplicação.
+Por exemplo, um sistema de vigilância que gerasse imagens de alta resolução precisaria de robustez computacional e alta capacidade de armazenamento para funcionar continuamente.
+Sistemas de imagens médicas também enfrentam o dilema de obter imagens melhores sem aumentar a exposição do paciente à radiação \cite{yue2016image}.
 
 Todas essas questões trouxeram a necessidade de técnicas de aprimoramento de imagens que não somente aumentassem a resolução espacial artificialmente, como ocorre em um processo de interpolação, mas que também recuperassem as componentes de alta frequência que se perdem durante o processo de subamostragem.
 
+Entende-se por Super-resolução o processo de obtenção de uma ou mais imagens de alta resolução a partir de uma ou mais imagens de baixa resolução.
+Técnicas de super-resolução são estudadas desde os anos 1970 e têm despertado um grande interesse de estudo nas últimas décadas.
+As aplicações de técnicas de SR são diversas e incluem aprimoramentos de imagens médicas, de imagens de rosto, de texto e impressões digitais\cite{nasrollahi2014super}.
 
-
-Entende-se por Super-resolução o processo de obtenção de uma ou mais imagens de alta resolução a partir de uma ou mais imagens de baixa resolução. Técnicas de super-resolução são estudadas desde os anos 1970 têm despertado um grande interesse de estudo nas últimas décadas. As aplicações de técnicas de SR são diversas e incluem aprimoramentos de imagens médicas, de imagens de rosto, de texto e impressões digitais\cite{nasrollahi2014super}.
-
-As abordagens também se diversificaram ao longo dos anos de estudos. Os primeiros algorítimos desenvolvidos faziam o processamento no domínio da frequência, usando transformações de Fourier e Wavelet. No entanto, os métodos de SR no domínio da frequência tinham limitações acabaram por ser substituídos por métodos no domínio espacial.
+As abordagens também se diversificaram ao longo dos anos de estudos. Os primeiros algorítimos desenvolvidos faziam o processamento no domínio da frequência, usando transformadas de Fourier e Wavelet.
+No entanto, os métodos de SR no domínio da frequência tinham limitações acabaram por ser substituídos por métodos no domínio espacial.
 
 
 
@@ -260,9 +265,15 @@ As abordagens também se diversificaram ao longo dos anos de estudos. Os primeir
 \chapter{Super Resolução Bayesiana}
 \section{Modelo de Observação}
 
-Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é importante para o desenvolvimento de qualquer técnica de super-resolução. O modelo de observação deste trabalho tenta simular cinco tipos de alteração aplicadas por sistemas de aquisição de imagens: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
+Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é importante para o desenvolvimento de qualquer técnica de super-resolução.
+O modelo de observação deste trabalho tenta simular cinco tipos de alteração aplicadas por sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
 
-Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
+As alterações de deslocamento linear e rotação tentam simular um possível movimento aleatório na câmera.
+A convolução com uma função de espalhamento de ponto Gaussiana repressenta o efeito de falta de foco provocado por uma lente.
+A subamostragem simula a baixa densidade de pixels no sensor da câmera,
+que seria menor do que a necessária para registrar os dados da imagem acima da taxa de Nyquist.
+
+Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor coluna $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
 
 Sabendo disso, a relação entre uma imagem de alta resolução $\mathbf{x}$ e uma imagem degradada $\mathbf{y}^{(k)}$ é resumida em (\ref{eq:degradation}). Onde $k = 1,2,...,K$; sendo $K$ o número total de quadros obtidos a partir da cena de alta resolução $\mathbf{x}$.
 
@@ -273,9 +284,11 @@ Sabendo disso, a relação entre uma imagem de alta resolução $\mathbf{x}$ e u
 
 O ruído, representado por $\mathbf{n}$ é um vetor de variáveis aleatórias Gaussianas independentes de média zero e variância $1/\beta$.
 
-A matriz de sistema $\mathbf{W}$ aplica as transformações de rotação, deslocamento, subamostragem e espalhamento de ponto ao ser multiplicada pela imagem de alta resolução $\mathbf{x}$. Pelas propriedades da multiplicação de matrizes, é natural que as dimensões da matriz do sistema sejam $M \times N$; onde $M$ é o número de pixels da imagem resultante. Também se espera que $N \gg M$.
+A matriz de sistema $\mathbf{W}$ aplica as transformações de rotação, deslocamento, subamostragem e espalhamento de ponto ao ser multiplicada pela imagem de alta resolução $\mathbf{x}$.
+Pelas propriedades da multiplicação de matrizes, é natural que as dimensões da matriz do sistema sejam $M \times N$; onde $M$ é o número de pixels da imagem resultante.
+Também se espera que $N \gg M$.
 
-A matriz $\mathbf{W}$ depende de de três parâmetros de transformação: a largura da função de espalhamento de ponto $\gamma$ um ângulo de rotação $\theta$ e um vetor de deslocamento linear $\mathbf{s}$. Os elementos da matriz são dados por (\ref{eq:wmatrix}) com a função de espalhamento de ponto descrita em (\ref{eq:psf}).
+A matriz $\mathbf{W}$ depende de três parâmetros de transformação: a largura da função de espalhamento de ponto $\gamma$ um ângulo de rotação $\theta$ e um vetor de deslocamento linear $\mathbf{s}$. Os elementos da matriz são dados por (\ref{eq:wmatrix}) com a função de espalhamento de ponto descrita em (\ref{eq:psf}).
 
 \begin{equation}
 	\label{eq:wmatrix}
@@ -287,7 +300,7 @@ A matriz $\mathbf{W}$ depende de de três parâmetros de transformação: a larg
 	\widetilde{W}^{(k)}_{ji} = \exp \left\{- \frac{\|\mathbf{v}_i - \mathbf{u}^{(k)}_j\|^2}{\gamma^2} \right\}
 \end{equation}
 
-Sendo que os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}). Explicando de modo simples, caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução. A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
+Os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}). Explicando de modo simples, caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução. A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
 
 Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem original é uma combinação dos pontos adjacentes.
 
@@ -315,17 +328,34 @@ Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem ori
 
 \chapter{Metodologia}
 
-Distribuição a priori da imagem original.
+O método algoritmo por Tipping se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
+
+Um método de inferência Bayesiana depende de um conhecimento a priori dos dados que se deseja estimar.
+
+A distribuição a priori da imagem original é dada por:
+
 \begin{gather}
 	p(\mathbf{x}) = \mathcal{N}(\mathbf{x} | 0, \mathbf{Z}_x) \\ 
 	Z_x(i,j) = A \exp \left\{ - \frac{\|\mathbf{v}_i - \mathbf{v}_j \|^2}{r^2} \right\}
 \end{gather}
 
+Onde $A$ é uma constante, e $r$ determina o quanto cada ponto da imagem de alta resolução depende dos pontos vizinhos.
+
+Este tipo de distribuição não é o ideal, visto que se definirmos $r=1$, estaríamos dizendo que a maioria dos valores dos pontos da imagem de de alta resolução estão contidos no intervalo $[-1,1]$, o que não condiz com a realidade.
+No entanto, o uso desta distribuição a priori será mantido no desenvolvimento deste trabalho pela conveniência proporcionada pela função de probabilidade Gaussiana, que facilita algumas manipulações -- como aplicação de logaritmos naturais --  utilizadas a seguir.
+
+Ciente da relação entre a imagem original e as imagens de baixa resolução, podemos escrever a probabilidade a posteriori das imagens de baixa resolução como:
+
 \begin{equation}
+	\label{eq:posterior0}
 	p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{s}_k, \theta_k, \gamma) = 
 	\left(\frac{\beta}{2\pi}\right)^{M/2}
-	\exp \left\{ -\frac{\beta}{2} \| \mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 \right\}
+	\exp \left\{ -\frac{\beta}{2} \| \mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 \right\}.
 \end{equation}
+
+Note que esta distribuição é condicionada na imagem de alta resolução e nos parâmetros de degradação, dados que são desconhecidos em um situação real.
+
+Podemos usar o Teorema de Bayes para isolar a imagem original $\mathbf{x}$, ao que obtemos:
 
 \begin{gather}
 	\label{eq:posteriordist}
@@ -335,7 +365,29 @@ Distribuição a priori da imagem original.
 	= \mathcal{N}(\mathbf{\mu},\mathbf{\Sigma})
 \end{gather}
 
-Considerando que os parâmetros de deslocamento, rotação e espalhamento de ponto estajam otimizados, os estimadores de máxima verossimilhança dos pixels da imagem $\mathbf{x}$ podem ser encontrados maximizando o numerador em (\ref{eq:posteriordist})
+Esta função de probabilidade já poderia ser utilizada para inferir a imagem de alta resolução.
+Para isso, bastaria encontrar o valor de $\mathbf{x}$ que maximiza o numerador em (\ref{eq:posteriordist}). entretanto, isso exigiria saber os valores dos parâmetros de degradação ($\gamma$, $\theta_k$, $\mathbf{\theta}_k$).
+Como esses parâmetros não estão disponíveis, eles também terão de ser estimados a partir das imagens de baixa resolução $\mathbf{y}_k$. 
+
+A solução proposta no artigo original é marginalizar $\mathbf{x}$ em (\ref{eq:posterior0}) para que ele não seja mais uma variável na função. O resultado disto é a seguinte distribuição:
+
+\begin{align}
+	\label{eq:parameter}
+	\log p(\mathrm{y}|\{\mathbf{s}_k,\theta_k\}, \gamma) &= -\frac{1}{2}\left[\beta \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\boldsymbol{\mu}\|
+    + \boldsymbol{\mu}^T\mathbf{Z}_x\boldsymbol{\mu} \right. \nonumber \\
+    &\qquad \left.\vphantom{\int_t} + \log |\mathbf{Z}_x| - \log{\Sigma} - KM \log \beta \right].
+\end{align}
+
+Onde y é o conjunto de todas as imagens de baixa resolução $\mathbf{y}_k$.
+
+Em uma situação ideal, a melhor estimativa dos valores dos parâmetros de degradação é a que maximiza a função de verossimilhança em (\ref{eq:parameter}).
+Tendo a estimativa desses valores, podemos então usá-los em (\ref{eq:posteriordist}) para procurar pelo vetor $\mathbf{x}$ que maximiza aquela função de verossimilhança.
+
+Um fato que se constatou empiricamente na tentativa de calcular os valores da função de verossimilhança é que as probabilidades são muito pequenas ao ponto de estarem fora do intervalo de precisão de uma variável do tipo ponto flutuante.
+Os valores também variam muito pouco ao longo do espaço vetorial de $\mathbf{x}$ o que dificultaria o uso de métodos iterativos para encontrar o ponto de máximo da função.
+
+Para resolver isso, aplicou-se o logaritmo natural à função. Isso resolveu o problema da escala e da variação.
+Além disso eliminou os exponenciais e os produtos, facilitando o cálculo do gradiente e Jacobiano da função.
 
 \begin{gather}
 	L(\mathbf{x}) = -\frac{1}{2} \left\{ \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 + \mathbf{x}^T\mathbf{Z}^{-1}_x\mathbf{x} - KM\mathrm{ln}(\beta) - \mathrm{ln}|\mathbf{Z}_x| \right\} \\ 
@@ -344,7 +396,6 @@ Considerando que os parâmetros de deslocamento, rotação e espalhamento de pon
 \end{gather}
 
 
-manual da função fmin \cite{scipycg}
 \chapter{Resultados}
 
 \chapter{Conclusão}
