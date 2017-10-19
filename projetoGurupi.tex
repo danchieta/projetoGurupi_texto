@@ -266,7 +266,9 @@ No entanto, os métodos de SR no domínio da frequência tinham limitações aca
 \section{Modelo de Observação}
 
 Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é importante para o desenvolvimento de qualquer técnica de super-resolução.
+
 O modelo de observação deste trabalho tenta simular cinco tipos de alteração aplicadas por sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
+Este modelo de observação é descrito tanto no artigo de Tipping \cite{tipping2003bayesian} quanto em vários outros trabalhos relacionados \cite{pickup2007bayesian}, \cite{Capel01a}.
 
 As alterações de deslocamento linear e rotação tentam simular um possível movimento aleatório na câmera.
 A convolução com uma função de espalhamento de ponto Gaussiana repressenta o efeito de falta de foco provocado por uma lente.
@@ -300,9 +302,12 @@ A matriz $\mathbf{W}$ depende de três parâmetros de transformação: a largura
 	\widetilde{W}^{(k)}_{ji} = \exp \left\{- \frac{\|\mathbf{v}_i - \mathbf{u}^{(k)}_j\|^2}{\gamma^2} \right\}
 \end{equation}
 
-Os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}). Explicando de modo simples, caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução. A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
+Os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}). Caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução. A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
 
 Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem original é uma combinação dos pontos adjacentes.
+% O efeito da transformação de espalhamento da função de espalhamento de ponto é o mesmo que o de realizar uma convolução da imagem com uma função Gaussiana bidimensional como a mostrada na Figura \ref{fig:point spread function}
+
+% OBSERVAÇÃO: ADICIONAR FIGURA MOSTRANDO GRÁFICO DA FUNÇÃO DE ESPALHAMENTO DE PONTO
 
 \begin{equation}
 	\label{eq:psfcenter}
@@ -329,10 +334,10 @@ Quando a função de espalhamento de ponto é aplicada, cada pixel da imagem ori
 \chapter{Metodologia}
 
 O método algoritmo por Tipping se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
+Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e imformações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
 
-Um método de inferência Bayesiana depende de um conhecimento a priori dos dados que se deseja estimar.
-
-A distribuição a priori da imagem original é dada por:
+Sabendo disso, há a necessdade de formular uma distribuição a priori que represente as características estatísticas da imagem que pretendemos estimar a partir dos dados.
+A distribuição de probabilidade a priori escolhida para a imagem é uma gaussiana como descrita a seguir:
 
 \begin{gather}
 	p(\mathbf{x}) = \mathcal{N}(\mathbf{x} | 0, \mathbf{Z}_x) \\ 
@@ -340,6 +345,11 @@ A distribuição a priori da imagem original é dada por:
 \end{gather}
 
 Onde $A$ é uma constante, e $r$ determina o quanto cada ponto da imagem de alta resolução depende dos pontos vizinhos.
+Expandindo a função densidade de probabilidade $p(\mathbf{x})$ temos:
+
+\begin{equation}
+	p(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^N \mathbf{Z}_x}}\exp{-\tfrac{1}{2} \mathbf{x}^T \mathbf{Z}_x \mathbf{x}}
+\end{equation}
 
 Este tipo de distribuição não é o ideal, visto que se definirmos $r=1$, estaríamos dizendo que a maioria dos valores dos pontos da imagem de de alta resolução estão contidos no intervalo $[-1,1]$, o que não condiz com a realidade.
 No entanto, o uso desta distribuição a priori será mantido no desenvolvimento deste trabalho pela conveniência proporcionada pela função de probabilidade Gaussiana, que facilita algumas manipulações -- como aplicação de logaritmos naturais --  utilizadas a seguir.
@@ -362,19 +372,21 @@ Podemos usar o Teorema de Bayes para isolar a imagem original $\mathbf{x}$, ao q
 	p(\mathbf{x}|\{\mathbf{y}^{(k)},\mathbf{s}_k,\theta_k\}, \gamma) = 
 	\frac{p(\mathbf{x})\prod^K_{k=1} p(\mathbf{y}^{(k)}|\mathbf{x},\mathbf{s}_k,\theta_k, \gamma)}
 	{p(\{\mathbf{y}^{(k)}\}|\{\mathbf{s}_k,\mathbf{\theta}_k\},\gamma)} \\
-	= \mathcal{N}(\mathbf{\mu},\mathbf{\Sigma})
+	= \mathcal{N}(\boldsymbol{\mu},\mathbf{\Sigma}) \\
+	\mathbf{ \Sigma }= \left[\mathbf{Z}^{-1}_x + \beta \left( \sum^K_{k = 1} \mathbf{W}^{(k)^T} \mathbf{W}^{(k)} \right) \right]^{-1} \\
+	\boldsymbol{\mu} = \beta \mathbf{ \Sigma } \left( \sum^K_{k=1} \mathbf{W}^{(k)^T}\mathbf{y}^{(k)} \right).
 \end{gather}
 
 Esta função de probabilidade já poderia ser utilizada para inferir a imagem de alta resolução.
 Para isso, bastaria encontrar o valor de $\mathbf{x}$ que maximiza o numerador em (\ref{eq:posteriordist}). entretanto, isso exigiria saber os valores dos parâmetros de degradação ($\gamma$, $\theta_k$, $\mathbf{\theta}_k$).
 Como esses parâmetros não estão disponíveis, eles também terão de ser estimados a partir das imagens de baixa resolução $\mathbf{y}_k$. 
 
-A solução proposta no artigo original é marginalizar $\mathbf{x}$ em (\ref{eq:posterior0}) para que ele não seja mais uma variável na função. O resultado disto é a seguinte distribuição:
+A solução proposta no artigo é marginalizar $\mathbf{x}$ em (\ref{eq:posterior0}) para que ele não seja mais uma variável na função. O resultado disto é a seguinte distribuição:
 
 \begin{align}
 	\label{eq:parameter}
 	\log p(\mathrm{y}|\{\mathbf{s}_k,\theta_k\}, \gamma) &= -\frac{1}{2}\left[\beta \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\boldsymbol{\mu}\|
-    + \boldsymbol{\mu}^T\mathbf{Z}_x\boldsymbol{\mu} \right. \nonumber \\
+    + \boldsymbol{\mu}^T\mathbf{Z}_x \boldsymbol{\mu} \right. \nonumber \\
     &\qquad \left.\vphantom{\int_t} + \log |\mathbf{Z}_x| - \log{\Sigma} - KM \log \beta \right].
 \end{align}
 
