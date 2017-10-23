@@ -212,10 +212,22 @@ Eclesiastes 9:10}
 % ---
 \begin{simbolos}
 %ISSUE: lista de símbolos
-	\item[$ \Gamma $] Letra grega Gama
-	\item[$ \lambda $] Lambda
-	\item[$ \zeta $] Letra grega minúscula zeta
-	\item[$ \in $] Pertence
+	\item[$ \mathbf{x} $] Vetor com os dados da imagem de alta resolução.
+	\item[$ \mathbf{y}_k $] Vetor da imagem de alta resolução de número k.
+	\item[$ K $] Número de imagens de baixa resolução.
+	\item[$ N $] Número de pontos na imagem de alta resolução.
+    \item[$ M $] Número de pontos na imagem de baixa resolução.
+    \item[$ \mathbf{W}^{(k)}$] Matriz de degradação da imagem de número k.
+    \item[$ \gamma $] Largura da função de espalhamento de ponto.
+    \item[$ \theta_k $] Ângulo de rotação da imagem de número k.
+    \item[$ \mathbf{s}_k $] Vetor com deslocamento bidimensional da imagem de baixa resolução de número k.
+    \item[$ \mathbf{Z}_x $] Matriz de covariância da distribuição a priori de $\mathbf{x}$.
+    \item[$ \mathbf{\Sigma}$] Matriz de covariância da distibuição a posteriori de $\mathbf{x}$ condicionada aos parâmetros de degradação e conjunto de todos os $\mathbf{y}^{(k)}$.
+    \item[$ \boldsymbol{\mu} $] Vetor média da distibuição a posteriori de $\mathbf{x}$ condicionada aos parâmetros de degradação e conjunto de todos os $\mathbf{y}^{(k)}$.
+    \item[$ \beta $] Inverso da variância do ruído.
+    \item[$ | \cdot | $] Determinante de matriz.
+    \item[$\| \cdot \|$] Norma de um vetor.
+    
 \end{simbolos}
 % ---
 
@@ -261,11 +273,9 @@ No entanto, os métodos de SR no domínio da frequência tinham limitações aca
 
 
 
-\section{Apreciação das Técnicas de Super-resolução}
 
-
-\chapter{Super Resolução Bayesiana}
-\section{Modelo de Observação}
+\chapter{Modelo de Observação}
+\label{sec:obsmodel}
 
 Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é importante para o desenvolvimento de qualquer técnica de super-resolução.
 
@@ -309,7 +319,6 @@ A Figura \ref{fig:transformations} mostra como se dá o processo de subamostrage
 O efeito da transformação de espalhamento da função de espalhamento de ponto é o mesmo que o de realizar uma convolução da imagem com uma função Gaussiana bidimensional como a mostrada na Figura \ref{fig:psfplot}.
 O efeito da transformação é semelhante ao de um desfoque lente, como mostrado na Figura \ref{fig:psfexample}.
 
-% OBSERVAÇÃO: ADICIONAR FIGURA MOSTRANDO GRÁFICO DA FUNÇÃO DE ESPALHAMENTO DE PONTO
 
 \begin{figure}[h]
 	\centering
@@ -344,16 +353,18 @@ O efeito da transformação é semelhante ao de um desfoque lente, como mostrado
 	\includegraphics[width=0.3\textwidth]{./figures/transform1.pdf}
 	\includegraphics[width=0.3\textwidth]{./figures/transform2.pdf}
 	\includegraphics[width=0.3\textwidth]{./figures/transform3.pdf}
-	\caption{Visualização das transformações de subamostragem, deslocmento linear e rotação.}
+	\caption{Visualização das transformações de subamostragem, deslocamento linear e rotação.}
 	\label{fig:transformations}
 \end{figure}
 
-\chapter{Metodologia}
+
+\chapter{Super Resolução Bayesiana}
+\chapter{Funções de probabilidade a priori e a posteriori}
 
 O método algoritmo por Tipping se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
-Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e imformações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
+Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e informações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
 
-Sabendo disso, há a necessdade de formular uma distribuição a priori que represente as características estatísticas da imagem que pretendemos estimar a partir dos dados.
+Sabendo disso, há a necessidade de formular uma distribuição a priori que represente as características estatísticas da imagem que pretendemos estimar a partir dos dados.
 A distribuição de probabilidade a priori escolhida para a imagem é uma gaussiana como descrita a seguir:
 
 \begin{gather}
@@ -404,7 +415,7 @@ A solução proposta no artigo é marginalizar $\mathbf{x}$ em (\ref{eq:posterio
 	\label{eq:parameter}
 	\log p(\mathrm{y}|\{\mathbf{s}_k,\theta_k\}, \gamma) &= -\frac{1}{2}\left[\beta \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\boldsymbol{\mu}\|
     + \boldsymbol{\mu}^T\mathbf{Z}_x \boldsymbol{\mu} \right. \nonumber \\
-    &\qquad \left.\vphantom{\int_t} + \log |\mathbf{Z}_x| - \log{\Sigma} - KM \log \beta \right].
+    &\qquad \left.\vphantom{\int_t} + \log |\mathbf{Z}_x| - \log{|\Sigma |} - KM \log \beta \right].
 \end{align}
 
 Onde y é o conjunto de todas as imagens de baixa resolução $\mathbf{y}_k$.
@@ -424,6 +435,8 @@ Além disso eliminou os exponenciais e os produtos, facilitando o cálculo do gr
 	L''(\mathbf{x}) =  -\sum^K_{k=1} (\mathbf{W}^{(k)})^T\mathbf{W}^{(k)} - \frac{1}{2}(\mathbf{Z}^{-1}_x - (\mathbf{Z}^{-1}_x)^T)^T
 \end{gather}
 
+\chapter{Geração do conjunto de imagens de teste}
+As imagens usadas para testar o método de restauração descrito neste trabalho foram geradas artificialmente a partir de uma única imagem usando o modelo de observação descrito no Capítulo 3 \ref{sec:obsmodel}
 
 \chapter{Resultados}
 
