@@ -269,12 +269,12 @@ No entanto, os métodos de SR no domínio da frequência tinham limitações aca
 
 Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é importante para o desenvolvimento de qualquer técnica de super-resolução.
 
-O modelo de observação deste trabalho tenta simular cinco tipos de alteração aplicadas por sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
-Este modelo de observação é descrito tanto no artigo de Tipping \cite{tipping2003bayesian} quanto em vários outros trabalhos relacionados \cite{pickup2007bayesian}, \cite{Capel01a}.
+O modelo de observação deste trabalho simula cinco tipos de alteração aplicadas por sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
+Este modelo de observação é descrito tanto em \cite{tipping2003bayesian} quanto em outros trabalhos relacionados \cite{pickup2007bayesian, Capel01a}.
 
-As alterações de deslocamento linear e rotação tentam simular um possível movimento aleatório na câmera.
-A convolução com uma função de espalhamento de ponto Gaussiana repressenta o efeito de falta de foco provocado por uma lente.
-A subamostragem simula a baixa densidade de pixels no sensor da câmera,
+As alterações de deslocamento linear e rotação tentam simular um possível movimento aleatório da câmera em relação ao objeto.
+A transformação de espalhamento de ponto simula um efeito de desfoque causado por um possível desajuste nos aspectos ópticos da câmera.
+A subamostragem representa a perda de resolução espacial aplicada à imagem captada por um sensor CMOS ou CCD, por exemplo.
 que seria menor do que a necessária para registrar os dados da imagem acima da taxa de Nyquist.
 
 Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor coluna $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
@@ -292,28 +292,29 @@ A matriz de sistema $\mathbf{W}$ aplica as transformações de rotação, desloc
 Pelas propriedades da multiplicação de matrizes, é natural que as dimensões da matriz do sistema sejam $M \times N$; onde $M$ é o número de pixels da imagem resultante.
 Também se espera que $N \gg M$.
 
-A matriz $\mathbf{W}$ depende de três parâmetros de transformação: a largura da função de espalhamento de ponto $\gamma$ um ângulo de rotação $\theta$ e um vetor de deslocamento linear $\mathbf{s}$. Os elementos da matriz são dados por (\ref{eq:wmatrix}) com a função de espalhamento de ponto descrita em (\ref{eq:psf}).
+A matriz $\mathbf{W}$ depende de três parâmetros de transformação: a largura da função de espalhamento de ponto $\gamma$, um ângulo de rotação $\theta$ e um vetor de deslocamento linear $\mathbf{s}$.
+Os elementos da matriz são dados por (\ref{eq:wmatrix}) com a função de espalhamento de ponto descrita em (\ref{eq:psf}) enquanto os parágrafos seguintes demonstram como as demais transformações são incorporadas à matriz de sistema.
 
-\begin{equation}
+\begin{gather}
 	\label{eq:wmatrix}
-	W^{(k)}_{ji} = \widetilde{W}^{(k)}_{ji} / \sum_{i'} \widetilde{W}^{(k)}_{ji}
-\end{equation}
-
-\begin{equation}
+	W^{(k)}_{ji} = \widetilde{W}^{(k)}_{ji} / \sum_{i'} \widetilde{W}^{(k)}_{ji} \\
 	\label{eq:psf}
 	\widetilde{W}^{(k)}_{ji} = \exp \left\{- \frac{\|\mathbf{v}_i - \mathbf{u}^{(k)}_j\|^2}{\gamma^2} \right\}
-\end{equation}
+\end{gather}
 
-Os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}). Caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução. A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
+Os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento de ponto e é descrito em (\ref{eq:psfcenter}).
+Caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução.
+A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
 
 O efeito da transformação de espalhamento da função de espalhamento de ponto é o mesmo que o de realizar uma convolução da imagem com uma função Gaussiana bidimensional como a mostrada na Figura \ref{fig:psfplot}.
+O efeito da transformação é semelhante ao de um desfoque lente, como mostrado na Figura \ref{fig:psfexample}.
 
 % OBSERVAÇÃO: ADICIONAR FIGURA MOSTRANDO GRÁFICO DA FUNÇÃO DE ESPALHAMENTO DE PONTO
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.7\textwidth]{./figures/psf1.pdf}
-	\caption{Exemplo de gráfico de uma função de espalhamento de ponto com $\gamma = 2$ e centrada em $[0,0]$.}
+	\caption{Exemplo de gráfico de uma função de espalhamento de ponto com $\gamma = 2$ centrada em $[0,0]$.}
 	\label{fig:psfplot}
 \end{figure}
 
