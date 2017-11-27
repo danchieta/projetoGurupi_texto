@@ -285,9 +285,14 @@ Desde então diversos procedimentos de restauração de imagen foram desenvolvid
 Não somente para imagens astronômicas, mas também para imagens médicas e de sistemas de vigilância. Esta última sendo o ojeto de estudo deste trabalho.
 
 % SOLUÇÃO ESCOLHIDA: O QUE ELA É E COMO FUNCIONA?
-% VANTAGENS: POR QUE ESTA SOLUÇÃO E NÃO AS OUTRAS?
 
-Este trabalho descreve a implementação e teste de um método de restauração de imagens de placas de veículos usando super-resolução bayesiana
+Este trabalho descreve a implementação e teste de um método de restauração de imagens de placas de veículos usando super-resolução bayesiana.
+O método utilizado foi apresentado por Michael Tipping em \cite{tipping2003bayesian}.
+Em resumo, o algorítimo apresentado define um modelo de observação no qual as degradações sofridas pela imagem durante o processo de aquisição são parametrizadas.
+Então são usadas inferências bayesianas para estimar os parâmetros de degradação a partir das imagens de baixa resolução, para então estimar a imagem de alta resolução a partir destes parâmetros.
+
+% VANTAGENS: POR QUE ESTA SOLUÇÃO E NÃO AS OUTRAS?
+Esta solução foi escolhida devido à adequação do algorítimo à aplicação desejada, que é a restauração de uma imagem de placa de veículo a partir de várias imagens degradadas.
 % ESTRUTURA: O QUE TEM NOS CAPÍTULOS SEGUINTES?
 
 \chapter{Restauração de Imagens Usando Super-resolução}
