@@ -298,17 +298,11 @@ Também vale destacar a relativa simplicidade de implementação do método esco
 
 \chapter{Restauração de Imagens Usando Super-resolução}
 \section{Introdução}
-A disponibilidade de um sistema de aquisição de imagens em alta resolução é um aspecto positivo para todas as aplicações que se beneficiam do uso de imagens digitais.
-Imagens médicas com boa resolução facilitam o diagnóstico de doenças, por exemplo \cite{park2003super}.
-No entanto, gerar imagens de alta resolução pode ter um custo elevado, além de apresentar outros inconvenientes dependendo da aplicação.
-Por exemplo, um sistema de vigilância que gerasse imagens de alta resolução precisaria de robustez computacional e alta capacidade de armazenamento para funcionar continuamente.
-Sistemas de imagens médicas também enfrentam o dilema de obter imagens melhores sem aumentar a exposição do paciente à radiação \cite{yue2016image}.
-
-Todas essas questões trouxeram a necessidade de técnicas de aprimoramento de imagens que não somente aumentassem a resolução espacial artificialmente, como ocorre em um processo de interpolação, mas que também recuperassem as componentes de alta frequência que se perdem durante o processo de subamostragem.
-
 Entende-se por Super-resolução o processo de obtenção de uma ou mais imagens de alta resolução a partir de uma ou mais imagens de baixa resolução.
 Técnicas de super-resolução são estudadas desde os anos 1970 e têm despertado um grande interesse de estudo nas últimas décadas.
 As aplicações de técnicas de SR são diversas e incluem aprimoramentos de imagens médicas, de imagens de rosto, de texto e impressões digitais\cite{nasrollahi2014super}.
+
+Vale esclarecer que quando este trabalho fala de \textit{resolução} ele se refere à resolução espacial de uma imagem, a qual mede a densidade de pontos por unidade de área no sensor do sistema de aquisição. \cite{zibetti2007super}
 
 As abordagens também se diversificaram ao longo dos anos de estudos. Os primeiros algorítimos desenvolvidos faziam o processamento no domínio da frequência, usando transformadas de Fourier e Wavelet.
 No entanto, os métodos de SR no domínio da frequência tinham limitações acabaram por ser substituídos por métodos no domínio espacial.
