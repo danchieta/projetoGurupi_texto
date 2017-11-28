@@ -260,7 +260,7 @@ Como exemplo disso podemos citar as imagens médicas, nas quais quanto melhor a 
 Também há o caso dos sistemas de vigilâcia, onde quanto melhor a resolução espacial da imagem, mais viável se torna a identificação de veículos e criminosos.
 
 % DELIMITAÇÃO: QUE PROBLEMA ESTOU RESOLVENDO?
-Hoje em dia, com realidade da insegurança em países como o Brasil, os cidadãos sentem a necessidade de investir na própria segurança privada para proteger a si mesmos e seus patrimônios.
+Hoje em dia, com as frequentes ameaças à segurança das pessoas em diversos lugares do mundo, os cidadãos sentem a necessidade de investir na própria segurança privada para proteger a si mesmos e seus patrimônios.
 Por causa dessa necessidade, houve uma popularização de sistemas de vigilância monitoramento.
 As câmeras de segurança já são tão onipresentes em grandes cidades que é praticamente impossível que um cidadão comum saia à rua e não tenha a sua imagem gravada por pelo menos uma delas.
 
@@ -292,6 +292,7 @@ Então são usadas inferências bayesianas para estimar os parâmetros de degrad
 
 % VANTAGENS: POR QUE ESTA SOLUÇÃO E NÃO AS OUTRAS?
 Esta solução foi escolhida devido à adequação do algorítimo à aplicação desejada, que é a restauração de uma imagem de placa de veículo a partir de várias imagens degradadas, como os quadros de um vídeo de câmera de vigilância.
+Também vale destacar a relativa simplicidade de implementação do método escolhido, o qual também possibilita ajustes afim de reduzir seu custo computacional.
 
 % ESTRUTURA: O QUE TEM NOS CAPÍTULOS SEGUINTES?
 
@@ -314,8 +315,8 @@ No entanto, os métodos de SR no domínio da frequência tinham limitações aca
 
 
 
-
-\chapter{Modelo de Observação}
+\chapter{Super Resolução Bayesiana}
+\section{Modelo de Observação}
 \label{sec:obsmodel}
 
 Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é importante para o desenvolvimento de qualquer técnica de super-resolução.
@@ -399,8 +400,7 @@ O efeito da transformação é semelhante ao de um desfoque lente, como mostrado
 \end{figure}
 
 
-\chapter{Super Resolução Bayesiana}
-\chapter{Funções de probabilidade a priori e a posteriori}
+\section{Funções de probabilidade a priori e a posteriori}
 
 O método algoritmo por Tipping se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e informações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
@@ -476,10 +476,10 @@ Além disso eliminou os exponenciais e os produtos, facilitando o cálculo do gr
 	L''(\mathbf{x}) =  -\sum^K_{k=1} (\mathbf{W}^{(k)})^T\mathbf{W}^{(k)} - \frac{1}{2}(\mathbf{Z}^{-1}_x - (\mathbf{Z}^{-1}_x)^T)^T
 \end{gather}
 
-\chapter{Geração do conjunto de imagens de teste}
+\chapter{Resultados}
+\section{Geração do conjunto de imagens de teste}
 As imagens usadas para testar o método de restauração descrito neste trabalho foram geradas artificialmente a partir de uma única imagem usando o modelo de observação descrito no Capítulo 3 \ref{sec:obsmodel}
 
-\chapter{Resultados}
 
 \chapter{Conclusão}
 
