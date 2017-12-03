@@ -257,7 +257,7 @@ Eclesiastes 9:10}
 % CONTEXTUALIZAÇÃO: ONDE MEU PROBLEMA APARECE?
 A disponibilidade de imagens de alta resolução é uma vantagem para a execução de qualquer trabalho que envolva a captação e interpretação de informações através de imagens digitais.
 Como exemplo disso podemos citar as imagens médicas, nas quais quanto melhor a qualidade da imagem, mais fácil é diferenciar as estruturas retratadas afim de diagnosticar doenças.
-Também há o caso dos sistemas de vigilâcia, onde quanto melhor a resolução espacial da imagem, mais viável se torna a identificação de veículos e criminosos.
+Também há o caso dos sistemas de vigilância, onde quanto melhor a resolução espacial da imagem, mais viável se torna a identificação de veículos e criminosos.
 
 % DELIMITAÇÃO: QUE PROBLEMA ESTOU RESOLVENDO?
 Hoje em dia, com as frequentes ameaças à segurança das pessoas em diversos lugares do mundo, os cidadãos sentem a necessidade de investir na própria segurança privada para proteger a si mesmos e seus patrimônios.
@@ -265,24 +265,23 @@ Por causa dessa necessidade, houve uma popularização de sistemas de vigilânci
 As câmeras de segurança já são tão onipresentes em grandes cidades que é praticamente impossível que um cidadão comum saia à rua e não tenha a sua imagem gravada por pelo menos uma delas.
 
 No entanto, apesar da presença geral dos sistemas de vigilância, a maioria dos equipamentos utilizados é de baixa qualidade, o que se reflete nas imagens captadas por eles.
-A consequência disso é que muitas vezes as câmeras de monitoramento registram cenas de crimes ou outros casos policiais,
-mas as imagens de baixa qualidade nem sempre ajudam a trazer à luz informações importantes, como o rosto de um criminoso ou a placa de um carro, por exemplo.
+A consequência disso é que muitas vezes as câmeras de monitoramento registram cenas de crimes,
+mas as imagens deterioradas nem sempre ajudam a trazer à luz informações importantes, como o rosto de um criminoso ou a placa de um carro, por exemplo.
 
-Não obstante, mesmo com necessidade evidente de se usar câmeras de alta resolução para sistemas de monitoramento,
+Não obstante, mesmo com necessidade evidente de se melhorar a qualidade das imagens geradas por sistemas de vigilância,
 também há o dilema constante entre aumentar a qualidade das imagens registradas e o custo de implementar manter o sistema de monitoramento funcionando.
 Quanto melhor a qualidade da imagem, maior é o custo do equipamento e mais capacidade de armazenamento será necessária para guardar uma quantidade útil de todas as imagens gravadas.
 
 
 % SOLUÇÕES: O QUE JÁ EXISTE QUE RESOLVE ESTE PROBLEMA?
 Face ao dilema das imagens geradas por sistemas de vigilância,
-a melhor solução a curto prazo seria o desenvolvimento de procedimentos de restauração de imagens.
-Esses procedimen que fossem capaz de revelar as informações perdidas para a degradação sofrida pela cena durante o processo de aquisição.
+a melhor solução a curto prazo seria aprimorar as imagens que estão sendo geradas pelas câmeras de vigilância que já temos hoje.
+Esse aprimoramento seria feito através de restauração de imagens digitais.
 
-A demanda pelo desenvolvimento de técnicas de restauração de imagens ganhou força no fim da década de 1950, quando iniciou a corrida espacial entre Estados Unidos e União Soviética.
-Naquele contexto, era necessário restaurar as primeiras imagens recebidas de sondas e satélites artificiais que sofriam degradações própprias do ambiente onde esses objetos trabalhavam \cite{banham1997digital}.
+A demanda pelo desenvolvimento de técnicas de restauração de imagens ganhou força no fim da década de 1950, quando a sua principal aplicação era na área de imagens astronômicas.
+Naquele contexto, era necessário restaurar as primeiras imagens recebidas de sondas e satélites artificiais que sofriam degradações próprias do ambiente onde esses objetos trabalhavam.
 
-Desde então diversos procedimentos de restauração de imagen foram desenvolvidos.
-Não somente para imagens astronômicas, mas também para imagens médicas e de sistemas de vigilância. Esta última sendo o ojeto de estudo deste trabalho.
+Após tantos anos, a restauração de imagens digitais continua tendo sua importância na astronomia, mas também é uma ferramenta para outras áreas como medicina, mídia e ciências forenses \cite{banham1997digital}.
 
 % SOLUÇÃO ESCOLHIDA: O QUE ELA É E COMO FUNCIONA?
 Este trabalho descreve a implementação e teste de um método de restauração de imagens de placas de veículos usando super-resolução bayesiana.
@@ -299,15 +298,28 @@ Também vale destacar a relativa simplicidade de implementação do método esco
 \chapter{Restauração de Imagens Usando Super-resolução}
 \section{Introdução}
 Entende-se por Super-resolução o processo de obtenção de uma ou mais imagens de alta resolução a partir de uma ou mais imagens de baixa resolução.
-Técnicas de super-resolução são estudadas desde os anos 1970 e têm despertado um grande interesse de estudo nas últimas décadas.
+Técnicas de super-resolução são pesquisadas desde os anos 1970 e têm despertado um grande interesse de estudo nas últimas décadas.
 As aplicações de técnicas de SR são diversas e incluem aprimoramentos de imagens médicas, de imagens de rosto, de texto e impressões digitais\cite{nasrollahi2014super}.
 
 Vale esclarecer que, neste trabalho, a palavra \textit{resolução} se refere à resolução espacial de uma imagem, a qual mede a densidade de pontos por unidade de área em uma imagem \cite{zibetti2007super}.
 
+Este capítulo fará uma breve síntese do histórico das técnicas de super-resolução e seus principais exemplares.
+
+\section{Domínio da Frequência}
+
 Os primeiros algorítimos de super-resolução desenvolvidos faziam o processamento das imagens no domínio da frequência.
-Esse tipo de abordagem tinha a vantagem da simplicidade em sua teoria.\cite{park2003super}
+Esse tipo de abordagem tinha a vantagem da simplicidade em sua teoria.
 No entanto, as técnicas de super-resolução no domínio da frequência tinham limitações com respeito ao tipo de degradação sofrida pela imagem além da dificuldade de aplicar o conhecimento a priori da imagem de alta resolução no domínio espacial para regularização.
-Por estes e outros motivos que a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial.
+Por estes e outros motivos que a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial \cite{park2003super}.
+
+Os trabalhos de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative} foram os primeiros a introduzir técnicas de super-resolução no domínio da frequência.
+Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
+
+% ISSUE: Completar seção domínio da frequência.
+
+
+\section{Domínio Espacial}
+A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial. \cite{nasrollahi2014super}
 
 
 \chapter{Super Resolução Bayesiana}
