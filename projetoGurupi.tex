@@ -305,6 +305,8 @@ Vale esclarecer que, neste trabalho, a palavra \textit{resolução} se refere à
 
 Este capítulo fará uma breve síntese do histórico das técnicas de super-resolução e seus principais exemplares.
 
+% ISSUE: Talvez seja necessário mover a seção do modelo de observação para cá.
+
 \section{Domínio da Frequência}
 
 Os primeiros algorítimos de super-resolução desenvolvidos faziam o processamento das imagens no domínio da frequência.
@@ -321,6 +323,21 @@ Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolv
 \section{Domínio Espacial}
 A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
 Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
+
+\subsection{Iterative Back Projections}
+O método \textit{Iterative Back Projection} ou retroprojeção iterativa (tradução do autor) foi proposto pela primeira vez em \cite{irani1991improv}.
+Trata-se de um método iterativo que visa minimizar o erro a cada execução.
+
+% ISSUE: Inserir IBP na lista de siglas.
+
+A cada interação do método IBP, uma imagem de alta resolução é estimada.
+Então é usado o modelo de observação para gerar um conjunto simulado de imagens de baixa resolução.
+Esse conjunto de imagens simuladas é comparado às imagens de baixa resolução obtidas através do sistema de aquisição.
+A comparação se dá através do cálculo da diferença (erro) entre os dois conjuntos de imagem.
+O método iterativo busca minimizar esse erro afim de recuperar a imagem de alta resolução \cite{park2003super,reis2014metodo}
+
+\subsection{Métodos de Aprendizado}
+\subsection{Métodos Probabilísticos}
 
 
 \chapter{Super Resolução Bayesiana}
