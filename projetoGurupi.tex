@@ -8,6 +8,7 @@
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{float}
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{amsmath}
 
@@ -510,10 +511,7 @@ Além disso eliminou os exponenciais e os produtos, facilitando o cálculo do gr
 	L''(\mathbf{x}) =  -\sum^K_{k=1} (\mathbf{W}^{(k)})^T\mathbf{W}^{(k)} - \frac{1}{2}(\mathbf{Z}^{-1}_x - (\mathbf{Z}^{-1}_x)^T)^T
 \end{gather}
 
-\chapter{Resultados}
-\section{Geração do conjunto de imagens de teste}
-As imagens usadas para testar o método de restauração descrito neste trabalho foram geradas artificialmente a partir de uma única imagem usando o modelo de observação descrito na seção \ref{sec:obsmodel}.
-
+\input{./tex/resultados.tex}
 
 \chapter{Conclusão}
 
