@@ -1,0 +1,41 @@
+\section{Apreciação dos Métodos de Super-resolução} 
+\subsection{Domínio da Frequência}
+
+Os primeiros algorítimos de super-resolução desenvolvidos faziam o processamento das imagens no domínio da frequência.
+Esse tipo de abordagem tinha a vantagem da simplicidade em sua teoria.
+No entanto, as técnicas de super-resolução no domínio da frequência tinham limitações com respeito ao tipo de degradação sofrida pela imagem além da dificuldade de aplicar o conhecimento a priori da imagem de alta resolução no domínio espacial para regularização.
+Por estes e outros motivos que a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial \cite{park2003super}.
+
+Os trabalhos de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative} foram os primeiros a introduzir técnicas de super-resolução no domínio da frequência.
+Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
+
+% ISSUE: Completar seção domínio da frequência.
+
+
+\subsection{Domínio Espacial}
+A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
+Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
+
+\subsubsection{Iterative Back Projections}
+% ISSUE: Tentar mudar a formatação de subsubsection
+
+O método \emph{Iterative Back Projection} ou retroprojeção iterativa (tradução do autor) foi proposto pela primeira vez em \cite{irani1991improv}.
+Trata-se de um método iterativo que visa minimizar o erro a cada execução.
+
+% ISSUE: Inserir IBP na lista de siglas.
+
+A cada interação do método IBP, uma imagem de alta resolução é estimada.
+Então é usado o modelo de observação para gerar um conjunto simulado de imagens de baixa resolução.
+Esse conjunto de imagens simuladas é comparado às imagens de baixa resolução obtidas através do sistema de aquisição.
+A comparação se dá através do cálculo da diferença (erro) entre os dois conjuntos de imagem.
+O método iterativo busca minimizar esse erro afim de recuperar a imagem de alta resolução \cite{park2003super,reis2014metodo}.
+
+% SUGGESTION: Inserir figura do esquema de IBP.
+% SUGGESTION: Inserir equaçõ do algoritmo de IBP.
+
+\subsubsection{Métodos de Aprendizado}
+
+\subsubsection{Métodos Probabilísticos}
+
+
+

@@ -1,0 +1,50 @@
+% ----------------------------------------------------------
+% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+% ----------------------------------------------------------
+\chapter[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+% ----------------------------------------------------------
+%ISSUE: introdução
+
+% CONTEXTUALIZAÇÃO: ONDE MEU PROBLEMA APARECE?
+A disponibilidade de imagens de alta resolução é uma vantagem para a execução de qualquer trabalho que envolva a captação e interpretação de informações através de imagens digitais.
+Como exemplo disso podemos citar as imagens médicas, nas quais quanto melhor a qualidade da imagem, mais fácil é diferenciar as estruturas retratadas afim de diagnosticar doenças.
+Também há o caso dos sistemas de vigilância, onde quanto melhor a resolução espacial da imagem, mais viável se torna a identificação de veículos e criminosos.
+
+% DELIMITAÇÃO: QUE PROBLEMA ESTOU RESOLVENDO?
+Hoje em dia, com as frequentes ameaças à segurança das pessoas em diversos lugares do mundo, os cidadãos sentem a necessidade de investir na própria segurança privada para proteger a si mesmos e seus patrimônios.
+Por causa dessa necessidade, houve uma popularização de sistemas de vigilância monitoramento.
+As câmeras de segurança já são tão onipresentes em grandes cidades que é praticamente impossível que um cidadão comum saia à rua e não tenha a sua imagem gravada por pelo menos uma delas.
+
+No entanto, apesar da presença geral dos sistemas de vigilância, a maioria dos equipamentos utilizados é de baixa qualidade, o que se reflete nas imagens captadas por eles.
+A consequência disso é que muitas vezes as câmeras de monitoramento registram cenas de crimes,
+mas as imagens deterioradas nem sempre ajudam a trazer à luz informações importantes, como o rosto de um criminoso ou a placa de um carro, por exemplo.
+
+Não obstante, mesmo com necessidade evidente de se melhorar a qualidade das imagens geradas por sistemas de vigilância,
+também há o dilema constante entre aumentar a qualidade das imagens registradas e o custo de implementar manter o sistema de monitoramento funcionando.
+Quanto melhor a qualidade da imagem, maior é o custo do equipamento e mais capacidade de armazenamento será necessária para guardar uma quantidade útil de todas as imagens gravadas.
+
+
+% SOLUÇÕES: O QUE JÁ EXISTE QUE RESOLVE ESTE PROBLEMA?
+Face ao dilema das imagens geradas por sistemas de vigilância,
+a melhor solução a curto prazo seria aprimorar as imagens que estão sendo geradas pelas câmeras de vigilância que já temos hoje.
+Esse aprimoramento seria feito através de restauração de imagens digitais.
+
+A demanda pelo desenvolvimento de técnicas de restauração de imagens ganhou força no fim da década de 1950, quando a sua principal aplicação era na área de imagens astronômicas.
+Naquele contexto, era necessário restaurar as primeiras imagens recebidas de sondas e satélites artificiais que sofriam degradações próprias do ambiente onde esses objetos trabalhavam.
+
+Após tantos anos, a restauração de imagens digitais continua tendo sua importância na astronomia, mas também é uma ferramenta para outras áreas como medicina, mídia e ciências forenses \cite{banham1997digital}.
+
+% SOLUÇÃO ESCOLHIDA: O QUE ELA É E COMO FUNCIONA?
+Este trabalho descreve a implementação e teste de um método de restauração de imagens de placas de veículos usando super-resolução bayesiana.
+O método utilizado foi apresentado por Michael Tipping em \cite{tipping2003bayesian}.
+Em resumo, o algorítimo apresentado define um modelo de observação no qual as degradações sofridas pela imagem durante o processo de aquisição são parametrizadas.
+Então são usadas inferências bayesianas para estimar os parâmetros de degradação a partir das imagens de baixa resolução, para então estimar a imagem de alta resolução a partir destes parâmetros.
+
+% VANTAGENS: POR QUE ESTA SOLUÇÃO E NÃO AS OUTRAS?
+Esta solução foi escolhida devido à adequação do algorítimo à aplicação desejada, que é a restauração de uma imagem de placa de veículo a partir de várias imagens degradadas, como os quadros de um vídeo de câmera de vigilância.
+Também vale destacar a relativa simplicidade de implementação do método escolhido, o qual também possibilita ajustes afim de reduzir seu custo computacional.
+
+% ESTRUTURA: O QUE TEM NOS CAPÍTULOS SEGUINTES?
+
+
