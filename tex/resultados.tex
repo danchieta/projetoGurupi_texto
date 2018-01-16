@@ -1,5 +1,17 @@
 \chapter{Resultados}
+\label{chap:resultados}
+\section{Introdução}
+Para avaliar a eficácia do método de super-resolução bayesiana, 
+foi elaborado um teste que simula um sistema de aquisição de imagem,
+gerando as imagens de baixa resolução a serem restauradas.
+Na sequência, as imagens de baixa resolução foram submetidas ao método de super-resolução como descrito capítulo \ref{chap:srbayes}.
+
+Este capítulo descreve o processo de implementação e teste do método de super-resolução bayesiana.
+A seção \ref{sec:gerimagens} apresenta o processo que gerou as imagens de teste simulando as transformações aplicadas pelo sistema de aquisição.
+A seção \ref{sec:parestimation} relata como se deu o processo de restauração da imagem de alta resolução a partir do conjunto de imagens de baixa resolução.
+
 \section{Geração do conjunto de imagens de teste}
+\label{sec:gerimagens}
 As imagens usadas para testar o método de restauração descrito neste trabalho foram geradas artificialmente a partir de uma única imagem usando o modelo de observação descrito na seção \ref{sec:obsmodel}.
 Para os testes reportados aqui foi usada a imagem da Figura \ref{fig:hrimage}.
 Usando o modelo de observação, foram geradas 20 imagens de baixa resolução como as da Figura \ref{fig:frames}.
@@ -58,9 +70,27 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 		Dimensões das imagens de baixa resolução & $35 \times 26$ \\
 
 	\end{tabular}
-
 \end{table}
 
-\section{Estimação dos parâmetros de degradação}
-A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o seu processo de captura. 
+O processo de geração das imagens de baixa resolução foi todo desenvolvido usando a linguagem Python,
+beneficiando-se dos módulos Numpy e Pillow.
+Os parâmetros de degradação bem como as dimensões da imagem original foram salvas em arquivos de valores separados por vírgula (csv) junto com as imagens geradas.
+Isso foi necessário para que fosse possível validar os resultados das etapas de restauração.
 
+\section{Estimação dos parâmetros de degradação}
+\label{sec:parestimation}
+A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura.Como já elucidado no capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
+Teoricamente, os valores verdadeiros de $\mathbf{s}_k$, $\theta_k$ e $\gamma$ são os que maximizam a função de verosimilhança em \ref{eq:parameter}.
+
+O artigo no qual este trabalho se baseia relata que o método de otimização usado para estimar tanto os parâmetros de degradação quanto a imagem foi o de gradientes conjugados \cite{tipping2003bayesian}.
+Este algorítimo de otimização também é usado neste trabalho, porém com algumas diferenças na implementação.
+
+Como a função em \ref{eq:parameter} não é uma função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $.
+Por isso, a função de verossimilhança foi empacotada de forma que receba todos os parâmetros de entrada na forma de um vetor e retorne somente um escalar na saída.
+
+Ambos os procedimentos de geração das imagens de teste e otimização foram desenvolvidos na linguagem Python, usando seus módulos Numpy, Scipy e Pillow.
+
+Em vez de otimizar todos os parâmetros ao mesmo tempo,
+constatou-se que a otimização converge mais rápido se os valores 
+
+\section{Estimação da imagem de alta resolução}
