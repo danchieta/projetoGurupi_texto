@@ -89,7 +89,7 @@ Como o método de super-resolução deste trabalho foi todo escrito em Python,
 não foi possível utilizar o mesmo método de implementação utilizado no artigo.
 Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{Scipy}.
 
-% SUGGESTION: Falar mais sobre o algorítimo de otimização Método de Newton Truncado.
+% SUGGESTION: Falar mais sobre o algorítimo de otimização Método de Newton Truncado. Talvez em um apêndice.
 % NOTE: Talvez esta seção mude se for feita otimização de gamma.
 
 O processo de otimização dos parâmetros se deu da seguinte forma:
@@ -102,13 +102,11 @@ solução correta quando esses valores são estimados isoladamente.
 A estimação dos ângulos também funciona melhor quando os valores de deslocamento já estão
 otimizados.
 
-
-
 Como a função em \ref{eq:parameter} não é uma função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $.
-Por isso, a função de verossimilhança foi empacotada de forma que receba todos os parâmetros de entrada na forma de um vetor e retorne somente um escalar na saída.
+Por isso foi necessário empacotar a função de forma que ela receba os parâmetros de
+entrada reorganizados na forma de um vetor e retorne somente um escalar na saída.
 
-Em vez de otimizar todos os parâmetros ao mesmo tempo,
-constatou-se que a otimização converge mais rápido se os valores 
+% ISSUE: Figuras da etapa de otimização dos parâmetros
 
 \section{Estimação da imagem de alta resolução}
 % ISSUE: Seção de estimação da imagem
