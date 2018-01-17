@@ -82,15 +82,33 @@ Isso foi necessário para que fosse possível validar os resultados das etapas d
 A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura.Como já elucidado no capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
 Teoricamente, os valores verdadeiros de $\mathbf{s}_k$, $\theta_k$ e $\gamma$ são os que maximizam a função de verosimilhança em \ref{eq:parameter}.
 
-O artigo no qual este trabalho se baseia relata que o método de otimização usado para estimar tanto os parâmetros de degradação quanto a imagem foi o de gradientes conjugados \cite{tipping2003bayesian}.
-Este algorítimo de otimização também é usado neste trabalho, porém com algumas diferenças na implementação.
+O artigo no qual este trabalho se baseia relata que o método de otimização usado
+para estimar tanto os parâmetros de degradação quanto a imagem foi o de gradientes
+conjugados \cite{tipping2003bayesian}.
+Como o método de super-resolução deste trabalho foi todo escrito em Python,
+não foi possível utilizar o mesmo método de implementação utilizado no artigo.
+Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{Scipy}.
+
+% SUGGESTION: Falar mais sobre o algorítimo de otimização Método de Newton Truncado.
+% NOTE: Talvez esta seção mude se for feita otimização de gamma.
+
+O processo de otimização dos parâmetros se deu da seguinte forma:
+Os parâmetros iniciais foram definidos como zero.
+Primeiramente, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação ficam fixos.
+Só após isso que é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
+Essa abordagem é usada no artigo original e os testes realizados para este trabalho
+constataram que a otimização dos parâmetros de deslocamento se aproxima mais rápido da
+solução correta quando esses valores são estimados isoladamente.
+A estimação dos ângulos também funciona melhor quando os valores de deslocamento já estão
+otimizados.
+
+
 
 Como a função em \ref{eq:parameter} não é uma função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $.
 Por isso, a função de verossimilhança foi empacotada de forma que receba todos os parâmetros de entrada na forma de um vetor e retorne somente um escalar na saída.
-
-Ambos os procedimentos de geração das imagens de teste e otimização foram desenvolvidos na linguagem Python, usando seus módulos Numpy, Scipy e Pillow.
 
 Em vez de otimizar todos os parâmetros ao mesmo tempo,
 constatou-se que a otimização converge mais rápido se os valores 
 
 \section{Estimação da imagem de alta resolução}
+% ISSUE: Seção de estimação da imagem
