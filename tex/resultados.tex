@@ -96,17 +96,54 @@ O processo de otimização dos parâmetros se deu da seguinte forma:
 Os parâmetros iniciais foram definidos como zero.
 Primeiramente, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação ficam fixos.
 Só após isso que é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
+Em uma terceira etapa, a largura da função de espalhamento de ponto ($gamma$) é otimizada
+concomitantemente com os demais parâmetros.
 Essa abordagem é usada no artigo original e os testes realizados para este trabalho
 constataram que a otimização dos parâmetros de deslocamento se aproxima mais rápido da
 solução correta quando esses valores são estimados isoladamente.
 A estimação dos ângulos também funciona melhor quando os valores de deslocamento já estão
 otimizados.
 
-Como a função em \ref{eq:parameter} não é uma função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $.
-Por isso foi necessário empacotar a função de forma que ela receba os parâmetros de
-entrada reorganizados na forma de um vetor e retorne somente um escalar na saída.
+A figura \ref{fig:progression} mostra como o algorítimo de otimização progrediu ao longo das iterações.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{./figures/results_figures/comparisson_plot.png}
+	% ISSUE: Esta figura é provisória
+	\caption{Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
+	\label{fig:comparisson}
+\end{figure}
+
+Um fato que merece destaque é o de que, como a função em \ref{eq:parameter} não é uma
+função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $, não foi 
+possível passá-la diretamente ao método de otimização.
+Por isso foi necessário empacotar a função de forma que ela recebesse os parâmetros de
+entrada ($\mathbf{s}_k$, $\theta_k$ e $\gamma$) reorganizados na forma de um único
+vetor e retornasse somente um escalar na saída.
+Isso também implicou na exigência de calcular numericamente o gradiente da função,
+necessário na execução do método de otimização.
+
+% SUGGESTION: Escrever pseudocódigo do empacotamento da função de verossimilhança dos parâmetros.
 
 % ISSUE: Figuras da etapa de otimização dos parâmetros
 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{./figures/results_figures/progression_plot.png}
+	% ISSUE: Esta figura é provisória
+	\caption{Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+	\label{fig:progression}
+\end{figure}
+
+% ISSUE: Verificar os valores de número de interações, número máximo de avaliações da função 
+Os resultados foram obtidos após 90 iterações, considerando a soma de todas as etapas.
+A implementação do Método de Newton Truncado da biblioteca \emph{Scipy} permite
+que seja definido um número máximo de avaliações da função a ser maximizada.
+
+Para limitar o tempo de execução da etapa de otimização, foram definidos limites de 150 iterações para cada umas das etapas do processo de otimização.
+Isso foi feito porque, apesar de 
+
 \section{Estimação da imagem de alta resolução}
 % ISSUE: Seção de estimação da imagem
+
