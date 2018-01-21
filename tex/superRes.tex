@@ -4,22 +4,38 @@ Entende-se por Super-resolução o processo de obtenção de uma ou mais imagens
 Técnicas de super-resolução são pesquisadas desde os anos 1970 e têm despertado um grande interesse de estudo nas últimas décadas.
 As aplicações de técnicas de SR são diversas e incluem aprimoramentos de imagens médicas, de imagens de rosto, de texto e impressões digitais \cite{nasrollahi2014super}.
 
-Vale esclarecer que, neste trabalho, a palavra \textit{resolução} se refere à resolução espacial de uma imagem, a qual mede a densidade de pontos por unidade de área em uma imagem \cite{zibetti2007super}.
+Vale esclarecer que, neste trabalho, sempre que a palavra \textit{resolução} é usada,
+ela se refere à resolução espacial de uma imagem, a qual mede a densidade de pontos por
+unidade de área em uma imagem \cite{zibetti2007super}.
 
-Este capítulo fará uma breve síntese do histórico das técnicas de super-resolução e seus principais exemplares.
+Este capítulo fará uma breve síntese do histórico das técnicas de super-resolução e seus
+principais exemplares.
+A seção \ref{sec:obsmodel} descreve o modelo de observação usado pelos principais
+trabalhos no tema. A seção \ref{sec:srmetodos} cita e descreve resumidamente as
+principais técnicas e grupos de métodos de restauração de imagens via super-resolução. 
 
-\section{Modelo de Observação}
-\label{sec:obsmodel}
+\section{\label{sec:obsmodel}Modelo de Observação}
 
-Definir um modelo de observação que relacione a imagem de alta resolução às imagens de baixa resolução observadas é fundamental para o desenvolvimento de qualquer técnica de super-resolução.
 
-O modelo de observação deste trabalho simula cinco tipos de alteração aplicadas por sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de ponto, subamostragem e ruído.
-Este modelo de observação é descrito tanto em \cite{tipping2003bayesian} quanto em outros trabalhos relacionados \cite{pickup2007bayesian, Capel01a}.
+Definir um modelo de observação que relacione a imagem de alta resolução às imagens
+de baixa resolução observadas é fundamental para o desenvolvimento de qualquer técnica
+de super-resolução. Um modelo de observação permite parametrizar e quantificar as
+transformações às quais a imagem é submetida durante o processo de aquisição e é
+através dele que os principais metodos de super-resolução inferem as características
+da imagem de alta resolução.
 
-As alterações de deslocamento linear e rotação tentam simular um possível movimento aleatório da câmera em relação ao objeto.
-A transformação de espalhamento de ponto simula um efeito de desfoque causado por um possível desajuste nos aspectos ópticos da câmera.
-A subamostragem representa a perda de resolução espacial aplicada à imagem captada por um sensor CMOS ou CCD, por exemplo.
-que seria menor do que a necessária para registrar os dados da imagem acima da taxa de Nyquist.
+O modelo de observação deste trabalho simula cinco tipos de alteração aplicadas por
+sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de
+ponto, subamostragem e ruído.
+Este modelo de observação é descrito tanto no artigo de Tipping
+\cite{tipping2003bayesian} quanto em outros trabalhos relacionados \cite{pickup2007bayesian, Capel01a}.
+
+As alterações de deslocamento linear e rotação tentam simular um possível movimento
+aleatório da câmera em relação ao objeto ou vice-versa.
+A transformação de espalhamento de ponto simula um efeito de desfoque causado por um
+desajuste na definição de foco da câmera.
+A subamostragem representa a perda de resolução espacial aplicada à imagem captada
+por um sensor CMOS ou CCD de densidade menor do que a necessária para registrar os dados da imagem acima da taxa de Nyquist.
 
 Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor coluna $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
 

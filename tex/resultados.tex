@@ -19,14 +19,14 @@ Para diminuir o custo computacional do processo, a imagem foi convertida para es
 
 \begin{figure}[h]
 	\centering
+	\caption{\label{fig:hrimage}Imagem de alta resolução utilizada nos testes.}
 	\includegraphics{figures/imtestes.png}
-	\caption{Imagem de alta resolução utilizada nos testes.}
-	\label{fig:hrimage}
+	\legend{Fonte: O autor.}
 
 \end{figure}
 
 Para os testes feitos neste trabalho, a imagem de alta resolução foi reamostrada de forma que as dimensões das imagens de baixa resolução são iguais a $0.25$ vezes as dimensões da imagem HR.  
-Dessa forma, há 16 pontos na imagem de alta resolução para cada ponto na imagem de baix resolução.
+Dessa forma, há 16 pontos na imagem de alta resolução para cada ponto na imagem de baixa resolução.
 A largura da função de espalhamento de ponto ($\gamma$) escolhida foi 2.
 Para cada imagem, o ângulo de rotação foi escolhido aleatoriamente de uma distribuição uniforme entre $-4$ e $4$ graus.
 A mesma seleção aleatória foi feita para o deslocamento linear da imagem; a quantidade de pontos de deslocamento foi retirada de uma distribuição uniforme e contínua entre $-2$ e $2$ em cada um dos eixos.
@@ -34,6 +34,8 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 
 \begin{figure}[H]
 	\centering
+	\caption{\label{fig:frames}
+	Conjunto das imagens geradas a partir da imagem de alta resolução. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.}
 	\includegraphics{figures/degradedImg/result-0.png}
 	\includegraphics{figures/degradedImg/result-1.png}
 	\includegraphics{figures/degradedImg/result-2.png}
@@ -43,7 +45,8 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 	\includegraphics{figures/degradedImg/result-6.png}
 	\includegraphics{figures/degradedImg/result-7.png}
 	\includegraphics{figures/degradedImg/result-8.png}
-	\includegraphics{figures/degradedImg/result-9.png} \\
+	\includegraphics{figures/degradedImg/result-9.png} 
+
 	\includegraphics{figures/degradedImg/result-10.png}
 	\includegraphics{figures/degradedImg/result-11.png}
 	\includegraphics{figures/degradedImg/result-12.png}
@@ -54,8 +57,36 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 	\includegraphics{figures/degradedImg/result-17.png}
 	\includegraphics{figures/degradedImg/result-18.png}
 	\includegraphics{figures/degradedImg/result-19.png}
-	\caption{Conjunto das imagens geradas a partir da imagem de alta resolução. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.}
-	\label{fig:frames}
+	\legend{Fonte: O autor.}
+	
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\caption{\label{fig:frames}
+	Conjunto das imagens geradas a partir da imagem de alta resolução. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.}
+	\includegraphics{figures/degradedImg2/result-0.png}
+	\includegraphics{figures/degradedImg2/result-1.png}
+	\includegraphics{figures/degradedImg2/result-2.png}
+	\includegraphics{figures/degradedImg2/result-3.png}
+	\includegraphics{figures/degradedImg2/result-4.png}
+	\includegraphics{figures/degradedImg2/result-5.png}
+	\includegraphics{figures/degradedImg2/result-6.png}
+	\includegraphics{figures/degradedImg2/result-7.png}
+	\includegraphics{figures/degradedImg2/result-8.png}
+	\includegraphics{figures/degradedImg2/result-9.png} 
+
+	\includegraphics{figures/degradedImg2/result-10.png}
+	\includegraphics{figures/degradedImg2/result-11.png}
+	\includegraphics{figures/degradedImg2/result-12.png}
+	\includegraphics{figures/degradedImg2/result-13.png}
+	\includegraphics{figures/degradedImg2/result-14.png}
+	\includegraphics{figures/degradedImg2/result-15.png}
+	\includegraphics{figures/degradedImg2/result-16.png}
+	\includegraphics{figures/degradedImg2/result-17.png}
+	\includegraphics{figures/degradedImg2/result-18.png}
+	\includegraphics{figures/degradedImg2/result-19.png}
+	\legend{Fonte: O autor.}
+	
 \end{figure}
 
 \begin{table}[h]
@@ -70,20 +101,22 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 		Dimensões das imagens de baixa resolução & $35 \times 26$ \\
 
 	\end{tabular}
+	\legend{Fonte: O autor.}
 \end{table}
 
 O processo de geração das imagens de baixa resolução foi todo desenvolvido usando a linguagem Python,
 beneficiando-se dos módulos Numpy e Pillow.
 Os parâmetros de degradação bem como as dimensões da imagem original foram salvas em arquivos de valores separados por vírgula (csv) junto com as imagens geradas.
-Isso foi necessário para que fosse possível validar os resultados das etapas de restauração.
+Esses valores foram usados para avaliar quantitativamente a efetividade do algorítimo de
+otimização em inferir os valores corretos dos parâmetros.
 
 \section{Estimação dos parâmetros de degradação}
 \label{sec:parestimation}
-A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura.Como já elucidado no capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
+A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura. Como já elucidado no capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
 Teoricamente, os valores verdadeiros de $\mathbf{s}_k$, $\theta_k$ e $\gamma$ são os que maximizam a função de verosimilhança em \ref{eq:parameter}.
 
 O artigo no qual este trabalho se baseia relata que o método de otimização usado
-para estimar tanto os parâmetros de degradação quanto a imagem foi o de gradientes
+para estimar tanto os parâmetros de degradação quanto da imagem foi o de gradientes
 conjugados \cite{tipping2003bayesian}.
 Como o método de super-resolução deste trabalho foi todo escrito em Python,
 não foi possível utilizar o mesmo método de implementação utilizado no artigo.
@@ -94,9 +127,9 @@ Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{
 
 O processo de otimização dos parâmetros se deu da seguinte forma:
 Os parâmetros iniciais foram definidos como zero.
-Primeiramente, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação ficam fixos.
-Só após isso que é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
-Em uma terceira etapa, a largura da função de espalhamento de ponto ($gamma$) é otimizada
+Primeiramente, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação permanecem fixos.
+Após isso, é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
+Em uma terceira etapa, a largura da função de espalhamento de ponto ($\gamma$) é otimizada
 concomitantemente com os demais parâmetros.
 Essa abordagem é usada no artigo original e os testes realizados para este trabalho
 constataram que a otimização dos parâmetros de deslocamento se aproxima mais rápido da
@@ -104,15 +137,6 @@ solução correta quando esses valores são estimados isoladamente.
 A estimação dos ângulos também funciona melhor quando os valores de deslocamento já estão
 otimizados.
 
-A figura \ref{fig:progression} mostra como o algorítimo de otimização progrediu ao longo das iterações.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.7\textwidth]{./figures/results_figures/comparisson_plot.png}
-	% ISSUE: Esta figura é provisória
-	\caption{Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
-	\label{fig:comparisson}
-\end{figure}
 
 Um fato que merece destaque é o de que, como a função em \ref{eq:parameter} não é uma
 função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $, não foi 
@@ -123,27 +147,79 @@ vetor e retornasse somente um escalar na saída.
 Isso também implicou na exigência de calcular numericamente o gradiente da função,
 necessário na execução do método de otimização.
 
-% SUGGESTION: Escrever pseudocódigo do empacotamento da função de verossimilhança dos parâmetros.
+A função de otimização com algorítimo de Newton truncado presente na biblioteca
+\emph{Scipy} permite que sejam definidos limites para restringir o intervalo de busca
+no espaço vetorial onde a estimação é feita.
+Isso é especialmente útil, pois permite usarmos um conhecimento a priori acerca dos
+parâmetros para impedir que a otimização retorne resultados inviáveis que por ventura
+tenham um alto valor de verossimilhança.
+Os limites definidos para os parâmetros foram de -4 a 4 no caso dos ângulos de rotação,
+-2 a 2 para ambas as direções dos deslocamentos e 1 a 7 para a largura da função de
+espalhamento de ponto.
 
-% ISSUE: Figuras da etapa de otimização dos parâmetros
+Para reduzir o tempo gasto na execução da otimização dos parâmetros, o número máximo de avaliações da função de verossimilhança por etapa foi restringido.
+Na primeira etapa, o número máximo de avaliações da função de verossimilhança foi de 70.
+Em ambas as etapa subsequentes este limite foi de 50 avaliações.
+Esses limites não interferem na qualidade do resultado pois, mesmo que eles sejam bem maiores, o valor das avaliações da função estabiliza após poucas iterações.
+Isso será demonstrado mais adiante.
 
+\subsection{Resultados com a primeira imagem de teste}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./figures/results_figures/progression_plot.png}
-	% ISSUE: Esta figura é provisória
-	\caption{Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
-	\label{fig:progression}
+	\caption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+	\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot.pdf}
+	\legend{Fonte: O autor.}
 \end{figure}
 
-% ISSUE: Verificar os valores de número de interações, número máximo de avaliações da função 
-Os resultados foram obtidos após 90 iterações, considerando a soma de todas as etapas.
-A implementação do Método de Newton Truncado da biblioteca \emph{Scipy} permite
-que seja definido um número máximo de avaliações da função a ser maximizada.
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
+	\includegraphics[width=0.65\textwidth]{./figures/results_figures/comparisson_plot.pdf}
+	\legend{Fonte: O autor}
+	
+\end{figure}
+% SUGGESTION: Escrever pseudocódigo do empacotamento da função de verossimilhança dos parâmetros.
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig:sr_comparisson} Da esquerda para a direita: Uma das vinte imagens de baixa resolução;
+	Uma das imagens de baixa resolução ampliada com interpolação bicúbica;
+	Imagem restaurada pelo algorítimo de super-resolução.}
+	\includegraphics[width=0.25\textwidth]{./figures/results_figures/resized_nearest.png}
+	\includegraphics[width=0.25\textwidth]{./figures/results_figures/bicubic_equalized.png}
+	\includegraphics[width=0.25\textwidth]{./figures/results_figures/restored_image_sr.png}
+	\legend{Fonte: O autor.}
+\end{figure}
 
-Para limitar o tempo de execução da etapa de otimização, foram definidos limites de 150 iterações para cada umas das etapas do processo de otimização.
-Isso foi feito porque, apesar de 
+\subsection{Resultados com a segunda imagem de teste}
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+	\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot2.pdf}
+	\legend{Fonte: O autor.}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
+	\includegraphics[width=0.65\textwidth]{./figures/results_figures/comparisson_plot2.pdf}
+	\legend{Fonte: O autor}
+	
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig:sr_comparisson} Da esquerda para a direita: Uma das vinte imagens de baixa resolução;
+	Uma das imagens de baixa resolução ampliada com interpolação bicúbica;
+	Imagem restaurada pelo algorítimo de super-resolução.}
+	\includegraphics[width=0.25\textwidth]{./figures/results_figures/resized_nearest2.png}
+	\includegraphics[width=0.25\textwidth]{./figures/results_figures/resized_bicubic2.png}
+	\includegraphics[width=0.25\textwidth]{./figures/results_figures/restored_image_sr2.png}
+	\legend{Fonte: O autor.}
+\end{figure}
 
 \section{Estimação da imagem de alta resolução}
 % ISSUE: Seção de estimação da imagem
+
+
 

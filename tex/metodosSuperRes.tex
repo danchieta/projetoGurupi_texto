@@ -1,6 +1,5 @@
-\section{Apreciação dos Métodos de Super-resolução} 
-\subsection{Domínio da Frequência}
-
+\section{\label{sec:srmetodos}Apreciação dos Métodos de Super-resolução} 
+\subsection{Métodos no domínio da frequência.}
 Os primeiros algorítimos de super-resolução desenvolvidos faziam o processamento das imagens no domínio da frequência.
 Esse tipo de abordagem tinha a vantagem da simplicidade em sua teoria.
 No entanto, as técnicas de super-resolução no domínio da frequência tinham limitações com respeito ao tipo de degradação sofrida pela imagem além da dificuldade de aplicar o conhecimento a priori da imagem de alta resolução no domínio espacial para regularização.
@@ -12,14 +11,13 @@ Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolv
 % ISSUE: Completar seção domínio da frequência.
 
 
-\subsection{Domínio Espacial}
 A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
 Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
 
-\subsubsection{Iterative Back Projections}
+\subsection{Iterative Back Projections}
 % ISSUE: Tentar mudar a formatação de subsubsection
 
-O método \emph{Iterative Back Projection} ou retroprojeção iterativa (tradução do autor) foi proposto pela primeira vez em \cite{irani1991improv}.
+O método \emph{Iterative Back Projection} ou retroprojeção iterativa (tradução do autor) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
 Trata-se de um método iterativo que visa minimizar o erro a cada execução.
 
 % ISSUE: Inserir IBP na lista de siglas.
@@ -33,12 +31,12 @@ O método iterativo busca minimizar esse erro afim de recuperar a imagem de alta
 % SUGGESTION: Inserir figura do esquema de IBP.
 % SUGGESTION: Inserir equaçõ do algoritmo de IBP.
 
-\subsubsection{Métodos de Aprendizado}
+\subsection{Métodos de Aprendizado}
 Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
 Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
 Esse conhecimento forma a componente a priori na reconstrução das imagens.
 
-\subsubsection{Métodos Probabilísticos}
+\subsection{Métodos Probabilísticos}
 Os métodos probabilísticos se concentram em duas abordagens principais, a saber: máxima verossimilhança e máximo a posteriori \cite{nasrollahi2014super}.
 Em resumo, os métodos de máxima verossimilhança estabelecem uma função de verossimilhança das imagens observadas baseada nos modelos de observação e no ruído
 
