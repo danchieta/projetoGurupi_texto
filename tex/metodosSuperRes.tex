@@ -1,4 +1,8 @@
 \section{\label{sec:srmetodos}Apreciação dos Métodos de Super-resolução} 
+Esta seção descreve resumidamente alguns dos métodos de super-resolução mais importantes 
+
+A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
+Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
 \subsection{Métodos no domínio da frequência.}
 Os primeiros algorítimos de super-resolução desenvolvidos faziam o processamento das imagens no domínio da frequência.
 Esse tipo de abordagem tinha a vantagem da simplicidade em sua teoria.
@@ -8,11 +12,23 @@ Por estes e outros motivos que a maioria dos algorítimos de super-resolução d
 Os trabalhos de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative} foram os primeiros a introduzir técnicas de super-resolução no domínio da frequência.
 Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
 
+\begin{equation}
+	F_{g_k} (m,n) = \exp{[i2\pi (\Delta_{m_k}m + \Delta_{n_k}n)]} F_f (m,n)
+\end{equation}
+
+\begin{equation}
+	G_k(m.n) = \frac{1}{T_m T_n} \sum^\infty_{p_1=-\inf} \sum^\infty_{p_2=-\inf}
+	F_{g_k} \left( \frac{m}{MT_m} + p_1 \frac{1}{T_m},
+	\frac{n}{NT_n} + p_2\frac{1}{T_n} \right)
+\end{equation}
+\begin{equation}
+	\mathbf{G} = \mathbf{\Phi F_f}
+\end{equation}
+
 % ISSUE: Completar seção domínio da frequência.
 
 
-A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
-Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
+
 
 \subsection{Iterative Back Projections}
 % ISSUE: Tentar mudar a formatação de subsubsection

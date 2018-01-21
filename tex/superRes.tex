@@ -21,21 +21,30 @@ Definir um modelo de observação que relacione a imagem de alta resolução às
 de baixa resolução observadas é fundamental para o desenvolvimento de qualquer técnica
 de super-resolução. Um modelo de observação permite parametrizar e quantificar as
 transformações às quais a imagem é submetida durante o processo de aquisição e é
-através dele que os principais metodos de super-resolução inferem as características
+através dele que os principais métodos de super-resolução inferem as características
 da imagem de alta resolução.
 
 O modelo de observação deste trabalho simula cinco tipos de alteração aplicadas por
 sistemas de aquisição de imagens, a saber: rotação, deslocamento, espalhamento de
 ponto, subamostragem e ruído.
 Este modelo de observação é descrito tanto no artigo de Tipping
-\cite{tipping2003bayesian} quanto em outros trabalhos relacionados \cite{pickup2007bayesian, Capel01a}.
+\cite{tipping2003bayesian} quanto em outros trabalhos relacionados
+\cite{pickup2007bayesian, Capel01a}.
 
 As alterações de deslocamento linear e rotação tentam simular um possível movimento
 aleatório da câmera em relação ao objeto ou vice-versa.
 A transformação de espalhamento de ponto simula um efeito de desfoque causado por um
 desajuste na definição de foco da câmera.
 A subamostragem representa a perda de resolução espacial aplicada à imagem captada
-por um sensor CMOS ou CCD de densidade menor do que a necessária para registrar os dados da imagem acima da taxa de Nyquist.
+por um sensor CMOS ou CCD de densidade menor do que a necessária para registrar os dados da imagem sem que ocorra \emph{aliasing}.
+A figura \ref{fig:image_transformations} ilustra o efeito destas cinco transformações em uma imagem.
+
+\begin{figure}[h]
+	\centering
+	\caption{\label{fig:image_transformations}Ilustração demonstrado as transformações sofrida por uma imagem durante o processo de aquisição.}
+	\includegraphics[width=0.95\textwidth]{./figures/image_transformations.pdf}
+	\legend{Fonte: O autor.}
+\end{figure}
 
 Pela conveniência do modelo de observação, a imagem de alta resolução de dimensões $m \times n$ é representada por um vetor coluna $\mathbf{x} = [x_1, x_2, ... , x_{N-1}, x_N]^T$ onde $N ={} m \times n$. Ou seja, os valores dos pixels da imagem são rearranjados em um vetor de comprimento $N$.
 
@@ -49,7 +58,7 @@ Sabendo disso, a relação entre uma imagem de alta resolução $\mathbf{x}$ e u
 O ruído, representado por $\mathbf{n}$ é um vetor de variáveis aleatórias Gaussianas independentes de média zero e variância $1/\beta$.
 
 A matriz de sistema $\mathbf{W}$ aplica as transformações de rotação, deslocamento, subamostragem e espalhamento de ponto ao ser multiplicada pela imagem de alta resolução $\mathbf{x}$.
-Pelas propriedades da multiplicação de matrizes, é natural que as dimensões da matriz do sistema sejam $M \times N$; onde $M$ é o número de pixels da imagem resultante.
+Pelas propriedades da multiplicação de matrizes, é natural que as dimensões da matriz de sistema sejam $M \times N$; onde $M$ é o número de pixels da imagem resultante.
 Também se espera que $N \gg M$.
 
 A matriz $\mathbf{W}$ depende de três parâmetros de transformação: a largura da função de espalhamento de ponto $\gamma$, um ângulo de rotação $\theta$ e um vetor de deslocamento linear $\mathbf{s}$.
@@ -66,25 +75,6 @@ Os vetores $\mathbf{u}^{(k)}_j$ representam o centro da função de espalhamento
 Caso não houvesse espalhamento de ponto, as coordenadas $\{\mathbf{u}_1, \mathbf{u}_2,\mathbf{u}_3,..., \mathbf{u}_M\}$ seriam os pontos de amostragem da imagem de baixa resolução na imagem de alta resolução.
 A Figura \ref{fig:transformations} mostra como se dá o processo de subamostragem e outras transformações bidimensionais.
 
-O efeito da transformação de espalhamento da função de espalhamento de ponto é o mesmo que o de realizar uma convolução da imagem com uma função Gaussiana bidimensional como a mostrada na Figura \ref{fig:psfplot}.
-O efeito da transformação é semelhante ao de um desfoque lente, como mostrado na Figura \ref{fig:psfexample}.
-
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = 0.7\textwidth]{./figures/psf1.pdf}
-	\caption{Exemplo de gráfico de uma função de espalhamento de ponto com $\gamma = 2$ centrada em $[0,0]$.}
-	\label{fig:psfplot}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width = 0.25\textwidth]{./figures/psfexample0.png}
-	\includegraphics[width = 0.25\textwidth]{./figures/psfexample1.png}
-	\caption{Exemplo de convolução de uma imagem com uma função de espalhamento de ponto com $\gamma = 10$.}
-	\label{fig:psfexample}
-\end{figure}
-
 \begin{equation}
 	\label{eq:psfcenter}
 	\mathbf{u}^{(k)}_j = \mathbf{R}^{(k)}(\mathbf{v}_j-\mathbf{\overline{v}})+\mathbf{\overline{v}}+\mathbf{s}_k
@@ -98,13 +88,32 @@ O efeito da transformação é semelhante ao de um desfoque lente, como mostrado
 	\end{pmatrix}
 \end{equation}
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
+	\caption{\label{fig:transformations}Visualização das transformações de subamostragem, deslocamento linear e rotação.}
 	\includegraphics[width=0.3\textwidth]{./figures/transform1.pdf}
 	\includegraphics[width=0.3\textwidth]{./figures/transform2.pdf}
 	\includegraphics[width=0.3\textwidth]{./figures/transform3.pdf}
-	\caption{Visualização das transformações de subamostragem, deslocamento linear e rotação.}
-	\label{fig:transformations}
+	\legend{Fonte: O autor.}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\caption{\label{fig:psfplot}Exemplo de gráfico de uma função de espalhamento de ponto com $\gamma = 2$ centrada em $[0,0]$.}
+	\includegraphics[width = 0.5\textwidth]{./figures/psf1.pdf}
+	\legend{Fonte: O autor.}
+% ISSUE: Refazer esta figura com margens menores
+\end{figure}
+
+A transformação de espalhamento de ponto ou borramento consiste em realizar uma convolução da imagem com uma função gaussiana bidimensional como a mostrada na figura \ref{fig:psfplot}.
+Visualmente, o efeito dessa convolução é equivalente ao de um desfoque de lente, como demonstrado na figura \ref{fig:psfexample}
+
+\begin{figure}[H]
+	\centering
+	\caption{\label{fig:psfexample}Exemplo de convolução de uma imagem com uma função de espalhamento de ponto.
+	Neste caso, a imagem da direita é resultado da convolução da imagem da esquerda com uma função de espalhamento de ponto gaussiana com $\gamma = 10$.}
+	\includegraphics[width = 0.25\textwidth]{./figures/psfexample0.png}
+	\includegraphics[width = 0.25\textwidth]{./figures/psfexample1.png}
+	\legend{Fonte: O autor.}
+\end{figure}
 
