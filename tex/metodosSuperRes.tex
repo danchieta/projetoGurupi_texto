@@ -31,8 +31,6 @@ Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolv
 
 
 \subsection{Iterative Back Projections}
-% ISSUE: Tentar mudar a formatação de subsubsection
-
 O método \emph{Iterative Back Projection} ou retroprojeção iterativa (tradução do autor) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
 Trata-se de um método iterativo que visa minimizar o erro a cada execução.
 
@@ -44,6 +42,15 @@ Esse conjunto de imagens simuladas é comparado às imagens de baixa resolução
 A comparação se dá através do cálculo da diferença (erro) entre os dois conjuntos de imagem.
 O método iterativo busca minimizar esse erro afim de recuperar a imagem de alta resolução \cite{park2003super,reis2014metodo}.
 
+\begin{equation}
+	\mathbf{y}^{(k)} = \mathbf{W}^{(k)} \mathbf{x}
+\end{equation}
+
+
+\begin{gather}
+	\mathbf{\epsilon}^{(k)}_j = \mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j \\
+	\mathbf{\epsilon}_j = \sum^N_{k=1}{\sqrt{\|\mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j\|^2_2}}
+\end{gather}
 % SUGGESTION: Inserir figura do esquema de IBP.
 % SUGGESTION: Inserir equaçõ do algoritmo de IBP.
 
