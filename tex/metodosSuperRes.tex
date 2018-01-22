@@ -11,17 +11,35 @@ Por estes e outros motivos que a maioria dos algorítimos de super-resolução d
 
 Os trabalhos de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative} foram os primeiros a introduzir técnicas de super-resolução no domínio da frequência.
 Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
+Este algorítimo foi desenvolvido para processar as imagens geradas pelo satélite Landsat 4.
+Este satélite gerava várias imagens semelhantes, porém deslocadas, da mesma área na
+terra.
+
+Podemos considerar que cada imagem $g_k$ gerada pelo satélite seja uma versão deslocada de uma cena contínua $f$, podemos considerar que
 
 \begin{equation}
-	F_{g_k} (m,n) = \exp{[i2\pi (\Delta_{m_k}m + \Delta_{n_k}n)]} F_f (m,n)
+	g_k(m,n) = f(m + \Delta_{m_k}, n + \Delta_{n_k}).
 \end{equation}
 
+Pela propriedade de deslocamento da transformada de Fourier, a transformada de Fourier contínua das imagens geradas pelo satélite, em relação à pode ser dada por
+
 \begin{equation}
-	G_k(m.n) = \frac{1}{T_m T_n} \sum^\infty_{p_1=-\inf} \sum^\infty_{p_2=-\inf}
+	F_{g_k} (m,n) = \exp{[i2\pi (\Delta_{m_k}m + \Delta_{n_k}n)]} F_f (m,n).
+\end{equation}
+
+Tendo isso, a transformada discreta de Fourier de $g_k$ é dada por
+
+\begin{equation}
+	G_k(m,n) = \frac{1}{T_m T_n} \sum^\infty_{p_1=-\infty} \sum^\infty_{p_2=-\infty}
 	F_{g_k} \left( \frac{m}{MT_m} + p_1 \frac{1}{T_m},
-	\frac{n}{NT_n} + p_2\frac{1}{T_n} \right)
+	\frac{n}{NT_n} + p_2\frac{1}{T_n} \right).
 \end{equation}
+
+Segundo Nasrollahi e Moeslund \cite{nasrollahi2014super} o problema de super-resolução se resolve encontrando a transformada contínua de Fourier ($\mathbf{F_f}$) que soluciona (\ref{eq:dft_tsai}).
+Isso pode ser resolvido usando o Método dos Mínimos Quadrados.
+
 \begin{equation}
+	\label{eq:dft_tsai}
 	\mathbf{G} = \mathbf{\Phi F_f}
 \end{equation}
 
