@@ -49,29 +49,38 @@ Isso pode ser resolvido usando o Método dos Mínimos Quadrados.
 
 
 \subsection{Iterative Back Projections}
-O método \emph{Iterative Back Projection} ou retroprojeção iterativa (tradução do autor) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
-Trata-se de um método iterativo que visa minimizar o erro a cada execução.
+O método \emph{Iterative Back Projection} (IBP) (tradução do autor) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
+O método IBP consistida de um método iterativo de super-resolução para restaurar uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 
 % ISSUE: Inserir IBP na lista de siglas.
+O método partia de um modelo de observação como o apresentado na seção \ref{sec:obsmodel} no qual uma imagem de baixa resolução $\mathbf{y}^{(k)}$ é dada por
+
+\begin{equation}
+	\mathbf{y}^{(k)} = \mathbf{W}^{(k)} \mathbf{x}.
+\end{equation}
+
+Onde $\mathbf{x}$ é a imagem de alta resolução a ser encontrada e $\mathbf{W}^{(k)}$ é a matriz que aplica as transformações do modelo de observação.
+
+Se for feito um palpite tanto para a matriz de sistema quanto para a imagem a ser estimada, podemos dizer que o erro do palpite é dado por \ref{eq:ibperror1}.
+Feito isso, a melhor estimativa para a imagem de alta resolução $\mathbf{x}$ seria a que minimiza o erro na equação \ref{eq:ibperrorsum}.
+Essa estimativa é alcaçada através de métodos iterativos como o de mínimos quadrados.
+
+\begin{gather}
+	\label{eq:ibperror1} \mathbf{\epsilon}^{(k)}_j = \mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j \\
+	\label{eq:ibperrorsum} \mathbf{e}_j = \sum^N_{k=1}{\sqrt{\|\mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j\|^2_2}}
+\end{gather}
+
+O método \emph{Iterative Back Projections} tem a vantagem de ser intuitivo e de fácil compreensão.
+No entanto, ele tem rpoblemas por não ter uma solução única, além de não permitir que se use com facilidade o conhecimento a priori acerca da imagem de alta resolução \cite{nasrollahi2014super, park2003super}.
+% SUGGESTION: Inserir figura do esquema de IBP.
+% SUGGESTION: Inserir equaçõ do algoritmo de IBP.
+
 
 A cada interação do método IBP, uma imagem de alta resolução é estimada.
 Então é usado o modelo de observação para gerar um conjunto simulado de imagens de baixa resolução.
 Esse conjunto de imagens simuladas é comparado às imagens de baixa resolução obtidas através do sistema de aquisição.
 A comparação se dá através do cálculo da diferença (erro) entre os dois conjuntos de imagem.
 O método iterativo busca minimizar esse erro afim de recuperar a imagem de alta resolução \cite{park2003super,reis2014metodo}.
-
-\begin{equation}
-	\mathbf{y}^{(k)} = \mathbf{W}^{(k)} \mathbf{x}
-\end{equation}
-
-
-\begin{gather}
-	\mathbf{\epsilon}^{(k)}_j = \mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j \\
-	\mathbf{\epsilon}_j = \sum^N_{k=1}{\sqrt{\|\mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j\|^2_2}}
-\end{gather}
-% SUGGESTION: Inserir figura do esquema de IBP.
-% SUGGESTION: Inserir equaçõ do algoritmo de IBP.
-
 \subsection{Métodos de Aprendizado}
 Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
 Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
