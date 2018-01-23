@@ -4,15 +4,13 @@ Esta seção descreve resumidamente alguns dos métodos de super-resolução mai
 A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
 Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
 \subsection{Métodos no domínio da frequência.}
-Os primeiros algorítimos de super-resolução desenvolvidos faziam o processamento das imagens no domínio da frequência.
-Esse tipo de abordagem tinha a vantagem da simplicidade em sua teoria.
-No entanto, as técnicas de super-resolução no domínio da frequência tinham limitações com respeito ao tipo de degradação sofrida pela imagem além da dificuldade de aplicar o conhecimento a priori da imagem de alta resolução no domínio espacial para regularização.
-Por estes e outros motivos que a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial \cite{park2003super}.
 
-Os trabalhos de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative} foram os primeiros a introduzir técnicas de super-resolução no domínio da frequência.
-Sendo que o primeiro método a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
+Os primeiros métodos de super-resolução desenvolvido faziam o processamento das imagens no domínio da frequência.
+Sendo que os primeiros trabalhos com essa abordagem foram os de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative}.
+
+O primeiro método de super-resolução no domínio da frequência a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
 Este algorítimo foi desenvolvido para processar as imagens geradas pelo satélite Landsat 4.
-Este satélite gerava várias imagens semelhantes, porém deslocadas, da mesma área na
+Este aparelho gerava várias imagens semelhantes, porém deslocadas, da mesma área na
 terra.
 
 Podemos considerar que cada imagem $g_k$ gerada pelo satélite seja uma versão deslocada de uma cena contínua $f$, podemos considerar que
@@ -43,17 +41,17 @@ Isso pode ser resolvido usando o Método dos Mínimos Quadrados.
 	\mathbf{G} = \mathbf{\Phi F_f}
 \end{equation}
 
-% ISSUE: Completar seção domínio da frequência.
-
-
-
+A abordagem dos algorítmos de super-resolução deste tipo tinha a vantagem da simplicidade em sua teoria.
+No entanto, as técnicas de super-resolução no domínio da frequência tinham limitações com respeito ao tipo de degradação sofrida pela imagem além da dificuldade de aplicar o conhecimento a priori da imagem de alta resolução no domínio espacial para regularização.
+Estes são os principais motivos pelos quais a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial \cite{park2003super}.
 
 \subsection{Iterative Back Projections}
-O método \emph{Iterative Back Projection} (IBP) (tradução do autor) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
-O método IBP consistida de um método iterativo de super-resolução para restaurar uma imagem de alta resolução a partir de várias imagens de baixa resolução.
+O método \emph{Iterative Back Projection} (IBP) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
+O método IBP se caracteriza por ser um método iterativo de super-resolução para restaurar uma imagem de alta resolução a partir de várias imagens de baixa resolução.
+Por ser iterativo, o método executa uma rotina por diversas iterações com o objetivo de se aproximar mais da solução correta a cada execução.
 
 % ISSUE: Inserir IBP na lista de siglas.
-O método partia de um modelo de observação como o apresentado na seção \ref{sec:obsmodel} no qual uma imagem de baixa resolução $\mathbf{y}^{(k)}$ é dada por
+O método parte de um modelo de observação como o apresentado na seção \ref{sec:obsmodel} no qual uma imagem de baixa resolução $\mathbf{y}^{(k)}$ é dada por
 
 \begin{equation}
 	\mathbf{y}^{(k)} = \mathbf{W}^{(k)} \mathbf{x}.
@@ -76,17 +74,42 @@ No entanto, ele tem rpoblemas por não ter uma solução única, além de não p
 % SUGGESTION: Inserir equaçõ do algoritmo de IBP.
 
 
-A cada interação do método IBP, uma imagem de alta resolução é estimada.
-Então é usado o modelo de observação para gerar um conjunto simulado de imagens de baixa resolução.
-Esse conjunto de imagens simuladas é comparado às imagens de baixa resolução obtidas através do sistema de aquisição.
-A comparação se dá através do cálculo da diferença (erro) entre os dois conjuntos de imagem.
-O método iterativo busca minimizar esse erro afim de recuperar a imagem de alta resolução \cite{park2003super,reis2014metodo}.
 \subsection{Métodos de Aprendizado}
 Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
 Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
 Esse conhecimento forma a componente a priori na reconstrução das imagens.
 
 \subsection{Métodos Probabilísticos}
+
+Baseado no modelo de observação apresentado na equação \ref{eq:degradation} podemos dizer que
+\begin{equation}
+	\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}} =  \mathbf{n}^{(k)} \\
+\end{equation}
+
+\begin{equation}
+	p(\mathbf{n}^{(k)}) = \left(\frac{ \beta}{2\pi} \right)^{M/2}
+	\exp{\left\{  -  \frac{\beta}{2}\|\mathbf{n}^{(k)}\|^2 \right\}}
+\end{equation}
+
+\begin{equation}
+	p(\mathbf{y}^{(k)} | \hat{\mathbf{x}}, \mathbf{W}^{(k)}) = \left(\frac{ \beta}{2\pi} \right)^{M/2}
+	\exp{\left\{-\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 \right\}}
+\end{equation}
+
+\begin{equation}
+	L\{\mathbf{y}^{(k)}\} = -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
+\end{equation}
+
+\begin{equation}
+	\mathbf{y}^{(k)}_{ML} = \argmax_{\hat{\mathbf{x}}}
+	\left[ -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
+	\right ]
+\end{equation}
+
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d} \hat{\mathbf{x}}}
+	L\{\mathbf{y}^{(k)}\} = -\beta (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}})^T \mathbf{W}^{(k)} 
+\end{equation}
 Os métodos probabilísticos se concentram em duas abordagens principais, a saber: máxima verossimilhança e máximo a posteriori \cite{nasrollahi2014super}.
 Em resumo, os métodos de máxima verossimilhança estabelecem uma função de verossimilhança das imagens observadas baseada nos modelos de observação e no ruído
 
