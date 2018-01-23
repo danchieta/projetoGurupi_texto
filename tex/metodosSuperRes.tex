@@ -81,35 +81,52 @@ Esse conhecimento forma a componente a priori na reconstrução das imagens.
 
 \subsection{Métodos Probabilísticos}
 
-Baseado no modelo de observação apresentado na equação \ref{eq:degradation} podemos dizer que
-\begin{equation}
-	\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}} =  \mathbf{n}^{(k)} \\
-\end{equation}
+Consideremos o modelo de observação em (\ref{eq:degradation}), onde o vetor
+$\mathbf{n}$ representa o ruído adicionado às imagens de baixa resolução.
+Sabendo que cada elemento $\mathbf{n}_i$ é aleatório seguindo uma distribuição
+gaussiana de média 0 e variância $1/\beta$, podemos estabelecer que a função
+densidade de probabilidade de $\mathbf{n}$ é representada em (\ref{eq:noisedensity}).
 
 \begin{equation}
+	\label{eq:noisedensity}
 	p(\mathbf{n}^{(k)}) = \left(\frac{ \beta}{2\pi} \right)^{M/2}
 	\exp{\left\{  -  \frac{\beta}{2}\|\mathbf{n}^{(k)}\|^2 \right\}}
 \end{equation}
 
+Ainda baseado em (\ref{eq:degradation}), a relação entre uma estimativa da imagem de alta resolução $\hat{\mathbf{x}}$ e a imagem de baixa resolução observada é:
+
 \begin{equation}
+	\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}} =  \mathbf{n}^{(k)} \\
+\end{equation}
+
+Então é possível dizer que a probabilidade de $\mathbf{y}^{(k)}$ ocorrer baseado em uma estimativa da imagem de alta resolução $\hat{\mathbf{x}}$ é dada pela distribuição em (\ref{eq:ykdistr}).
+
+\begin{equation}
+	\label{eq:ykdistr}
 	p(\mathbf{y}^{(k)} | \hat{\mathbf{x}}, \mathbf{W}^{(k)}) = \left(\frac{ \beta}{2\pi} \right)^{M/2}
 	\exp{\left\{-\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 \right\}}
 \end{equation}
 
-\begin{equation}
-	L\{\mathbf{y}^{(k)}\} = -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
-\end{equation}
+O logaritmo da função de verossimilhança de $\mathbf{y}^{(k)}$ é expresso em
 
 \begin{equation}
+	L\{\mathbf{y}^{(k)}\} = -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2.
+\end{equation}
+
+Teoricamente, a melhor estimativa ($\hat{\mathbf{x}}$) da imagem de alta resolução é a que maximiza a função de verossimilhança acima. Isso é demonstrado em (\ref{eq:maxlhood}).
+
+\begin{equation}
+	\label{eq:maxlhood}
 	\mathbf{y}^{(k)}_{ML} = \argmax_{\hat{\mathbf{x}}}
 	\left[ -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
 	\right ]
 \end{equation}
 
-\begin{equation}
+\begin{gather}
 	\frac{\mathrm{d}}{\mathrm{d} \hat{\mathbf{x}}}
-	L\{\mathbf{y}^{(k)}\} = -\beta (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}})^T \mathbf{W}^{(k)} 
-\end{equation}
+	L\{\mathbf{y}^{(k)}\} = -\beta (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T \\
+	-\beta (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}})^T \mathbf{W}^{(k)} = 0
+\end{gather}
 Os métodos probabilísticos se concentram em duas abordagens principais, a saber: máxima verossimilhança e máximo a posteriori \cite{nasrollahi2014super}.
 Em resumo, os métodos de máxima verossimilhança estabelecem uma função de verossimilhança das imagens observadas baseada nos modelos de observação e no ruído
 
