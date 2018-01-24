@@ -15,6 +15,7 @@ problema, contornando assim um dos problemas da abordagem de máxima verossimilh
 A adição de uma densidade de probabilidade \emph{a priori}, converte a abordagem de máxima verossimilhança em uma abordagem de máximo \emph{a posteriori} (MAP).
 
 % ISSUE: Adicionar resumo do capítulo de Super-resolução Bayesiana
+% ISSUE: Excluir os parágrafos abaixo
 se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e informações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
 
@@ -81,7 +82,7 @@ A solução proposta no artigo é marginalizar $\mathbf{x}$ em (\ref{eq:posterio
 Onde y é o conjunto de todas as imagens de baixa resolução $\mathbf{y}_k$.
 
 Em uma situação ideal, a melhor estimativa dos valores dos parâmetros de degradação é a que maximiza a função de verossimilhança em (\ref{eq:parameter}).
-Tendo a estimativa desses valores, podemos então usá-los em (\ref{eq:posteriordist}) para procurar pelo vetor $\mathbf{x}$ que maximiza aquela função de verossimilhança.
+Tendo a estimativa desses valores, podemos então usá-los em (\ref{eq:posteriordist}) para procurar pela imagem de alta resolução $\mathbf{x}$ que maximiza aquela função de verossimilhança.
 
 Um fato que se constatou empiricamente na tentativa de calcular os valores da função de verossimilhança é que as probabilidades são muito pequenas ao ponto de estarem fora do intervalo de precisão de uma variável do tipo ponto flutuante.
 Os valores também variam muito pouco ao longo do espaço vetorial de $\mathbf{x}$ o que dificultaria o uso de métodos iterativos para encontrar o ponto de máximo da função.
