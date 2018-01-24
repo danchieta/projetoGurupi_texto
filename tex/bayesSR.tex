@@ -1,6 +1,17 @@
 \chapter{Super Resolução Bayesiana}
 \label{chap:srbayes}
-O método algoritmo por Tipping se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
+O método de super resolução desenvolvido no trabalho de Tipping e Bishop \cite{tipping2003bayesian} é um método probabilístico para a obtenção de uma imagem de alta resolução
+a partir de um conjunto de imagens de baixa resolução de uma mesma cena.
+Esse conjunto de imagens de baixa resolução poderiam ser retirados de quadros de um
+vídeo produzido por uma câmera de segurança que fica parada em relação ao objeto
+observado, por exemplo.
+
+Pode-se dizer que a abordagem usada neste método é uma expansão do método de máxima
+verossimilhança descrito na seção \ref{sec:metodosprob}.
+O método de super-resolução Bayesiana adiciona uma densidade de probabilidade como conhecimento a priori da imagem para restringir a quantidade de soluções possíveis do problema, contornando assim um dos problemas da abordagem de máxima verossimilhança.
+A adição de uma densidade de probabilidade \emph{a priori}, converte a abordagem de máxima verossimilhança em uma abordagem de máximo \emph{a posteriori} (MAP).
+
+se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e informações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
 
 Sabendo disso, há a necessidade de formular uma distribuição a priori que represente as características estatísticas da imagem que pretendemos estimar a partir dos dados.
@@ -15,7 +26,8 @@ Onde $A$ é uma constante, e $r$ determina o quanto cada ponto da imagem de alta
 Expandindo a função densidade de probabilidade $p(\mathbf{x})$ temos:
 
 \begin{equation}
-	p(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^N \mathbf{Z}_x}}\exp{-\tfrac{1}{2} \mathbf{x}^T \mathbf{Z}_x \mathbf{x}}
+	p(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^N |\mathbf{Z}_x|}}\exp{-\tfrac{1}{2} \mathbf{x}^T \mathbf{Z}^{-1}_x \mathbf{x}}
+% ISSUE: Corrigir esta equação.
 \end{equation}
 
 Este tipo de distribuição não é o ideal, visto que se definirmos $r=1$, estaríamos dizendo que a maioria dos valores dos pontos da imagem de de alta resolução estão contidos no intervalo $[-1,1]$, o que não condiz com a realidade.

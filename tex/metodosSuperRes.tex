@@ -78,8 +78,9 @@ No entanto, ele tem rpoblemas por não ter uma solução única, além de não p
 Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
 Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
 Esse conhecimento forma a componente a priori na reconstrução das imagens.
+% ISSUE: Desenvolver seção dos métodos de aprendizado.
 
-\subsection{Métodos Probabilísticos}
+\subsection{\label{sec:metodosprob}Métodos Probabilísticos}
 
 Consideremos o modelo de observação em (\ref{eq:degradation}), onde o vetor
 $\mathbf{n}$ representa o ruído adicionado às imagens de baixa resolução.
@@ -110,23 +111,35 @@ Então é possível dizer que a probabilidade de $\mathbf{y}^{(k)}$ ocorrer base
 O logaritmo da função de verossimilhança de $\mathbf{y}^{(k)}$ é expresso em
 
 \begin{equation}
-	L\{\mathbf{y}^{(k)}\} = -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2.
+	L\{\mathbf{y}^{(k)}\} = -\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2.
 \end{equation}
 
-Teoricamente, a melhor estimativa ($\hat{\mathbf{x}}$) da imagem de alta resolução é a que maximiza a função de verossimilhança acima. Isso é demonstrado em (\ref{eq:maxlhood}).
+Teoricamente, a melhor estimativa ($\hat{\mathbf{x}}$) da imagem de alta resolução é a
+que maximiza a função de verossimilhança acima, como é demonstrado em (\ref{eq:maxlhood}).
 
 \begin{equation}
 	\label{eq:maxlhood}
 	\mathbf{y}^{(k)}_{ML} = \argmax_{\hat{\mathbf{x}}}
-	\left[ -\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
+	\left[-\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
 	\right ]
 \end{equation}
 
+Para obter o ponto de máximo da função, podemos calcular seu diferencial, igualá-lo a zero, e isolar o $\hat{\mathbf{x}}$ na equação como é feito abaixo.
+
 \begin{gather}
 	\frac{\mathrm{d}}{\mathrm{d} \hat{\mathbf{x}}}
-	L\{\mathbf{y}^{(k)}\} = -\beta (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T \\
-	-\beta (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}})^T \mathbf{W}^{(k)} = 0
+	L\{\mathbf{y}^{(k)}\} = -2 (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T \\
+	(\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T = 0 \\
+	\hat{\mathbf{x}} = (\mathbf{W}^T\mathbf{W})^{-1} \mathbf{W}^T y^{(k)}
 \end{gather}
-Os métodos probabilísticos se concentram em duas abordagens principais, a saber: máxima verossimilhança e máximo a posteriori \cite{nasrollahi2014super}.
-Em resumo, os métodos de máxima verossimilhança estabelecem uma função de verossimilhança das imagens observadas baseada nos modelos de observação e no ruído
 
+O método de máxima verossimilhança é sensível a distúrbios causados por ruídos ou
+imprecisões na estimação dos parâmetros de aquisição.
+Além disso, se o número de imagens não for suficiente, pode haver mais de ima solução
+possível. Esse problema deve ser contornado adicionando conhecimento \emph{a priori} da
+imagem.
+Esse conhecimento ajuda a restringir o número de respostas possíveis \cite{nasrollahi2014super}.
+
+Uma das formas de adicionar conhecimento \emph{a priori} ao método é transformá-lo em
+uma abordagem de máximo \emph{a posteriori}.
+O método de Super-resolução Bayesiana estudado neste trabalho é um exemplo de método probabilístico que usa inferência Bayesiana para incorporar conhecimento \emph{a priori} acerca da imagem ao modelo.
