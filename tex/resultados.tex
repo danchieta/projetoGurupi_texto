@@ -26,8 +26,16 @@ O modelo de observação exposto na seção \ref{sec:obsmodel} foi usado para ge
 \begin{figure}[h]
 	\centering
 	\caption{\label{fig:hrimage}Imagens de alta resolução utilizadas nos testes.}
-	\includegraphics{figures/imtestes.png}
-	\includegraphics{figures/imteste2s.png}
+	\begin{minipage}[b]{.48\linewidth}
+		\centering
+		\includegraphics{figures/imtestes.png}
+		\subcaption{Exemplar 1: \emph{``Virginia''}}
+	\end{minipage}
+	\begin{minipage}[b]{.48\linewidth}
+		\centering
+		\includegraphics{figures/imteste2s.png}
+		\subcaption{Exemplar 2: \emph{``Ohio''}}
+	\end{minipage}
 	\legend{Fonte: O autor.}
 
 \end{figure}
@@ -124,7 +132,7 @@ otimização em inferir os valores corretos dos parâmetros.
 \section{Estimação dos parâmetros de degradação}
 \label{sec:parestimation}
 A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura. Como já elucidado no capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
-Teoricamente, os valores verdadeiros de $\mathbf{s}_k$, $\theta_k$ e $\gamma$ são os que maximizam a função de verosimilhança em \ref{eq:parameter}.
+Teoricamente, os valores verdadeiros de $\mathbf{s}_k$, $\theta_k$ e $\gamma$ são os que maximizam a função de verosimilhança em (\ref{eq:parameter}).
 
 O artigo no qual este trabalho se baseia relata que o método de otimização usado
 para estimar tanto os parâmetros de degradação quanto da imagem foi o de gradientes
@@ -137,7 +145,9 @@ Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{
 % NOTE: Talvez esta seção mude se for feita otimização de gamma.
 
 O processo de otimização dos parâmetros se deu da seguinte forma:
-Os parâmetros iniciais foram definidos como zero.
+Os parâmetros de rotação e deslocamento foram definidos como zero;
+a largura da função de espalhamento de ponto inicial foi 4.
+
 Primeiramente, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação permanecem fixos.
 Após isso, é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
 Em uma terceira etapa, a largura da função de espalhamento de ponto ($\gamma$) é otimizada
@@ -149,10 +159,10 @@ A estimação dos ângulos também funciona melhor quando os valores de deslocam
 otimizados.
 
 
-Um fato que merece destaque é o de que, como a função em \ref{eq:parameter} não é uma
+Um fato que merece destaque é o de que, como a função em (\ref{eq:parameter}) não é uma
 função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1 $, não foi 
 possível passá-la diretamente ao método de otimização.
-Por isso foi necessário empacotar a função de forma que ela recebesse os parâmetros de
+Por isso, foi necessário empacotar a função de forma que ela recebesse os parâmetros de
 entrada ($\mathbf{s}_k$, $\theta_k$ e $\gamma$) reorganizados na forma de um único
 vetor e retornasse somente um escalar na saída.
 Isso também implicou na exigência de calcular numericamente o gradiente da função,
@@ -162,7 +172,7 @@ A função de otimização com algorítimo de Newton truncado presente na biblio
 \emph{Scipy} permite que sejam definidos limites para restringir o intervalo de busca
 no espaço vetorial onde a estimação é feita.
 Isso é especialmente útil, pois permite usarmos um conhecimento a priori acerca dos
-parâmetros para impedir que a otimização retorne resultados inviáveis que por ventura
+parâmetros para impedir que a otimização retorne resultados inviáveis que, por ventura,
 tenham um alto valor de verossimilhança.
 Os limites definidos para os parâmetros foram de -4 a 4 no caso dos ângulos de rotação,
 -2 a 2 para ambas as direções dos deslocamentos e 1 a 7 para a largura da função de
@@ -174,63 +184,61 @@ Em ambas as etapa subsequentes este limite foi de 50 avaliações.
 Esses limites não interferem na qualidade do resultado pois, mesmo que eles sejam bem maiores, o valor das avaliações da função estabiliza após poucas iterações.
 Isso será demonstrado mais adiante.
 
-\subsection{Resultados com a primeira imagem de teste}
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\caption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
-	\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot.pdf}
-	\legend{Fonte: O autor.}
-\end{figure}
+	\caption{tomate}
+	\begin{minipage}[b]{.99\linewidth}
+		\centering
+		\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot.pdf}
+		\subcaption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+	\end{minipage}
 
-\begin{figure}[h]
-	\centering
-	\caption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
-	\includegraphics[width=0.65\textwidth]{./figures/results_figures/comparisson_plot.pdf}
+	\begin{minipage}[b]{.99\linewidth}
+		\centering
+		\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot2.pdf}
+		\subcaption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
+		
+	\end{minipage}
 	\legend{Fonte: O autor}
-	
 \end{figure}
 % SUGGESTION: Escrever pseudocódigo do empacotamento da função de verossimilhança dos parâmetros.
-\begin{figure}[h]
-	\centering
-	\caption{\label{fig:sr_comparisson} Da esquerda para a direita: Uma das vinte imagens de baixa resolução;
-	Uma das imagens de baixa resolução ampliada com interpolação bicúbica;
-	Imagem restaurada pelo algorítimo de super-resolução.}
-	\includegraphics[width=0.25\textwidth]{./figures/results_figures/resized_nearest.png}
-	\includegraphics[width=0.25\textwidth]{./figures/results_figures/bicubic_equalized.png}
-	\includegraphics[width=0.25\textwidth]{./figures/results_figures/restored_image_sr.png}
-	\legend{Fonte: O autor.}
-\end{figure}
 
-\subsection{Resultados com a segunda imagem de teste}
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\caption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
-	\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot2.pdf}
-	\legend{Fonte: O autor.}
-\end{figure}
+	\caption{tomate}
+	\begin{minipage}[b]{.99\linewidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{./figures/results_figures/comparisson_plot.pdf}
+		\subcaption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+	\end{minipage}
 
-\begin{figure}[h]
-	\centering
-	\caption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
-	\includegraphics[width=0.65\textwidth]{./figures/results_figures/comparisson_plot2.pdf}
+	\begin{minipage}[b]{.99\linewidth}
+		\centering
+		\includegraphics[width=0.8\textwidth]{./figures/results_figures/comparisson_plot2.pdf}
+		\subcaption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
+		
+	\end{minipage}
 	\legend{Fonte: O autor}
-	
 \end{figure}
 
-\begin{figure}[h]
-	\centering
-	\caption{\label{fig:sr_comparisson} Da esquerda para a direita: Uma das vinte imagens de baixa resolução;
-	Uma das imagens de baixa resolução ampliada com interpolação bicúbica;
-	Imagem restaurada pelo algorítimo de super-resolução.}
-	\includegraphics[width=0.25\textwidth]{./figures/results_figures/resized_nearest2.png}
-	\includegraphics[width=0.25\textwidth]{./figures/results_figures/resized_bicubic2.png}
-	\includegraphics[width=0.25\textwidth]{./figures/results_figures/restored_image_sr2.png}
-	\legend{Fonte: O autor.}
-\end{figure}
 
 \section{Estimação da imagem de alta resolução}
 % ISSUE: Seção de estimação da imagem
+Após a estimação dos parâmetros de degradação, os valores otimizados deve ser passados para a função de verossimilhança da imagem em (\ref{eq:imageLikelihood}) para que seja estimada a imagem de alta resolução em si.
+
+O algorítimo de Newton truncado também foi usado para estimar a imagem de acordo com as imagens observadas e os parâmetros de degradação.
+Ao contrário do que aconteceu na etapa anterior, não foi necessário calcular o gradiente da função numericamente para esta etapa.
+Como a função de verossimilhança em (\ref{eq:imageLikelihood}) é uma função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1$, então foi relativamente simples calcular seu gradiente mostrado na equação (\ref{eq:imageLikelihood_gradient}).
+
+A possibilidade de se calcular o gradiente da função analiticamente em vez de numericamente teve como consequência um ganho considerável de desempenho com redução no tempo de execução do algorítimo.
+Esse ganho de desempenho foi bastante importante devido à quantidade de dados a serem estimados, que chegam a 15600 pontos no caso da imagem de maior resolução.
+
+% ISSUE: Falar das matrizes grandes que foram gravadas em disco.
 
 
-
+\begin{figure}[H]
+	\centering
+	\caption{Comparação do resultado obtido através do método de super-resolução Bayesiana com a simples interpolação da imagem.}
+	\includegraphics[width = 0.95\textwidth]{./figures/results_figures/result_compare.pdf}
+	\legend{Fonte: O autor.}
+\end{figure}
