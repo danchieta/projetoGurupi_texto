@@ -81,7 +81,7 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\caption{\label{fig:frames}
+	\caption{\label{fig:frames2}
 	Conjunto das imagens geradas a partir da imagem de alta resolução. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.}
 	\includegraphics{figures/degradedImg2/result-0.png}
 	\includegraphics{figures/degradedImg2/result-1.png}
@@ -252,11 +252,16 @@ A possibilidade de se calcular o gradiente da função analiticamente em vez de 
 Esse ganho de desempenho foi bastante importante devido à quantidade de dados a serem estimados, que chegam a 15600 pontos no caso da imagem de maior resolução.
 
 % ISSUE: Falar das matrizes grandes que foram gravadas em disco.
+% ISSUE: Mostrar imagem cinza que precisou ter histograma equalizado
 
+O processo de otimização da imagem teve como resultado uma imagem de baixo contraste que precisou ter seu histograma equalizado para 
+
+A figura \label{fig:results_compare} mostra as imagens obtidas através do mérodo de super-resolução Bayesiana e a compara com uma imaguem que foi redimensionada usando interpolação bicúbica; que é um método bastante utilizado nos programas de edição de imagens.
 
 \begin{figure}[H]
 	\centering
 	\caption{Comparação do resultado obtido através do método de super-resolução Bayesiana com a simples interpolação da imagem.}
+	\label{fig:results_compare}
 	\includegraphics[width = 0.95\textwidth]{./figures/results_figures/result_compare.pdf}
 	\legend{Fonte: O autor.}
 \end{figure}
