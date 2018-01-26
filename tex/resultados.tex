@@ -184,38 +184,56 @@ Em ambas as etapa subsequentes este limite foi de 50 avaliações.
 Esses limites não interferem na qualidade do resultado pois, mesmo que eles sejam bem maiores, o valor das avaliações da função estabiliza após poucas iterações.
 Isso será demonstrado mais adiante.
 
+% ISSUE: Comentar sobre o tempo de execução nas etapas de otimização
+
+Durante a execução do Método de Newton Truncado, foram registrados o valor da função de verossimilhança e o erro da solução atual ao fim de cada iteração.
+O erro calculado é igual $\|\mathbf{c}_{atual} - \mathbf{c}_{real}\|$ onde
+$\mathbf{c}_{atual}$ é o vetor com os parâmetros obtidos ao fim da iteração e
+$\mathbf{c}_{real}$ é o vetor com os parâmetros verdadeiros usado para a comparação.
+Os resultados desta análise são ilustrados na figura \ref{fig:progression_plots}.
+
 \begin{figure}[H]
 	\centering
-	\caption{tomate}
+	\caption{Progressão dos valores da avaliação da função de verossimilhança e do erro dos parâmetros estimados a cada iteração do algorítimo de otimização.}
+	\label{fig:progression_plots}
 	\begin{minipage}[b]{.99\linewidth}
 		\centering
 		\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot.pdf}
-		\subcaption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+		\subcaption{Resultados obtidos com a estimação do Exemplar 1: \emph{``Virginia''}}
 	\end{minipage}
 
 	\begin{minipage}[b]{.99\linewidth}
 		\centering
 		\includegraphics[width=0.90\textwidth]{./figures/results_figures/progression_plot2.pdf}
-		\subcaption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
-		
+		\subcaption{Resultados obtidos com a estimação do Exemplar 2: \emph{``Ohio''}}
 	\end{minipage}
 	\legend{Fonte: O autor}
 \end{figure}
 % SUGGESTION: Escrever pseudocódigo do empacotamento da função de verossimilhança dos parâmetros.
 
+% ISSUE: Checar o número de iterações em cada execução do algorítimo
+Ao final da execução do algorítimo de otimização, os os valores obtidos foram
+colhidos e comparados com os parâmetros de transformação reais. O resultado dessa
+comparação está retratado na figura \ref{fig:comparisson_plots}. 
+A estimativa da largura da função de espalhamento de ponto foi de 1 para ambas as imagens testadas.
+Esse erro pode ser observado também nos gráficos da figura \ref{fig:progression_plots} onde há um aumento acentuado tanto no valor da função de verossimilhança quanto no erro da solução encontrada.
+Esse erro ocorre no 
+
+
 \begin{figure}[H]
 	\centering
-	\caption{tomate}
+	\caption{Comparação dos resultados obtidos ao final da execução do algorítimo de otimização com os parâmetros verdadeiros.}
+	\label{fig:comparisson_plots}
 	\begin{minipage}[b]{.99\linewidth}
 		\centering
 		\includegraphics[width=0.8\textwidth]{./figures/results_figures/comparisson_plot.pdf}
-		\subcaption{\label{fig:progression} Progressão do valor da função de verossimilhança e do erro ao longo das iterações do algoritmo de otimização.}
+		\subcaption{Resultados obtidos com a estimação do Exemplar 1: \emph{``Virginia''}}
 	\end{minipage}
 
 	\begin{minipage}[b]{.99\linewidth}
 		\centering
 		\includegraphics[width=0.8\textwidth]{./figures/results_figures/comparisson_plot2.pdf}
-		\subcaption{\label{fig:comparisson} Comparação dos resultados obtidos durante a otimização com os parâmetros verdadeiros.}
+		\subcaption{Resultados obtidos com a estimação do Exemplar 2: \emph{``Ohio''}}
 		
 	\end{minipage}
 	\legend{Fonte: O autor}
