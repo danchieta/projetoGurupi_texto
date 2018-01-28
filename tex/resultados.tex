@@ -144,7 +144,7 @@ O artigo no qual este trabalho se baseia relata que o método de otimização us
 para estimar tanto os parâmetros de degradação quanto da imagem foi o de gradientes
 conjugados \cite{tipping2003bayesian}.
 Como o método de super-resolução deste trabalho foi todo escrito em Python,
-não foi possível utilizar o mesmo método de implementação utilizado no artigo.
+não foi possível utilizar o mesmo método de implementação empregado no artigo.
 Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{Scipy}.
 
 % SUGGESTION: Falar mais sobre o algorítimo de otimização Método de Newton Truncado. Talvez em um apêndice.
@@ -152,11 +152,13 @@ Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{
 O processo de otimização dos parâmetros se deu da seguinte forma:
 Os parâmetros de rotação e deslocamento foram definidos como zero;
 a largura da função de espalhamento de ponto inicial foi 4.
+Então, a otimização dos parâmetros se deu em três partes:
+\begin{enumerate}
+	\item Na primeira, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação permanecem fixos.
+	\item Na segunda, é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
+	\item Em uma terceira etapa, a largura da função de espalhamento de ponto ($\gamma$) é otimizada concomitantemente com os demais parâmetros.
+\end{enumerate}
 
-Primeiramente, somente os valores de deslocamento são otimizados enquanto os valores dos ângulos de rotação permanecem fixos.
-Após isso, é realizada a otimização dos ângulos de rotação junto com os deslocamentos lineares.
-Em uma terceira etapa, a largura da função de espalhamento de ponto ($\gamma$) é otimizada
-concomitantemente com os demais parâmetros.
 Essa abordagem é usada no artigo original e os testes realizados para este trabalho
 constataram que a otimização dos parâmetros de deslocamento se aproxima mais rápido da
 solução correta quando esses valores são estimados isoladamente.
