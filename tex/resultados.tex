@@ -29,12 +29,12 @@ O modelo de observação exposto na seção \ref{sec:obsmodel} foi usado para ge
 	\begin{minipage}[b]{.48\linewidth}
 		\centering
 		\includegraphics{figures/imtestes.png}
-		\subcaption{Exemplar 1: \emph{``Virginia''}}
+		\subcaption{Exemplar 1: \emph{``Virginia''}.}
 	\end{minipage}
 	\begin{minipage}[b]{.48\linewidth}
 		\centering
 		\includegraphics{figures/imteste2s.png}
-		\subcaption{Exemplar 2: \emph{``Ohio''}}
+		\subcaption{Exemplar 2: \emph{``Ohio''}.}
 	\end{minipage}
 	\legend{Fonte: O autor.}
 
@@ -54,7 +54,8 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 \begin{figure}[H]
 	\centering
 	\caption{\label{fig:frames}
-	Conjunto das imagens geradas a partir da imagem de alta resolução. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.}
+	Conjunto das imagens geradas a partir da imagem de alta resolução \emph{"Virginia"}. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.
+	As dimensões de cada imagem são de $38 \times 26$.}
 	\includegraphics{figures/degradedImg/result-0.png}
 	\includegraphics{figures/degradedImg/result-1.png}
 	\includegraphics{figures/degradedImg/result-2.png}
@@ -81,8 +82,9 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\caption{\label{fig:frames2}
-	Conjunto das imagens geradas a partir da imagem de alta resolução. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.}
+	\caption{ Conjunto das imagens geradas a partir da imagem de alta resolução \emph{"Ohio"}.
+	As dimensões de cada imagem são de $38 \times 23$.}
+	\label{fig:frames2}
 	\includegraphics{figures/degradedImg2/result-0.png}
 	\includegraphics{figures/degradedImg2/result-1.png}
 	\includegraphics{figures/degradedImg2/result-2.png}
@@ -116,8 +118,6 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 		Ângulos de rotação ($\theta_k$) & $ \sim \mathcal{U}(-4, 4)$ \\ \hline
 		Deslocamento ($\mathbf{s}_k$)& $\sim \mathcal{U}(-2,2)$\\ \hline
 		Largura da PSF ($\gamma$) & 2 \\ \hline
-		Dimensões da imagem de alta resolução & $139 \times 104$ \\ \hline
-		Dimensões das imagens de baixa resolução & $35 \times 26$ \\
 
 	\end{tabular}
 	\legend{Fonte: O autor.}
@@ -237,7 +237,23 @@ Esse erro ocorre no
 		
 	\end{minipage}
 	\legend{Fonte: O autor}
-\end{figure}
+\end{figure} 
+
+\begin{table}[H]
+	\caption{Tempos de execução e número de iterações no algorítimo de Newton truncado para cada um dos exemplares.}
+	\label{tab:temposexec}
+	\begin{tabular}{r || l | l}
+		 & Exemplar 1: \emph{"Ohio"} & Exemplar 2: \emph{"Virginia"} \\ \hline
+		Tempo de execução & 31 minutos e 39 segundos & 37 minutos e 23 segundos \\ \hline
+		Número de iterações & 18 & 27
+	\end{tabular}
+	\legend{Fonte: O autor}
+\end{table}
+
+Tempo de execução imagem 1: 31 minutos e 39 segundos \\
+Número de iterações
+
+Tempo de execução imagem 1: 37 minutos e 23 segundos
 
 
 \section{Estimação da imagem de alta resolução}
@@ -252,7 +268,43 @@ A possibilidade de se calcular o gradiente da função analiticamente em vez de 
 Esse ganho de desempenho foi bastante importante devido à quantidade de dados a serem estimados, que chegam a 15600 pontos no caso da imagem de maior resolução.
 
 % ISSUE: Falar das matrizes grandes que foram gravadas em disco.
-% ISSUE: Mostrar imagem cinza que precisou ter histograma equalizado
+\begin{figure}
+	\centering
+	\caption{Resultados obtidos com a otimização do Exemplar 2: \emph{"Ohio"}}
+	\label{fig:result_histograms1}
+	\begin{minipage}[b]{.99\linewidth}
+		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma2.pdf}
+		\subcaption{Imagem resultante do processo de otimização juto com seu histograma.}
+		\label{fig:result_histograms1_output}
+	\end{minipage}	
+
+	\begin{minipage}[b]{.99\linewidth}
+		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma1.pdf}
+		\label{fig:result_histograms1_equalized}
+		\subcaption{Imagem resultante após equalização de histograma.}
+	\end{minipage}	
+	\legend{Fonte: O autor.}
+	
+\end{figure}
+
+\begin{figure}
+	\centering
+	\caption{Resultados obtidos com a otimização do Exemplar 1: \emph{"Virginia"}}
+	\label{fig:result_histograms2}
+	\begin{minipage}[b]{.99\linewidth}
+		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma3.pdf}
+		\subcaption{Imagem resultante do processo de otimização juto com seu histograma.}
+		\label{fig:result_histograms2_output}
+	\end{minipage}	
+
+	\begin{minipage}[b]{.99\linewidth}
+		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma4.pdf}
+		\subcaption{Imagem resultante após equalização de histograma.}
+		\label{fig:result_histograms2_equalized}
+	\end{minipage}	
+	\legend{Fonte: O autor.}
+	
+\end{figure}
 
 O processo de otimização da imagem teve como resultado uma imagem de baixo contraste que precisou ter seu histograma equalizado para 
 
@@ -265,3 +317,18 @@ A figura \label{fig:results_compare} mostra as imagens obtidas através do méro
 	\includegraphics[width = 0.95\textwidth]{./figures/results_figures/result_compare.pdf}
 	\legend{Fonte: O autor.}
 \end{figure}
+
+
+\begin{table}
+	\caption{Tempos de execução e número de iterações no algorítimo de Newton truncado para cada um dos exemplares.}
+	\label{tab:temposexec2}
+	\begin{tabular}{r || l | l}
+		 & Exemplar 1: \emph{"Virginia"} & Exemplar 2: \emph{"Ohio"} \\ \hline
+		Tempo de execução & 4 minutos e 24 segundos & 7 minutos e 24 segundos\\ \hline
+		Número de iterações & 2 & 2 \\ \hline
+		Número de avaliações da função & 90 & 89
+	\end{tabular}
+	\legend{Fonte: O autor}
+\end{table}
+
+

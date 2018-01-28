@@ -1,2 +1,29 @@
 \chapter{Conclusão}
+% RESUMO DO QUE FOI FEITO
+Este trabalho apresentou a teoria e relatou a implementação e os resultados do desenvolvimento de um método de Super-Resolução Bayesiana aplicado na restauração de imagens de placas de veículos.
 
+As principais características do método proposto são:
+\begin{itemize}
+	\item Obtêm uma imagem de alta resolução a partir de um conjunto de imagens de baixa resolução.
+	\item Incorpora uma distribuição de probabilidade como conhecimento \emph{a priori} acerca da imagem de alta resolução.
+	\item Usa um método de inferência Bayesiana para estimar os parâmetros de degradação e a imagem de alta resolução em si.
+	\item O uso de um método iterativo de otimização baseado e gradiente para estimar tanto os parâmetros de degradação quanto a própria imagem.
+
+\end{itemize}
+
+% AVALIAÇÃO
+A etapa de estimação dos parâmetros de degradação obteve resultados com precisão adequada considerando o custo em tempo computacional.
+A estimação dos ângulos e dos deslocamentos foi capaz de diminuir o erro em relação aos parâmetros verdadeiros.
+No entanto, o modelo proposto não foi eficaz em estimar a largura da função de espalhamento de ponto com a mesma precisão.
+
+Em uma análise subjetiva, a aplicação do método de Super-Resolução Bayesiana obteve resultados satisfatórios. 
+Como é possível observar na Figura \ref{fig:results_compare}, o método de super-resolução obteve resultados qualitativamente melhores do que um método mais simples como uma interpolação. Isso se deve ao fato de que o método de super resolução é capaz de recuperar as componentes de alta resolução da imagem que se perdem durante o processo de captura.
+
+% TRABALHOS FUTUROS
+Como propostas para trabalhos futuros podemos citar: a aplicação do método à imagens
+coloridas, visto que a única mudança seria na etapa de estimação da imagem,
+quando o algorítmo de otimização deve ser aplicado aos três canais da imagem;
+a redução do custo computacional do algoritmo, sobretudo a etapa de estimação da imagem
+que depende de matrizes com mais de 15000 elementos.
+
+% ISSUE: Falar de pelo menos mais uma proposta de trabalho futuro.
