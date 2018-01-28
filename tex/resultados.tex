@@ -10,6 +10,8 @@ Este capítulo descreve o processo de implementação e teste do método de supe
 A seção \ref{sec:gerimagens} apresenta o processo que gerou as imagens de teste simulando as transformações aplicadas pelo sistema de aquisição.
 A seção \ref{sec:parestimation} relata como se deu o processo de restauração da imagem de alta resolução a partir do conjunto de imagens de baixa resolução.
 
+% ISSUE: Atualizar introdução deste capítulo
+
 \section{Geração do conjunto de imagens de teste}
 \label{sec:gerimagens}
 
@@ -49,12 +51,14 @@ baixa resolução.
 Sobre os parâmetros de degradação escolhidos. A largura da função de espalhamento de ponto ($\gamma$) escolhida foi 2.
 Para cada imagem, o ângulo de rotação foi escolhido aleatoriamente de uma distribuição uniforme entre $-4$ e $4$ graus.
 A mesma seleção aleatória foi feita para o deslocamento linear da imagem; a quantidade de pontos de deslocamento foi retirada de uma distribuição uniforme e contínua entre $-2$ e $2$ em cada um dos eixos.
-A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degradação das imagens.
+A Tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degradação das imagens.
+
+% ISSUE: Falar dimensões das imagens HR.
 
 \begin{figure}[H]
 	\centering
 	\caption{\label{fig:frames}
-	Conjunto das imagens geradas a partir da imagem de alta resolução \emph{"Virginia"}. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.
+	Conjunto das imagens geradas a partir do Exemplar 1: \emph{"Virginia"}. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.
 	As dimensões de cada imagem são de $38 \times 26$.}
 	\includegraphics{figures/degradedImg/result-0.png}
 	\includegraphics{figures/degradedImg/result-1.png}
@@ -82,7 +86,7 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\caption{ Conjunto das imagens geradas a partir da imagem de alta resolução \emph{"Ohio"}.
+	\caption{ Conjunto das imagens geradas a partir da do Exemplar 2: \emph{"Ohio"}.
 	As dimensões de cada imagem são de $38 \times 23$.}
 	\label{fig:frames2}
 	\includegraphics{figures/degradedImg2/result-0.png}
@@ -117,7 +121,7 @@ A tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 	\begin{tabular}{r | l}
 		Ângulos de rotação ($\theta_k$) & $ \sim \mathcal{U}(-4, 4)$ \\ \hline
 		Deslocamento ($\mathbf{s}_k$)& $\sim \mathcal{U}(-2,2)$\\ \hline
-		Largura da PSF ($\gamma$) & 2 \\ \hline
+		Largura da PSF ($\gamma$) & 2 \\ 
 
 	\end{tabular}
 	\legend{Fonte: O autor.}
@@ -131,8 +135,10 @@ otimização em inferir os valores corretos dos parâmetros.
 
 \section{Estimação dos parâmetros de degradação}
 \label{sec:parestimation}
-A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura. Como já elucidado no capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
+A primeira etapa no processo de restauração da imagem é estimar os parâmetros que definiram as transformações que degradaram a imagem durante o processo simulado de captura. Como já elucidado no Capítulo \ref{chap:srbayes}, encontrar os valores dos parâmetros de degradação é um problema de otimização.
 Teoricamente, os valores verdadeiros de $\mathbf{s}_k$, $\theta_k$ e $\gamma$ são os que maximizam a função de verosimilhança em (\ref{eq:parameter}).
+
+% ISSUE: Pesquisar sobre o conceito de otimização.
 
 O artigo no qual este trabalho se baseia relata que o método de otimização usado
 para estimar tanto os parâmetros de degradação quanto da imagem foi o de gradientes
@@ -142,7 +148,6 @@ não foi possível utilizar o mesmo método de implementação utilizado no arti
 Em vez disso, foi usado um Método de Newton Truncado presente no módulo \emph{Scipy}.
 
 % SUGGESTION: Falar mais sobre o algorítimo de otimização Método de Newton Truncado. Talvez em um apêndice.
-% NOTE: Talvez esta seção mude se for feita otimização de gamma.
 
 O processo de otimização dos parâmetros se deu da seguinte forma:
 Os parâmetros de rotação e deslocamento foram definidos como zero;
@@ -168,6 +173,12 @@ vetor e retornasse somente um escalar na saída.
 Isso também implicou na exigência de calcular numericamente o gradiente da função,
 necessário na execução do método de otimização.
 
+O método de super resolução Bayesiana faz uso de matrizes esparsas como $\mathbf{Z}_x$ e $\mathbf{\Sigma}$ no seu modelo matemático que representam uma grande custo computacional em memória e tempo de processamento.
+Para reduzir esse custo, foi usada somente uma janela de $7 \times 7$ pontos do centro de
+cada imagem de baixa resolução para estimar os parâmetros de degradação.
+Neste caso, a janela de cada imagem foi passada ao algorítimo como se fosse a própria
+imagem de baixa resolução.
+
 A função de otimização com algorítimo de Newton truncado presente na biblioteca
 \emph{Scipy} permite que sejam definidos limites para restringir o intervalo de busca
 no espaço vetorial onde a estimação é feita.
@@ -182,7 +193,8 @@ Para reduzir o tempo gasto na execução da otimização dos parâmetros, o núm
 Na primeira etapa, o número máximo de avaliações da função de verossimilhança foi de 70.
 Em ambas as etapa subsequentes este limite foi de 50 avaliações.
 Esses limites não interferem na qualidade do resultado pois, mesmo que eles sejam bem maiores, o valor das avaliações da função estabiliza após poucas iterações.
-Isso será demonstrado mais adiante.
+
+% SUGGESTION: Talvez seja melhor usar gradiente em vez de número de avaliações como critério de parada
 
 % ISSUE: Comentar sobre o tempo de execução nas etapas de otimização
 
@@ -192,7 +204,7 @@ $\mathbf{c}_{atual}$ é o vetor com os parâmetros obtidos ao fim da iteração 
 $\mathbf{c}_{real}$ é o vetor com os parâmetros verdadeiros usado para a comparação.
 Os resultados desta análise são ilustrados na figura \ref{fig:progression_plots}.
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
 	\caption{Progressão dos valores da avaliação da função de verossimilhança e do erro dos parâmetros estimados a cada iteração do algorítimo de otimização.}
 	\label{fig:progression_plots}
@@ -211,16 +223,17 @@ Os resultados desta análise são ilustrados na figura \ref{fig:progression_plot
 \end{figure}
 % SUGGESTION: Escrever pseudocódigo do empacotamento da função de verossimilhança dos parâmetros.
 
-% ISSUE: Checar o número de iterações em cada execução do algorítimo
 Ao final da execução do algorítimo de otimização, os os valores obtidos foram
 colhidos e comparados com os parâmetros de transformação reais. O resultado dessa
 comparação está retratado na figura \ref{fig:comparisson_plots}. 
-A estimativa da largura da função de espalhamento de ponto foi de 1 para ambas as imagens testadas.
-Esse erro pode ser observado também nos gráficos da figura \ref{fig:progression_plots} onde há um aumento acentuado tanto no valor da função de verossimilhança quanto no erro da solução encontrada.
-Esse erro ocorre no 
+
+% SUGGESTION: Mostrar o gráfico da verossimilhança para os valores de gamma.
+
+A estimativa da largura da função de espalhamento de ponto foi de 1 para ambas as imagens testadas;
+o que indica que o método não foi eficaz para estimar com precisão o valor de $\gamma$.
 
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
 	\caption{Comparação dos resultados obtidos ao final da execução do algorítimo de otimização com os parâmetros verdadeiros.}
 	\label{fig:comparisson_plots}
@@ -243,19 +256,14 @@ Esse erro ocorre no
 	\caption{Tempos de execução e número de iterações no algorítimo de Newton truncado para cada um dos exemplares.}
 	\label{tab:temposexec}
 	\begin{tabular}{r || l | l}
-		 & Exemplar 1: \emph{"Ohio"} & Exemplar 2: \emph{"Virginia"} \\ \hline
+		 & Exemplar 1: \emph{"Virginia"} & Exemplar 2: \emph{"Ohio"} \\ \hline
 		Tempo de execução & 31 minutos e 39 segundos & 37 minutos e 23 segundos \\ \hline
 		Número de iterações & 18 & 27
 	\end{tabular}
 	\legend{Fonte: O autor}
 \end{table}
 
-Tempo de execução imagem 1: 31 minutos e 39 segundos \\
-Número de iterações
-
-Tempo de execução imagem 1: 37 minutos e 23 segundos
-
-
+\clearpage
 \section{Estimação da imagem de alta resolução}
 % ISSUE: Seção de estimação da imagem
 Após a estimação dos parâmetros de degradação, os valores otimizados deve ser passados para a função de verossimilhança da imagem em (\ref{eq:imageLikelihood}) para que seja estimada a imagem de alta resolução em si.
@@ -265,27 +273,18 @@ Ao contrário do que aconteceu na etapa anterior, não foi necessário calcular 
 Como a função de verossimilhança em (\ref{eq:imageLikelihood}) é uma função vetorial do tipo $ f(\mathbf{x}) : \mathbb{R}^n \to \mathbb{R}^1$, então foi relativamente simples calcular seu gradiente mostrado na equação (\ref{eq:imageLikelihood_gradient}).
 
 A possibilidade de se calcular o gradiente da função analiticamente em vez de numericamente teve como consequência um ganho considerável de desempenho com redução no tempo de execução do algorítimo.
-Esse ganho de desempenho foi bastante importante devido à quantidade de dados a serem estimados, que chegam a 15600 pontos no caso da imagem de maior resolução.
+Esse ganho de desempenho foi bastante importante devido à quantidade de dados a serem estimados.
+Para uma imagem com dimensões de $150 \times 104$, o vetor $\mathbf{x}$ chega a ter 15600 elementos.
 
-% ISSUE: Falar das matrizes grandes que foram gravadas em disco.
-\begin{figure}
-	\centering
-	\caption{Resultados obtidos com a otimização do Exemplar 2: \emph{"Ohio"}}
-	\label{fig:result_histograms1}
-	\begin{minipage}[b]{.99\linewidth}
-		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma2.pdf}
-		\subcaption{Imagem resultante do processo de otimização juto com seu histograma.}
-		\label{fig:result_histograms1_output}
-	\end{minipage}	
+A função de verossimilhança da imagem depende da inversa da matriz de covariância $\mathbf{Z}_x^{-1}$ e de $\log{|\mathbf{Z}_x|}$.
+Como a matriz de covariância tem muitos elementos e é sempre a mesma para imagens de dimensões iguais, esse valores foram salvos em disco para economizar tempo em vários testes sucessivos com a mesma imagem.
 
-	\begin{minipage}[b]{.99\linewidth}
-		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma1.pdf}
-		\label{fig:result_histograms1_equalized}
-		\subcaption{Imagem resultante após equalização de histograma.}
-	\end{minipage}	
-	\legend{Fonte: O autor.}
-	
-\end{figure}
+Ao final da execução do algorítimo de otimização, as imagens obtidas foram as imagens de
+baixo contraste retratadas nas Figuras \ref{fig:result_histograms2_output} e
+\ref{fig:result_histograms1_output}.
+Para revelar os resultados foi necessário equalizar os histogramas das imagens obtidas,
+o que resultou nas imagens retratadas nas Figuras \ref{fig:result_histograms2_equalized}
+e \ref{fig:result_histograms1_equalized}.
 
 \begin{figure}
 	\centering
@@ -306,11 +305,28 @@ Esse ganho de desempenho foi bastante importante devido à quantidade de dados a
 	
 \end{figure}
 
-O processo de otimização da imagem teve como resultado uma imagem de baixo contraste que precisou ter seu histograma equalizado para 
+\begin{figure}
+	\centering
+	\caption{Resultados obtidos com a otimização do Exemplar 2: \emph{"Ohio"}}
+	\label{fig:result_histograms1}
+	\begin{minipage}[b]{.99\linewidth}
+		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma2.pdf}
+		\subcaption{Imagem resultante do processo de otimização juto com seu histograma.}
+		\label{fig:result_histograms1_output}
+	\end{minipage}	
 
-A figura \label{fig:results_compare} mostra as imagens obtidas através do mérodo de super-resolução Bayesiana e a compara com uma imaguem que foi redimensionada usando interpolação bicúbica; que é um método bastante utilizado nos programas de edição de imagens.
+	\begin{minipage}[b]{.99\linewidth}
+		\includegraphics[width = 0.9\textwidth]{./figures/results_figures/histograma1.pdf}
+		\subcaption{Imagem resultante após equalização de histograma.}
+		\label{fig:result_histograms1_equalized}
+	\end{minipage}	
+	\legend{Fonte: O autor.}
+	
+\end{figure}
 
-\begin{figure}[H]
+A Figura \ref{fig:results_compare} compara as imagens de baixa resolução, redimensionada usando usando interpolação bicúbica (um método presente nos principais softwares de edição de imagens), restaurada usando o método de Super-resolução bayesiana e a imagem de alta resolução original.
+
+\begin{figure}
 	\centering
 	\caption{Comparação do resultado obtido através do método de super-resolução Bayesiana com a simples interpolação da imagem.}
 	\label{fig:results_compare}
@@ -318,6 +334,7 @@ A figura \label{fig:results_compare} mostra as imagens obtidas através do méro
 	\legend{Fonte: O autor.}
 \end{figure}
 
+A Tabela \ref{tab:temposexec2} mostra os tempos de execução, número de iterações e de avaliações da função da execução do Método de Newton Truncado para cada exemplar.
 
 \begin{table}
 	\caption{Tempos de execução e número de iterações no algorítimo de Newton truncado para cada um dos exemplares.}
