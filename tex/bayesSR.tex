@@ -24,6 +24,10 @@ A distribuição de probabilidade a priori escolhida para a imagem é uma gaussi
 
 \section{Máximo a posteriori}
 % ISSUE: Redigir sobre o máximo a posteriori.
+
+\begin{equation}
+	p(\mathbf{x} | \mathbf{y}^{(k)}, \mathbf{W}^{(k)}) = \frac{p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) p(\mathbf{x})}{p(\mathbf{y}^{(k)}, \mathbf{W}^{(k)})}
+\end{equation}
 \section{Equacionamento do Método de Super-resolução Bayesiana}
 A distribuição de probabilidade \emph{a priori} $p(\mathbf{x})$ é uma Gaussiana de média $\mathbf{0}$ e matriz de covariância $\mathbf{Z}_x$ como definido em (\ref{eq:covmat}).
 
