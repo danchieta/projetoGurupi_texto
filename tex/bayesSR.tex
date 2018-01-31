@@ -22,12 +22,6 @@ Através de um método de inferência Bayesiana, é possível obter uma estimati
 Sabendo disso, há a necessidade de formular uma distribuição a priori que represente as características estatísticas da imagem que pretendemos estimar a partir dos dados.
 A distribuição de probabilidade a priori escolhida para a imagem é uma gaussiana como descrita a seguir:
 
-\section{Máximo a posteriori}
-% ISSUE: Redigir sobre o máximo a posteriori.
-
-\begin{equation}
-	p(\mathbf{x} | \mathbf{y}^{(k)}, \mathbf{W}^{(k)}) = \frac{p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) p(\mathbf{x})}{p(\mathbf{y}^{(k)}, \mathbf{W}^{(k)})}
-\end{equation}
 \section{Equacionamento do Método de Super-resolução Bayesiana}
 A distribuição de probabilidade \emph{a priori} $p(\mathbf{x})$ é uma Gaussiana de média $\mathbf{0}$ e matriz de covariância $\mathbf{Z}_x$. A função que gera a matriz de covariância da distribuição \emph{a priori} da imagem é descrita em (\ref{eq:covmat}).
 
