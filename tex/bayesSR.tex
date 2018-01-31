@@ -11,7 +11,7 @@ Pode-se dizer que a abordagem usada neste método é uma expansão do método de
 verossimilhança descrito na seção \ref{sec:metodosprob}.
 O método de super-resolução Bayesiana adiciona uma densidade de probabilidade como
 conhecimento a priori da imagem para restringir a quantidade de soluções possíveis do
-problema, contornando assim um dos problemas da abordagem de máxima verossimilhança.
+problema, contornando assim uma das inconveniências da abordagem de máxima verossimilhança.
 A adição de uma densidade de probabilidade \emph{a priori}, converte a abordagem de máxima verossimilhança em uma abordagem de máximo \emph{a posteriori} (MAP).
 
 % ISSUE: Adicionar resumo do capítulo de Super-resolução Bayesiana
@@ -29,74 +29,104 @@ A distribuição de probabilidade a priori escolhida para a imagem é uma gaussi
 	p(\mathbf{x} | \mathbf{y}^{(k)}, \mathbf{W}^{(k)}) = \frac{p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) p(\mathbf{x})}{p(\mathbf{y}^{(k)}, \mathbf{W}^{(k)})}
 \end{equation}
 \section{Equacionamento do Método de Super-resolução Bayesiana}
-A distribuição de probabilidade \emph{a priori} $p(\mathbf{x})$ é uma Gaussiana de média $\mathbf{0}$ e matriz de covariância $\mathbf{Z}_x$ como definido em (\ref{eq:covmat}).
+A distribuição de probabilidade \emph{a priori} $p(\mathbf{x})$ é uma Gaussiana de média $\mathbf{0}$ e matriz de covariância $\mathbf{Z}_x$. A função que gera a matriz de covariância da distribuição \emph{a priori} da imagem é descrita em (\ref{eq:covmat}).
 
 \begin{gather}
-	p(\mathbf{x}) = \mathcal{N}(\mathbf{x} | 0, \mathbf{Z}_x) \\ 
+	\mathbf{x} \sim \mathcal{N}(\mathbf{0}, \mathbf{Z}_x) \\ 
 	\label{eq:covmat} Z_x(i,j) = A \exp \left\{ - \frac{\|\mathbf{v}_i - \mathbf{v}_j \|^2}{r^2} \right\}
 \end{gather}
 
-Onde $A$ é uma constante que indica a \emph{força} da distribuição e $r$ determina o quanto cada ponto da imagem de alta resolução depende dos pontos vizinhos.
+Onde $A$ é uma constante escalar que indica a \emph{força} da distribuição e $r$ determina o quanto cada ponto da imagem de alta resolução depende dos pontos vizinhos.
 Expandindo a função densidade de probabilidade $p(\mathbf{x})$ temos:
 
 \begin{equation}
+	\label{eq:priordist}
 	p(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^N |\mathbf{Z}_x|}}\exp{-\tfrac{1}{2} \mathbf{x}^T \mathbf{Z}^{-1}_x \mathbf{x}}
 \end{equation}
 
 Este tipo de distribuição não é o ideal, visto que se definirmos $r=1$, estaríamos dizendo que a maioria dos valores dos pontos da imagem de de alta resolução estão contidos no intervalo $[-1,1]$, o que não condiz com a realidade do que se espera de uma imagem digital.
-No entanto, o uso desta distribuição a priori será mantido no desenvolvimento deste trabalho pela conveniência proporcionada pela função de probabilidade Gaussiana, que facilita algumas manipulações -- como aplicação de logaritmos naturais --  utilizadas a seguir.
+No entanto, o uso desta distribuição a priori será mantido no desenvolvimento deste
+trabalho pela conveniência proporcionada pela função de probabilidade Gaussiana, que
+facilita algumas manipulações -- como aplicação de logaritmos naturais e as marginalizações --  utilizadas a seguir.
 
-Ciente da relação entre a imagem original e as imagens de baixa resolução, podemos escrever a probabilidade a posteriori das imagens de baixa resolução como:
+Com base no modelo de observação em \ref{eq:degradation} e no que foi descrito na Seção \ref{sec:metodosprob}, a distribuição de probabilidade de $\mathbf{y}^{(k)}$ condicionada uma estimativa dos parâmetros e da imagem de alta resolução é dada por:
 
 \begin{equation}
-	\label{eq:posterior0}
+	\label{eq:likelihood0}
 	p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{s}_k, \theta_k, \gamma) = 
 	\left(\frac{\beta}{2\pi}\right)^{M/2}
 	\exp \left\{ -\frac{\beta}{2} \| \mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 \right\}.
 \end{equation}
 
-Note que esta distribuição é condicionada na imagem de alta resolução e nos parâmetros de degradação, dados que são desconhecidos em um situação real.
+% Note que esta distribuição é condicionada na imagem de alta resolução e nos parâmetros de degradação, dados que são desconhecidos em um situação real.
 
-Podemos usar o Teorema de Bayes para isolar a imagem original $\mathbf{x}$, ao que obtemos:
+A proposta de Super-resolução Bayesiana é usar o teorema de Bayes para obter uma função
+de probabilidade \emph{a posteriori} da imagem $\mathbf{x}$; ou seja, uma função de
+probabilidade que resulte da aplicação de um conhecimento \emph{a priori} da imagem à
+abordagem de máxima verossimilhança. A Equação \ref{eq:posteriordist} mostra como foi aplicado o Teorema de Bayes para obter uma função de probabilidade \emph{a posteriori} da imagem.
 
-\begin{gather}
+\begin{equation}
 	\label{eq:posteriordist}
 	p(\mathbf{x}|\{\mathbf{y}^{(k)},\mathbf{s}_k,\theta_k\}, \gamma) = 
 	\frac{p(\mathbf{x})\prod^K_{k=1} p(\mathbf{y}^{(k)}|\mathbf{x},\mathbf{s}_k,\theta_k, \gamma)}
 	{p(\{\mathbf{y}^{(k)}\}|\{\mathbf{s}_k,\mathbf{\theta}_k\},\gamma)} \\
-	= \mathcal{N}(\boldsymbol{\mu},\mathbf{\Sigma}) \\
-	\mathbf{ \Sigma }= \left[\mathbf{Z}^{-1}_x + \beta \left( \sum^K_{k = 1} \mathbf{W}^{(k)^T} \mathbf{W}^{(k)} \right) \right]^{-1} \\
-	\boldsymbol{\mu} = \beta \mathbf{ \Sigma } \left( \sum^K_{k=1} \mathbf{W}^{(k)^T}\mathbf{y}^{(k)} \right).
-\end{gather}
+\end{equation}
+
+
+Esclarecendo que $\{\mathbf{y}^{(k)}\}$ é o conjunto de todos $\mathbf{y}^{(k)}$ para $k = 1,2,...,K$.
+Esta lógica também se aplica aos conjuntos $\{\mathbf{s}_k,\mathbf{\theta}_k\}$.
 
 Esta função de probabilidade já poderia ser utilizada para inferir a imagem de alta resolução.
 Para isso, bastaria encontrar o valor de $\mathbf{x}$ que maximiza o numerador em (\ref{eq:posteriordist}). entretanto, isso exigiria saber os valores dos parâmetros de degradação ($\gamma$, $\theta_k$, $\mathbf{\theta}_k$).
 Como esses parâmetros não estão disponíveis, eles também terão de ser estimados a partir das imagens de baixa resolução $\mathbf{y}_k$. 
+Algumas abordagens procuram otimizar os parâmetros de degradação concomitantemente com a imagem usando a distribuição em (\ref{eq:posteriordist}) (ao que o trabalho de Tipping \cite{tipping2003bayesian} se refere como "abordagem MAP"). No entanto, esta abordagem não leva em consideração a incerteza ao determinar a imagem de alta resolução e as consequências disso na estimação dos parâmetros.
 
-A solução proposta no artigo é marginalizar $\mathbf{x}$ em (\ref{eq:posterior0}) para que ele não seja mais uma variável na função. O resultado disto é a seguinte distribuição:
+Os parâmetros de degradação $\mathbf{s}_k$, $\theta_k$ e $\gamma$ devem ser estimados a partir de uma distribuição marginal que, segundo Pickup \cite{pickup2007bayesian2}, é dada por:
 
-\begin{align}
+\begin{equation}
+	\label{eq:marginalization}
+	p(\{\mathbf{y}^{(k)}\} | \{\mathbf{s}_k, \theta_k \}, \gamma) = 
+	\int  p(\mathbf{x})\prod^K_{k=1} p(\mathbf{y}^{(k)}|\mathbf{x},\mathbf{s}_k,\theta_k, \gamma) \mathrm{d}\mathbf{x}.
+\end{equation}
+
+Fazendo as devidas aplicações de (\ref{eq:likelihood0}) e (\ref{eq:priordist}), a expressão em (\ref{eq:marginalization}) se avalia como uma distribuição Gaussiana de $\{\mathbf{y}^{(k)}\}$ na forma
+\begin{equation}
+	\mathrm{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{Z}_y)
+\end{equation}
+onde $\mathrm{y}$ é um vetor empilhado de todas as imagens de baixa resolução e
+\begin{equation}
+	\mathbf{Z}_y = \beta^{-1} \mathbf{I} + \mathrm{W} \mathbf{Z}_x \mathrm{W}^T.
+\end{equation}
+
+
+Condensando tudo e fazendo as devidas manipulações de matrizes, obtemos a função de verossimilhança em (\ref{eq:parameter}), onde foi aplicado o logaritmo e descartados os termos que não dependem dos parâmetros de degradação.
+
+\begin{gather}
 	\label{eq:parameter}
-	\log p(\mathrm{y}|\{\mathbf{s}_k,\theta_k\}, \gamma) &= -\frac{1}{2}\left[\beta \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\boldsymbol{\mu}\|
-    + \boldsymbol{\mu}^T\mathbf{Z}_x \boldsymbol{\mu} \right. \nonumber \\
-    &\qquad \left.\vphantom{\int_t} + \log |\mathbf{Z}_x| - \log{|\Sigma |} - KM \log \beta \right].
-\end{align}
-
-Onde y é o conjunto de todas as imagens de baixa resolução $\mathbf{y}_k$.
+	\log p(\mathrm{y}|\{\mathbf{s}_k,\theta_k\}, \gamma) = -\frac{1}{2}\left[\beta \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\boldsymbol{\mu}\|^2
+    + \boldsymbol{\mu}^T\mathbf{Z}_x \boldsymbol{\mu}
+    \vphantom{\int_t} + \log |\mathbf{Z}_x| - \log{|\Sigma |} \right] \\
+%	= \mathcal{N}(\boldsymbol{\mu},\mathbf{\Sigma}) \\
+	\mathbf{ \Sigma }= \left[\mathbf{Z}^{-1}_x + \beta \left( \sum^K_{k = 1} \mathbf{W}^{(k)^T} \mathbf{W}^{(k)} \right) \right]^{-1} \\
+	\boldsymbol{\mu} = \beta \mathbf{ \Sigma } \left( \sum^K_{k=1} \mathbf{W}^{(k)^T}\mathbf{y}^{(k)} \right).
+\end{gather}
 
 Em uma situação ideal, a melhor estimativa dos valores dos parâmetros de degradação é a que maximiza a função de verossimilhança em (\ref{eq:parameter}).
-Tendo a estimativa desses valores, podemos então usá-los em (\ref{eq:posteriordist}) para procurar pela imagem de alta resolução $\mathbf{x}$ que maximiza aquela função de verossimilhança.
+Tendo a estimativa desses valores, podemos então usá-los em (\ref{eq:posteriordist}) para procurar pela imagem de alta resolução $\mathbf{x}$ que maximiza aquela distribuição de probabilidade.
 
 Um fato que se constatou empiricamente na tentativa de calcular os valores da função de verossimilhança é que as probabilidades são muito pequenas ao ponto de estarem fora do intervalo de precisão de uma variável do tipo ponto flutuante.
 Os valores também variam muito pouco ao longo do espaço vetorial de $\mathbf{x}$ o que dificultaria o uso de métodos iterativos para encontrar o ponto de máximo da função.
 
+
 Para resolver isso, aplicou-se o logaritmo natural à função. Isso resolveu o problema da escala e da variação.
-Além disso eliminou os exponenciais e os produtos, facilitando o cálculo do gradiente e Jacobiano da função.
+Além disso eliminou os exponenciais e os produtos, facilitando o cálculo do gradiente, necessário na aplicação dos algorítimos de otimização.
 
 \begin{gather}
-	\label{eq:imageLikelihood} L(\mathbf{x}) = -\frac{1}{2} \left\{ \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 + \mathbf{x}^T\mathbf{Z}^{-1}_x\mathbf{x} - KM\log{(\beta)} - \log{|\mathbf{Z}_x|} \right\} \\ 
-	\label{eq:imageLikelihood_gradient} L'(\mathbf{x}) =  \sum^K_{k=1}  (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x})(\mathbf{W}^{(k)})^T  - \frac{1}{2}(\mathbf{Z}^{-1}_x + (\mathbf{Z}^{-1}_x)^T)\mathbf{x}  \\
-	L''(\mathbf{x}) =  -\sum^K_{k=1} (\mathbf{W}^{(k)})^T\mathbf{W}^{(k)} - \frac{1}{2}(\mathbf{Z}^{-1}_x - (\mathbf{Z}^{-1}_x)^T)^T
+	\label{eq:imageLikelihood} \mathcal{L}(\mathbf{x}) = -\frac{1}{2} \left\{ \sum^K_{k=1} \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} \|^2 + \mathbf{x}^T\mathbf{Z}^{-1}_x\mathbf{x} - KM\log{(\beta)} - \log{|\mathbf{Z}_x|} \right\} \\ 
+	\label{eq:imageLikelihood_gradient} \mathcal{L}'(\mathbf{x}) =  \sum^K_{k=1}  (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x})(\mathbf{W}^{(k)})^T  - \frac{1}{2}(\mathbf{Z}^{-1}_x + (\mathbf{Z}^{-1}_x)^T)\mathbf{x}  
+	% L''(\mathbf{x}) =  -\sum^K_{k=1} (\mathbf{W}^{(k)})^T\mathbf{W}^{(k)} - \frac{1}{2}(\mathbf{Z}^{-1}_x - (\mathbf{Z}^{-1}_x)^T)^T
 \end{gather}
 
-
+Com tudo isso, já temos todas as ferramentas necessárias para estimar os parâmetros de degradação e usá-los para inferir a imagem de alta resolução.
+Tanto a função em (\ref{eq:imageLikelihood}) quanto a função de probabilidade \emph{a posteriori} podem ser otimizadas usando métodos iterativos.
+Isso será melhor discutido no Capítulo \ref{chap:resultados}.

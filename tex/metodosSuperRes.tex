@@ -45,7 +45,7 @@ A abordagem dos algorítmos de super-resolução deste tipo tinha a vantagem da 
 No entanto, as técnicas de super-resolução no domínio da frequência tinham limitações com respeito ao tipo de degradação sofrida pela imagem além da dificuldade de aplicar o conhecimento a priori da imagem de alta resolução no domínio espacial para regularização.
 Estes são os principais motivos pelos quais a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial \cite{park2003super}.
 
-\subsection{Iterative Back Projections}
+\subsection{\emph{Iterative Back Projections}}
 O método \emph{Iterative Back Projection} (IBP) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
 O método IBP se caracteriza por ser um método iterativo de super-resolução para restaurar uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 Por ser iterativo, o método executa uma rotina por diversas iterações com o objetivo de se aproximar mais da solução correta a cada execução.
@@ -72,6 +72,19 @@ No entanto, ele tem rpoblemas por não ter uma solução única, além de não p
 % SUGGESTION: Inserir figura do esquema de IBP.
 % SUGGESTION: Inserir equaçõ do algoritmo de IBP.
 
+\subsection{\emph{Projection Onto Convex Sets}}
+Este método de super-resolução apareceu primeiro no trabalho de Stark e Oskoui \cite{stark1989high}.
+O método POCS, assim como o IBP, também é um método iterativo, mas que se diferencia por incorporar um conhecimento \emph{a priori} sobre a imagem. Assume-se que esse conhecimento \emph{a priori} é um conjunto convexo fechado, definido como:
+\begin{equation}
+	S_{\mathbf{x}} = \{ \mathbf{x} : \delta_i < |\mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j| < \delta_s \}
+\end{equation}
+onde $\delta_i$ e $\delta_s$ são os limites superiores in inferiores da incerteza do modelo, respectivamente \cite{nasrollahi2014super}.
+
+A solução do problema $\hat{\mathbf{x}}$ está na intersecção dos conjuntos convexos. A busca pela imagem de alta resolução é feita através do método iterativo abaixo\cite{reis2014metodo}.
+\begin{equation}
+	\hat{\mathbf{x}}^{n+1} = P_m P_{m-1} ... P_1 P_0 \hat{\mathbf{x}}^{n}
+\end{equation}
+onde $P$ são operadores de projeção para cada conjunto convexo.
 
 \subsection{Métodos de Aprendizado}
 Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
@@ -79,7 +92,8 @@ Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos 
 Esse conhecimento forma a componente a priori na reconstrução das imagens.
 % ISSUE: Desenvolver seção dos métodos de aprendizado.
 
-\subsection{\label{sec:metodosprob}Métodos Probabilísticos}
+\subsection{Máxima Verossimilhança}
+\label{sec:metodosprob}
 
 Consideremos o modelo de observação em (\ref{eq:degradation}), onde o vetor
 $\mathbf{n}$ representa o ruído adicionado às imagens de baixa resolução.
@@ -142,3 +156,19 @@ Esse conhecimento ajuda a restringir o número de respostas possíveis \cite{nas
 Uma das formas de adicionar conhecimento \emph{a priori} ao método é transformá-lo em
 uma abordagem de máximo \emph{a posteriori}.
 O método de Super-resolução Bayesiana estudado neste trabalho é um exemplo de método probabilístico que usa inferência Bayesiana para incorporar conhecimento \emph{a priori} acerca da imagem ao modelo.
+
+\subsection{Máximo a posteriori}
+% ISSUE: Redigir sobre o máximo a posteriori.
+
+\begin{equation}
+	p(\mathbf{x} | \{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\}) = \frac{p(\{\mathbf{y}^{(k)}\} | \mathbf{x}, \{\mathbf{W}^{(k)}\}) p(\mathbf{x})}
+	{p(\{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\})}
+\end{equation}
+
+\begin{gather}
+	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \log \left[ p(\mathbf{x}) \prod_k p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right] \\
+	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \left[ \log p(\mathbf{x}) + \sum_k \log p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right]
+\end{gather}
+
+
+
