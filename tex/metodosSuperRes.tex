@@ -118,12 +118,6 @@ onde $P$ são operadores de projeção para cada conjunto convexo.
 As vantagens do método POCS são sua simplicidade e o uso poderoso modelo de observação de domínio espacial. O método também permite uma inclusão conveniente de informações a priori. Esses métodos têm as desvantagens de não-singularidade da solução, convergência lenta e um alto custo computacional. \cite{park2003super}
 \end{citacao}
 
-\subsection{Métodos de Aprendizado}
-Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
-Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
-Esse conhecimento forma a componente a priori na reconstrução das imagens.
-% ISSUE: Desenvolver seção dos métodos de aprendizado.
-
 \subsection{Máxima Verossimilhança}
 \label{sec:metodosprob}
 
@@ -207,6 +201,11 @@ O método de Super-resolução Bayesiana estudado neste trabalho é um exemplo d
 \subsection{Máximo a posteriori}
 % ISSUE: Redigir sobre o máximo a posteriori.
 
+Segundo Therrien \cite{therrien2011probability}: "[O teorema de Bayes] é usado em um número de problemas que 
+
+\begin{citacao}
+É usado em uma série de problemas que geralmente ocorrem nas comunicações ou em outras áreas onde decisões ou inferências devem ser feitas a partir de algum sinal ou dados observados.
+\end{citacao}
 Tendo uma distribuição como a (\ref{eq:ykdistr}) e um conhecimento \emph{a priori} da imagem de alta resolução $p(\mathbf{x})$, é possível usar o Teorema de Bayes para calcular a probabilidade \emph{a posteriori} da imagem de alta resolução \cite{nasrollahi2014super,pickup2007bayesian,pickup2007bayesian2} . Ao que temos:
 \begin{equation}
 	p(\mathbf{x} | \{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\}) = \frac{p(\{\mathbf{y}^{(k)}\} | \mathbf{x}, \{\mathbf{W}^{(k)}\}) p(\mathbf{x})}
