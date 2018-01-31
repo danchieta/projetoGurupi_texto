@@ -1,10 +1,15 @@
 % ----------------------------------------------------------
 % Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
 % ----------------------------------------------------------
-\chapter*[Introdução]{Introdução}
-\addcontentsline{toc}{chapter}{Introdução}
+\chapter[Introdução]{Introdução}
+% \addcontentsline{toc}{chapter}{Introdução}
 % ----------------------------------------------------------
 %ISSUE: introdução
+%ISSUE: Corrigir a capitalização de seção
+%ISSUE: Corrigir a capitalização de capítulo
+%ISSUE: Corrigir a capitalização de figura 
+%ISSUE: Corrigir a capitalização de tabela
+%ISSUE: Corrigir a capitalização de equação
 
 % CONTEXTUALIZAÇÃO: ONDE MEU PROBLEMA APARECE?
 A disponibilidade de imagens de alta resolução é uma vantagem para a execução de qualquer trabalho que envolva a captação e interpretação de informações através de imagens digitais.
@@ -30,24 +35,33 @@ Quanto melhor a qualidade da imagem, maior é o custo do equipamento e mais capa
 
 % SOLUÇÕES: O QUE JÁ EXISTE QUE RESOLVE ESTE PROBLEMA?
 Face ao dilema das imagens geradas por sistemas de vigilância,
-a melhor solução a curto prazo seria aprimorar as imagens que estão sendo geradas pelas câmeras de vigilância que já temos hoje.
+a melhor solução a curto prazo seria aprimorar as imagens que estão sendo geradas pelas câmeras de monitoramento que já temos hoje.
 Esse aprimoramento seria feito através de restauração de imagens digitais.
 
 A demanda pelo desenvolvimento de técnicas de restauração de imagens ganhou força no fim da década de 1950, quando a sua principal aplicação era na área de imagens astronômicas.
-Naquele contexto, era necessário restaurar as primeiras imagens recebidas de sondas e satélites artificiais que sofriam degradações próprias do ambiente onde esses objetos trabalhavam.
+Naquele contexto, era necessário restaurar as primeiras imagens recebidas de sondas e satélites artificiais.
+As imagens captadas por sondas espaciais e satélites artificiais sofriam degradações próprias do ambiente onde esses objetos trabalhavam.
 
 Após tantos anos, a restauração de imagens digitais continua tendo sua importância na astronomia, mas também é uma ferramenta para outras áreas como medicina, mídia e ciências forenses \cite{banham1997digital}.
+Cada uma com suas particularidades e necessidades.
 
 % SOLUÇÃO ESCOLHIDA: O QUE ELA É E COMO FUNCIONA?
 Este trabalho descreve a implementação e teste de um método de restauração de imagens de placas de veículos usando super-resolução bayesiana.
-O método utilizado foi apresentado por Michael Tipping em \cite{tipping2003bayesian}.
+O método utilizado foi apresentado por Michael Tipping e Christopher Bishop \cite{tipping2003bayesian}.
 Em resumo, o algorítimo apresentado define um modelo de observação no qual as degradações sofridas pela imagem durante o processo de aquisição são parametrizadas.
 Então são usadas inferências bayesianas para estimar os parâmetros de degradação a partir das imagens de baixa resolução, para então estimar a imagem de alta resolução a partir destes parâmetros.
 
 % VANTAGENS: POR QUE ESTA SOLUÇÃO E NÃO AS OUTRAS?
-Esta solução foi escolhida devido à adequação do algorítimo à aplicação desejada, que é a restauração de uma imagem de placa de veículo a partir de várias imagens degradadas, como os quadros de um vídeo de câmera de vigilância.
+Esta solução foi escolhida devido à adequação do algorítimo à aplicação desejada, que é a restauração de uma imagem de placa de veículo a partir de várias imagens degradadas.
+A ideia principal é que o método posa ser usado para revelar os caracteres de uma placa de um veículo que tenha sido captado por uma câmera de vídeo, mas que não esteja visível devido à má qualidade da imagem.
+
 Também vale destacar a relativa simplicidade de implementação do método escolhido, o qual também possibilita ajustes afim de reduzir seu custo computacional.
 
 % ESTRUTURA: O QUE TEM NOS CAPÍTULOS SEGUINTES?
 % ISSUE: Escrever estrutura do trabalho
+
+Esta monografia está organizada da seguinte forma: O Capítulo \ref{chap:superRes} apresenta o conceito de Super-resolução e descreve resumidamente as principais técnicas.
+O Capítulo \ref{chap:srbayes} apresenta e descreve com detalhes o método de Super Resolução Bayesiana, o qual é objeto de estudo deste trabalho.
+O Capítulo \ref{chap:resultados} descreve o contexto no qual o método foi testado e apresenta os resultados das simulações.
+As considerações finais acerca do trabalho são feitas no Capítulo \ref{chap:conclusao}.
 

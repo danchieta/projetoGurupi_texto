@@ -86,6 +86,10 @@ A solução do problema $\hat{\mathbf{x}}$ está na intersecção dos conjuntos 
 \end{equation}
 onde $P$ são operadores de projeção para cada conjunto convexo.
 
+\begin{citacao}
+As vantagens do método POCS são sua simplicidade e o uso poderoso modelo de observação de domínio espacial. O método também permite uma inclusão conveniente de informações a priori. Esses métodos têm as desvantagens de não-singularidade da solução, convergência lenta e um alto custo computacional. \cite{park2003super}
+\end{citacao}
+
 \subsection{Métodos de Aprendizado}
 Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
 Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
@@ -158,6 +162,7 @@ Basta igualar a derivada à zero e fazer as devidas manupulações para encontra
 \begin{gather}
 	(\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T = 0 \\
 	\hat{\mathbf{x}}_{ML} = (\mathbf{W}^T\mathbf{W})^{-1} \mathbf{W}^T \mathbf{y}^{(k)}
+% ISUUE: Corrigir as matrizes W nesta equação.
 \end{gather}
 
 O método de máxima verossimilhança é sensível a distúrbios causados por ruídos ou
