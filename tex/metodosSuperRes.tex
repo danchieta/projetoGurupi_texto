@@ -1,25 +1,54 @@
-\section{\label{sec:srmetodos}Apreciação dos Métodos de Super-resolução} 
-Esta seção descreve resumidamente alguns dos métodos de super-resolução mais importantes 
+\section{Apreciação dos Métodos de Super-resolução} 
+\label{sec:srmetodos}
+Os métodos de super-resolução são bastante diversos em abordagens, aplicações e complexidade. Para esta seção, foram selecionados alguns métodos de Super-resolução que são importantes para o assunto e que ajudam a compreender a abordagem utilizada neste trabalho.
 
-A maioria dos algorítmos de super-resolução desenvolvidos faz o processamento de imagem no domínio espacial.
-Os tipos de abordagens usadas são bastante diversos, sendo que a mais frequente é a probabilística, na qual o método usado neste trabalho está incluído \cite{nasrollahi2014super}.
+Os métodos agrupados aqui podem ser categorizados e agrupados da seguinte forma:
+
+\begin{itemize}
+	\item Múltiplas imagens
+	\begin{itemize}
+		\item Domínio da frequência
+		\begin{itemize}
+			\item Método de Tsai e Huang
+		\end{itemize}
+		\item Domínio da Espacial
+		\begin{itemize}
+			\item \emph{Iterative Back Projection}
+			\item \emph{Projection Onto Convex Sets}
+			\item Métodos Probabilísticos
+			\begin{itemize}
+				\item Máxima Verossimilhança
+				\item \emph{Máximo \emph{a posteriori}}
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+		
+\end{itemize}
+
 \subsection{Métodos no domínio da frequência.}
 
-Os primeiros métodos de super-resolução desenvolvido faziam o processamento das imagens no domínio da frequência.
+Os métodos cujo processamento é feito no domínio da frequência estão entre os primeiros algorítimos de Super-resolução desenvolvidos.
 Sendo que os primeiros trabalhos com essa abordagem foram os de Gerchberg \cite{Gerchberg1974} e Santis e Gori \cite{de1975iterative}.
+
+\begin{citacao}
+	A abordagem do domínio de freqüência baseia-se nestes três princípios:
+	i) a propriedade de deslocamento da transformada de Fourier,
+	ii) a relação de \emph{aliasing} entre a transformada contínua de Fourier (CFT) de uma imagem alta resolução original e a transformada discreta de Fourier (DFT) das imagens observadas,
+	iii) no pressuposto de que uma imagem original é RH é limitada em frequência.
+\end{citacao}
 
 O primeiro método de super-resolução no domínio da frequência a ter múltiplas imagens como entrada foi desenvolvido por Tsai e Huang em 1994 \cite{nasrollahi2014super}.
 Este algorítimo foi desenvolvido para processar as imagens geradas pelo satélite Landsat 4.
 Este aparelho gerava várias imagens semelhantes, porém deslocadas, da mesma área na
 terra.
 
-Podemos considerar que cada imagem $g_k$ gerada pelo satélite seja uma versão deslocada de uma cena contínua $f$, podemos considerar que
+Podemos considerar que cada imagem $g_k$ gerada pelo satélite seja uma versão deslocada de uma cena contínua $f$, logo:
 
 \begin{equation}
 	g_k(m,n) = f(m + \Delta_{m_k}, n + \Delta_{n_k}).
 \end{equation}
 
-Pela propriedade de deslocamento da transformada de Fourier, a transformada de Fourier contínua das imagens geradas pelo satélite, em relação à pode ser dada por
+Pela propriedade de deslocamento da transformada de Fourier, a transformada de Fourier contínua das imagens geradas pelo satélite $F_{g_k}$, em relação à transformada da imagem que se pretende estimar é dada por
 
 \begin{equation}
 	F_{g_k} (m,n) = \exp{[i2\pi (\Delta_{m_k}m + \Delta_{n_k}n)]} F_f (m,n).
@@ -33,8 +62,7 @@ Tendo isso, a transformada discreta de Fourier de $g_k$ é dada por
 	\frac{n}{NT_n} + p_2\frac{1}{T_n} \right).
 \end{equation}
 
-Segundo Nasrollahi e Moeslund \cite{nasrollahi2014super} o problema de super-resolução se resolve encontrando a transformada contínua de Fourier ($\mathbf{F_f}$) que soluciona (\ref{eq:dft_tsai}).
-Isso pode ser resolvido usando o Método dos Mínimos Quadrados.
+Segundo Nasrollahi e Moeslund \cite{nasrollahi2014super} ``[O problema de] SR aqui é, portanto, reduzido a encontrar $\mathbf{ F_f}$ na Equação (\ref{eq:dft_tsai}) que geralmente é resolvido por um algoritmo de mínimos quadrados''.
 
 \begin{equation}
 	\label{eq:dft_tsai}
