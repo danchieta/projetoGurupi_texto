@@ -63,8 +63,8 @@ Feito isso, a melhor estimativa para a imagem de alta resolução $\mathbf{x}$ s
 Essa estimativa é alcaçada através de métodos iterativos como o de mínimos quadrados.
 
 \begin{gather}
-	\label{eq:ibperror1} \mathbf{\epsilon}^{(k)}_j = \mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j \\
-	\label{eq:ibperrorsum} \mathbf{e}_j = \sum^N_{k=1}{\sqrt{\|\mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j\|^2_2}}
+	\label{eq:ibperror1} \mathbf{e}^{(k)}_j = \mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j \\
+	\label{eq:ibperrorsum} \epsilon_j = \sqrt{\sum^N_{k=1}{\|\mathbf{y}^{(k)}-\mathbf{W}^{(k)}_j \mathbf{x}_j\|^2_2}}
 \end{gather}
 
 O método \emph{Iterative Back Projections} tem a vantagem de ser intuitivo e de fácil compreensão.
@@ -107,43 +107,57 @@ densidade de probabilidade de $\mathbf{n}$ é representada em (\ref{eq:noisedens
 	\exp{\left\{  -  \frac{\beta}{2}\|\mathbf{n}^{(k)}\|^2 \right\}}
 \end{equation}
 
-Ainda baseado em (\ref{eq:degradation}), a relação entre uma estimativa da imagem de alta resolução $\hat{\mathbf{x}}$ e a imagem de baixa resolução observada é:
+Ainda baseado em (\ref{eq:degradation}), a relação entre uma estimativa da imagem de alta resolução $\mathbf{x}$ e a imagem de baixa resolução observada é:
 
 \begin{equation}
-	\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}} =  \mathbf{n}^{(k)} \\
+	\mathbf{y}^{(k)} - \mathbf{W}^{(k)} \mathbf{x} =  \mathbf{n}^{(k)} \\
 \end{equation}
 
-Então é possível dizer que a probabilidade de $\mathbf{y}^{(k)}$ ocorrer baseado em uma estimativa da imagem de alta resolução $\hat{\mathbf{x}}$ é dada pela distribuição em (\ref{eq:ykdistr}).
+Então é possível dizer que a probabilidade de $\mathbf{y}^{(k)}$ ocorrer baseado em uma estimativa da imagem de alta resolução $\mathbf{x}$ é dada pela distribuição em (\ref{eq:ykdistr}).
 
 \begin{equation}
 	\label{eq:ykdistr}
-	p(\mathbf{y}^{(k)} | \hat{\mathbf{x}}, \mathbf{W}^{(k)}) = \left(\frac{ \beta}{2\pi} \right)^{M/2}
-	\exp{\left\{-\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 \right\}}
+	p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) = \left(\frac{ \beta}{2\pi} \right)^{M/2}
+	\exp{\left\{-\frac{\beta}{2}\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x} \|^2 \right\}}
 \end{equation}
 
 O logaritmo da função de verossimilhança de $\mathbf{y}^{(k)}$ é expresso em
 
 \begin{equation}
-	L\{\mathbf{y}^{(k)}\} = -\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2.
+	\mathcal{L}\{\mathbf{y}^{(k)}\} = \log \left[ p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right]
+\end{equation}
+
+Aplicando o logaritmo e eliminando todas as variáveis que não dependem de $\mathbf{y}^{(k)}$ temos que:
+
+\begin{equation}
+	\mathcal{L}\{\mathbf{y}^{(k)}\} = -\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x}\|^2.
 \end{equation}
 
 Teoricamente, a melhor estimativa ($\hat{\mathbf{x}}$) da imagem de alta resolução é a
 que maximiza a função de verossimilhança acima, como é demonstrado em (\ref{eq:maxlhood}).
 
-\begin{equation}
+\begin{gather}
 	\label{eq:maxlhood}
-	\mathbf{y}^{(k)}_{ML} = \argmax_{\hat{\mathbf{x}}}
-	\left[-\|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}\|^2 
-	\right ]
+	\hat{\mathbf{x}}_{ML} = \argmax_{\mathbf{x}}
+	\left[ - \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x}\|^2 
+	\right ] \\
+	\hat{\mathbf{x}}_{ML} = \argmin_{\mathbf{x}}
+	\left[ \|\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x}\|^2 
+	\right ] 
+\end{gather}
+
+
+Considerando que o diferencial d função de verossimilhança em relação a $\mathbf{x}$ é dado por:
+\begin{equation}
+	\frac{\mathrm{d}}{\mathrm{d} \mathbf{x}}
+	\mathcal{L}\{\mathbf{y}^{(k)}\} = -2 (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\mathbf{x}) {\mathbf{W}^{(k)}}^T \\
 \end{equation}
 
-Para obter o ponto de máximo da função, podemos calcular seu diferencial, igualá-lo a zero, e isolar o $\hat{\mathbf{x}}$ na equação como é feito abaixo.
+Basta igualar a derivada à zero e fazer as devidas manupulações para encontrar o estimador de máxima verossimilhança $\hat{\mathbf{x}}_{ML}$: 
 
 \begin{gather}
-	\frac{\mathrm{d}}{\mathrm{d} \hat{\mathbf{x}}}
-	L\{\mathbf{y}^{(k)}\} = -2 (\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T \\
 	(\mathbf{y}^{(k)} - \mathbf{W}^{(k)}\hat{\mathbf{x}}) {\mathbf{W}^{(k)}}^T = 0 \\
-	\hat{\mathbf{x}} = (\mathbf{W}^T\mathbf{W})^{-1} \mathbf{W}^T y^{(k)}
+	\hat{\mathbf{x}}_{ML} = (\mathbf{W}^T\mathbf{W})^{-1} \mathbf{W}^T \mathbf{y}^{(k)}
 \end{gather}
 
 O método de máxima verossimilhança é sensível a distúrbios causados por ruídos ou
@@ -160,9 +174,15 @@ O método de Super-resolução Bayesiana estudado neste trabalho é um exemplo d
 \subsection{Máximo a posteriori}
 % ISSUE: Redigir sobre o máximo a posteriori.
 
+Tendo uma distribuição como a (\ref{eq:ykdistr}) e um conhecimento \emph{a priori} da imagem de alta resolução $p(\mathbf{x})$, é possível usar o Teorema de Bayes para calcular a probabilidade \emph{a posteriori} da imagem de alta resolução \cite{nasrollahi2014super,pickup2007bayesian,pickup2007bayesian2} . Ao que temos:
 \begin{equation}
 	p(\mathbf{x} | \{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\}) = \frac{p(\{\mathbf{y}^{(k)}\} | \mathbf{x}, \{\mathbf{W}^{(k)}\}) p(\mathbf{x})}
 	{p(\{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\})}
+\end{equation}
+onde
+\begin{equation}
+	p(\{\mathbf{y}^{(k)}\} | \mathbf{x}, \{\mathbf{W}^{(k)}\}) = 
+	\prod_k p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)})
 \end{equation}
 
 \begin{gather}
