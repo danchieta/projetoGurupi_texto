@@ -200,14 +200,21 @@ O método de Super-resolução Bayesiana estudado neste trabalho é um exemplo d
 
 \subsection{Máximo a posteriori}
 % ISSUE: Redigir sobre o máximo a posteriori.
+Esta abordagem aparece em diversos trabalhos, dentre eles \cite{pickup2007bayesian2,pickup2007bayesian} e \cite{tipping2003bayesian}.
+Sendo que este último é objeto de estudo nesta monografia.
+A abordagem de Máximo a posteriori é uma 
 
-Segundo Therrien \cite{therrien2011probability}: "[O teorema de Bayes] é usado em um número de problemas que 
+Digamos que exista um dado observável $z$ que depende de um parâmetro desconhecido $\eta$ da forma que a probabilidade condicional $p(z|\eta)$ é conhecida.
+\begin{equation}
+	p(\eta|z) = \frac{p(z|\eta) p(\eta)}{p(z)}
+\end{equation}
 
-\begin{citacao}
-É usado em uma série de problemas que geralmente ocorrem nas comunicações ou em outras áreas onde decisões ou inferências devem ser feitas a partir de algum sinal ou dados observados.
-\end{citacao}
+
+Segundo Therrien, ``[O Teorema de Bayes] É usado em uma série de problemas que geralmente ocorrem nas comunicações ou em outras áreas onde decisões ou inferências devem ser feitas a partir de algum sinal ou dados observados'' \cite{therrien2011probability}.
+
 Tendo uma distribuição como a (\ref{eq:ykdistr}) e um conhecimento \emph{a priori} da imagem de alta resolução $p(\mathbf{x})$, é possível usar o Teorema de Bayes para calcular a probabilidade \emph{a posteriori} da imagem de alta resolução \cite{nasrollahi2014super,pickup2007bayesian,pickup2007bayesian2} . Ao que temos:
 \begin{equation}
+	\label{eq:mapbayes}
 	p(\mathbf{x} | \{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\}) = \frac{p(\{\mathbf{y}^{(k)}\} | \mathbf{x}, \{\mathbf{W}^{(k)}\}) p(\mathbf{x})}
 	{p(\{\mathbf{y}^{(k)}, \mathbf{W}^{(k)}\})}
 \end{equation}
@@ -217,9 +224,12 @@ onde
 	\prod_k p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)})
 \end{equation}
 
+A melhor estimativa da imagem de alta resolução $\hat{\mathbf{x}}_{\mathrm{MAP}}$ seria a que maximiza o numerador em \ref{eq:mapbayes}. 
+Aplicando o os logaritmos, temos
+
 \begin{gather}
 	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \log \left[ p(\mathbf{x}) \prod_k p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right] \\
-	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \left[ \log p(\mathbf{x}) + \sum_k \log p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right]
+	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \left[ \log p(\mathbf{x}) + \sum_k \log p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right].
 \end{gather}
 
 
