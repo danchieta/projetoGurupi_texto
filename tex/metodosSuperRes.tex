@@ -92,11 +92,6 @@ Sobre as vantagens e desvantagens do método de \emph{Projection Onto Convex Set
 As vantagens do método POCS são sua simplicidade e o uso poderoso modelo de observação de domínio espacial. O método também permite uma inclusão conveniente de informações a priori. Esses métodos têm as desvantagens de não-singularidade da solução, convergência lenta e um alto custo computacional. \cite{park2003super}
 \end{citacao}
 
-\subsection{Métodos de Aprendizado}
-Os métodos de super-resolução baseados em aprendizado usam redes neurais para restaurar imagens estáticas.
-Para que isso seja possível, deve haver uma etapa de aprendizado onde exemplos de imagens de uma classe específica (impressões digitais, rostos, texto) são usados junto com seus equivalentes de baixa resolução para que o algorítimo reconheça o relacionamento entre elas.
-Esse conhecimento forma a componente a priori na reconstrução das imagens.
-% ISSUE: Desenvolver seção dos métodos de aprendizado.
 
 \subsection{Máxima Verossimilhança}
 \label{sec:metodosprob}
@@ -196,6 +191,3 @@ onde
 	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \log \left[ p(\mathbf{x}) \prod_k p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right] \\
 	\hat{\mathbf{x}}_{\mathrm{MAP}} = \argmax_{\mathbf{x}} \left[ \log p(\mathbf{x}) + \sum_k \log p(\mathbf{y}^{(k)} | \mathbf{x}, \mathbf{W}^{(k)}) \right]
 \end{gather}
-
-
-

@@ -8,4 +8,5 @@ tags
 *.lot
 *.toc
 build.sh
+build.bat
 *.swp
