@@ -19,7 +19,7 @@ Podemos considerar que cada imagem $g_k$ gerada pelo satélite seja uma versão 
 	g_k(m,n) = f(m + \Delta_{m_k}, n + \Delta_{n_k}).
 \end{equation}
 
-Pela propriedade de deslocamento da transformada de Fourier, a transformada de Fourier contínua das imagens geradas pelo satélite, em relação à pode ser dada por
+Pela propriedade de deslocamento da transformada de Fourier, a transformada de Fourier contínua das imagens geradas pelo satélite, em relação à transformada da imagem que se deseja estimar é dada por
 
 \begin{equation}
 	F_{g_k} (m,n) = \exp{[i2\pi (\Delta_{m_k}m + \Delta_{n_k}n)]} F_f (m,n).
@@ -50,7 +50,7 @@ O método \emph{Iterative Back Projection} (IBP) foi proposto pela primeira vez 
 O método IBP se caracteriza por ser um método iterativo de super-resolução para restaurar uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 Por ser iterativo, o método executa uma rotina por diversas iterações com o objetivo de se aproximar mais da solução correta a cada execução.
 
-O método parte de um modelo de observação como o apresentado na seção \ref{sec:obsmodel} no qual uma imagem de baixa resolução $\mathbf{y}^{(k)}$ é dada por
+O método parte de um modelo de observação como o apresentado na Seção \ref{sec:obsmodel} no qual uma imagem de baixa resolução $\mathbf{y}^{(k)}$ é dada por
 
 \begin{equation}
 	\mathbf{y}^{(k)} = \mathbf{W}^{(k)} \mathbf{x}.
@@ -58,8 +58,8 @@ O método parte de um modelo de observação como o apresentado na seção \ref{
 
 Onde $\mathbf{x}$ é a imagem de alta resolução a ser encontrada e $\mathbf{W}^{(k)}$ é a matriz que aplica as transformações do modelo de observação.
 
-Se for feito um palpite tanto para a matriz de sistema quanto para a imagem a ser estimada, podemos dizer que o erro do palpite é dado por \ref{eq:ibperror1}.
-Feito isso, a melhor estimativa para a imagem de alta resolução $\mathbf{x}$ seria a que minimiza o erro na equação \ref{eq:ibperrorsum}.
+Se for feito um palpite tanto para a matriz de sistema quanto para a imagem a ser estimada, podemos dizer que o erro do palpite é dado por (\ref{eq:ibperror1}).
+Feito isso, a melhor estimativa para a imagem de alta resolução $\mathbf{x}$ seria a que minimiza o erro na equação (\ref{eq:ibperrorsum}).
 Essa estimativa é alcaçada através de métodos iterativos como o de mínimos quadrados.
 
 \begin{gather}
@@ -85,6 +85,8 @@ A solução do problema $\hat{\mathbf{x}}$ está na intersecção dos conjuntos 
 	\hat{\mathbf{x}}^{n+1} = P_m P_{m-1} ... P_1 P_0 \hat{\mathbf{x}}^{n}
 \end{equation}
 onde $P$ são operadores de projeção para cada conjunto convexo.
+
+Sobre as vantagens e desvantagens do método de \emph{Projection Onto Convex Sets}, Part et. al dizem:
 
 \begin{citacao}
 As vantagens do método POCS são sua simplicidade e o uso poderoso modelo de observação de domínio espacial. O método também permite uma inclusão conveniente de informações a priori. Esses métodos têm as desvantagens de não-singularidade da solução, convergência lenta e um alto custo computacional. \cite{park2003super}
