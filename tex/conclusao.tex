@@ -1,9 +1,16 @@
 \chapter{Conclusão}
 \label{chap:conclusao}
 % RESUMO DO QUE FOI FEITO
-Este trabalho apresentou a teoria e relatou a implementação e os resultados do desenvolvimento de um método de Super-Resolução Bayesiana aplicado na restauração de imagens de placas de veículos.
+Este trabalho apresentou a teoria e relatou a implementação e os resultados do desenvolvimento de um método de Super-resolução Bayesiana aplicado na restauração de imagens de placas de veículos.
+O método escolhido foi proposto inicialmente por Tipping e Bishop \cite{tipping2003bayesian}. 
 
+
+Como fundamentação teórica, foi explicado o conceito de Super-resolução e as técnicas importantes que ajudam a compreender o método proposto.
+O modelo de observação utilizado pelos principais métodos (incluindo o implementado neste trabalho) também foi descrito com detalhes.
+
+A teoria e o modelo matemático usado no método desenvolvido por Tipping e Bishop foram descritas no Capítulo \ref{chap:srbayes}.
 As principais características do método proposto são:
+
 \begin{itemize}
 	\item Obtêm uma imagem de alta resolução a partir de um conjunto de imagens de baixa resolução.
 	\item Incorpora uma distribuição de probabilidade como conhecimento \emph{a priori} acerca da imagem de alta resolução.
@@ -12,19 +19,27 @@ As principais características do método proposto são:
 
 \end{itemize}
 
+Como explicado no Capítulo \ref{chap:resultados}, o método de Super-resolução se deu em duas etapas.
+Na primeira, usou-se o método de Newton truncado para otimizar os parâmetros de degradação.
+Na segunda, foi usado o mesmo método de otimização para otimizar a imagem de alta resolução a partir dos parâmetros encontrados na primeira etapa e dos dados observados.
+
 % AVALIAÇÃO
 A etapa de estimação dos parâmetros de degradação obteve resultados com precisão adequada considerando o custo em tempo computacional.
-A estimação dos ângulos e dos deslocamentos foi capaz de diminuir o erro em relação aos parâmetros verdadeiros.
+A estimação dos ângulos e dos deslocamentos foi capaz de diminuir o erro em relação aos parâmetros verdadeiros consideravelmente ao longo de poucas iterações.
 No entanto, o modelo proposto não foi eficaz em estimar a largura da função de espalhamento de ponto com a mesma precisão.
 
 Em uma análise subjetiva, a aplicação do método de Super-Resolução Bayesiana obteve resultados satisfatórios. 
 Como é possível observar na Figura \ref{fig:results_compare}, o método de super-resolução obteve resultados qualitativamente melhores do que um método mais simples como uma interpolação. Isso se deve ao fato de que o método de super resolução é capaz de recuperar as componentes de alta resolução da imagem que se perdem durante o processo de captura.
 
+% JUSTIFICATIVA/MOTIVAÇÃO
+O tipo de ferramenta desenvolvida neste trabalho pode vir a ter considerável importância para a área forense, onde ela pode ser usada para identificar veículos em vídeos de câmeras de segurança.
+
 % TRABALHOS FUTUROS
-Como propostas para trabalhos futuros podemos citar: a aplicação do método à imagens
-coloridas, visto que a única mudança seria na etapa de estimação da imagem,
-quando o algorítmo de otimização deve ser aplicado aos três canais da imagem;
-a redução do custo computacional do algoritmo, sobretudo a etapa de estimação da imagem
-que depende de matrizes com mais de 15000 elementos.
+Como propostas para trabalhos futuros podemos citar:
+
+\begin{alineas}
+	\item A redução do custo computacional do método. Boa parte do custo computacional do método está na dependência de cálculos com grandes matrizes, o que impossibilita a restauração de imagens de maiores dimensões.
+	\item A incorporação de um método de visão computacional para identificar os caracteres da placa na imagem restaurada.
+\end{alineas}
 
 % ISSUE: Falar de pelo menos mais uma proposta de trabalho futuro.

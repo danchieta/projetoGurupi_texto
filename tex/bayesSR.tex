@@ -14,12 +14,6 @@ conhecimento a priori da imagem para restringir a quantidade de soluções poss�
 problema, contornando assim uma das inconveniências da abordagem de máxima verossimilhança.
 
 % ISSUE: Adicionar resumo do capítulo de Super-resolução Bayesiana
-% ISSUE: Excluir os parágrafos abaixo
-se vale do método de inferência Bayesiana para obter uma imagem de alta resolução a partir de várias imagens de baixa resolução.
-Através de um método de inferência Bayesiana, é possível obter uma estimativa de valores desconhecidos (como a imagem de alta resolução) usando um conhecimento a priori que se tem desses dados e informações que já estão disponíveis(no caso, as imagens de baixa resolução) \cite{therrien2011probability}.
-
-Sabendo disso, há a necessidade de formular uma distribuição a priori que represente as características estatísticas da imagem que pretendemos estimar a partir dos dados.
-A distribuição de probabilidade a priori escolhida para a imagem é uma gaussiana como descrita a seguir:
 
 \section{Equacionamento do Método de Super-resolução Bayesiana}
 A distribuição de probabilidade \emph{a priori} $p(\mathbf{x})$ é uma Gaussiana de média $\mathbf{0}$ e matriz de covariância $\mathbf{Z}_x$. A função que gera a matriz de covariância da distribuição \emph{a priori} da imagem é descrita em (\ref{eq:covmat}).
