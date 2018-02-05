@@ -27,15 +27,17 @@ O modelo de observação exposto na Seção \ref{sec:obsmodel} foi usado para ge
 
 \begin{figure}[h]
 	\centering
-	\caption{\label{fig:hrimage}Imagens de alta resolução utilizadas nos testes.}
-	\begin{minipage}[b]{.48\linewidth}
+	\caption{Imagens de alta resolução utilizadas nos testes junto com seus histogramas.}
+	\label{fig:hrimage}
+	\begin{minipage}[b]{\linewidth}
 		\centering
-		\includegraphics{figures/imtestes.png}
+		\includegraphics[width=0.95\textwidth]{figures/imtestes.pdf}
 		\subcaption{Exemplar 1: \emph{``Virginia''}.}
 	\end{minipage}
-	\begin{minipage}[b]{.48\linewidth}
+
+	\begin{minipage}[b]{\linewidth}
 		\centering
-		\includegraphics{figures/imteste2s.png}
+		\includegraphics[width=0.95\textwidth]{figures/imteste2s.pdf}
 		\subcaption{Exemplar 2: \emph{``Ohio''}.}
 	\end{minipage}
 	\legend{Fonte: O autor.}
@@ -52,6 +54,7 @@ Sobre os parâmetros de degradação escolhidos. A largura da função de espalh
 Para cada imagem, o ângulo de rotação foi escolhido aleatoriamente de uma distribuição uniforme entre $-4$ e $4$ graus.
 A mesma seleção aleatória foi feita para o deslocamento linear da imagem; a quantidade de pontos de deslocamento foi retirada de uma distribuição uniforme e contínua entre $-2$ e $2$ em cada um dos eixos.
 A Tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degradação das imagens.
+As Figuras \ref{fig:frames} e \ref{fig:frames2} ilustram os dois conjuntos de imagens de baixa resolução gerados usando o modelo de observação.
 
 % ISSUE: Falar dimensões das imagens HR.
 
@@ -60,27 +63,29 @@ A Tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 	\caption{\label{fig:frames}
 	Conjunto das imagens geradas a partir do Exemplar 1: \emph{"Virginia"}. A diferença sutil entre as imagens é causada pelas transformações de deslocamento e rotação.
 	As dimensões de cada imagem são de $38 \times 26$.}
-	\includegraphics{figures/degradedImg/result-0.png}
-	\includegraphics{figures/degradedImg/result-1.png}
-	\includegraphics{figures/degradedImg/result-2.png}
-	\includegraphics{figures/degradedImg/result-3.png}
-	\includegraphics{figures/degradedImg/result-4.png}
-	\includegraphics{figures/degradedImg/result-5.png}
-	\includegraphics{figures/degradedImg/result-6.png}
-	\includegraphics{figures/degradedImg/result-7.png}
-	\includegraphics{figures/degradedImg/result-8.png}
-	\includegraphics{figures/degradedImg/result-9.png} 
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-0.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-1.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-2.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-3.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-4.png}
 
-	\includegraphics{figures/degradedImg/result-10.png}
-	\includegraphics{figures/degradedImg/result-11.png}
-	\includegraphics{figures/degradedImg/result-12.png}
-	\includegraphics{figures/degradedImg/result-13.png}
-	\includegraphics{figures/degradedImg/result-14.png}
-	\includegraphics{figures/degradedImg/result-15.png}
-	\includegraphics{figures/degradedImg/result-16.png}
-	\includegraphics{figures/degradedImg/result-17.png}
-	\includegraphics{figures/degradedImg/result-18.png}
-	\includegraphics{figures/degradedImg/result-19.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-5.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-6.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-7.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-8.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-9.png} 
+
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-10.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-11.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-12.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-13.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-14.png}
+
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-15.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-16.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-17.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-18.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg/result-19.png}
 	\legend{Fonte: O autor.}
 	
 \end{figure}
@@ -88,28 +93,30 @@ A Tabela \ref{tab:resumoParametros} resume os parâmetros utilizados na degrada�
 	\centering
 	\caption{ Conjunto das imagens geradas a partir da do Exemplar 2: \emph{"Ohio"}.
 	As dimensões de cada imagem são de $38 \times 23$.}
-	\label{fig:frames2}
-	\includegraphics{figures/degradedImg2/result-0.png}
-	\includegraphics{figures/degradedImg2/result-1.png}
-	\includegraphics{figures/degradedImg2/result-2.png}
-	\includegraphics{figures/degradedImg2/result-3.png}
-	\includegraphics{figures/degradedImg2/result-4.png}
-	\includegraphics{figures/degradedImg2/result-5.png}
-	\includegraphics{figures/degradedImg2/result-6.png}
-	\includegraphics{figures/degradedImg2/result-7.png}
-	\includegraphics{figures/degradedImg2/result-8.png}
-	\includegraphics{figures/degradedImg2/result-9.png} 
+	\label{fig:frames2}	
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-0.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-1.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-2.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-3.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-4.png}
 
-	\includegraphics{figures/degradedImg2/result-10.png}
-	\includegraphics{figures/degradedImg2/result-11.png}
-	\includegraphics{figures/degradedImg2/result-12.png}
-	\includegraphics{figures/degradedImg2/result-13.png}
-	\includegraphics{figures/degradedImg2/result-14.png}
-	\includegraphics{figures/degradedImg2/result-15.png}
-	\includegraphics{figures/degradedImg2/result-16.png}
-	\includegraphics{figures/degradedImg2/result-17.png}
-	\includegraphics{figures/degradedImg2/result-18.png}
-	\includegraphics{figures/degradedImg2/result-19.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-5.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-6.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-7.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-8.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-9.png} 
+
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-10.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-11.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-12.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-13.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-14.png}
+
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-15.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-16.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-17.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-18.png}
+	\includegraphics[width=.15\textwidth]{figures/degradedImg2/result-19.png}
 	\legend{Fonte: O autor.}
 	
 \end{figure}
