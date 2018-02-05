@@ -10,16 +10,16 @@ Os métodos descritos aqui podem ser agrupados da seguinte forma:
 	\begin{itemize}
 		\item Domínio da frequência:
 		\begin{itemize}
-			\item Método de Tsai e Huang,
+			\item \textbf{Método de Tsai e Huang},
 		\end{itemize}
 		\item Domínio espacial:
 		\begin{itemize}
-			\item \emph{Iterative Back Projections},
-			\item \emph{Projection Onto Convex Sets},
+			\item \textbf{\emph{Iterative Back Projections}},
+			\item \textbf{\emph{Projection Onto Convex Sets}},
 			\item Métodos Probabilísticos:
 			\begin{itemize}
-				\item Máxima Verossimilhança,
-				\item Máximo \emph{a posteriori},
+				\item \textbf{Máxima Verossimilhança},
+				\item \textbf{Máximo \emph{a posteriori}},
 			\end{itemize}
 		\end{itemize}
 	\end{itemize}
@@ -79,9 +79,17 @@ No entanto, as técnicas de super-resolução no domínio da frequência tinham 
 Estes são os principais motivos pelos quais a maioria dos algorítimos de super-resolução desenvolvidos até hoje faz o processamento das imagens no domínio espacial \cite{park2003super}.
 
 \subsection{\emph{Iterative Back Projections}}
-O método \emph{Iterative Back Projection} (IBP) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
+O método \emph{Iterative Back Projections} (IBP) foi proposto pela primeira vez por Irani e Peleg \cite{irani1991improv}.
 O método IBP se caracteriza por ser um método iterativo de super-resolução para restaurar uma imagem de alta resolução a partir de várias imagens de baixa resolução.
 Por ser iterativo, o método executa uma rotina por diversas iterações com o objetivo de se aproximar mais da solução correta a cada execução.
+A Figura \ref{fig:ibpdiagram} ilustra o funcionamento do método \emph{Iterative Back Projections}.
+
+\begin{figure}
+	\caption{Ilustração do método \emph{Iterative Back Projections}}
+	\label{fig:ibpdiagram}
+	\includegraphics[width=.97\textwidth]{./figures/ibpdiagram.pdf}
+	\legend{Fonte: REIS, 2014 \cite{reis2014metodo}}
+\end{figure}
 
 O método parte de um modelo de observação como o apresentado na Seção \ref{sec:obsmodel} no qual uma imagem de baixa resolução $\mathbf{y}^{(k)}$ é dada por
 

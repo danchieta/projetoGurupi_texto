@@ -66,7 +66,7 @@ Esta lógica também se aplica aos conjuntos $\{\mathbf{s}_k,\mathbf{\theta}_k\}
 Esta função de probabilidade já poderia ser utilizada para inferir a imagem de alta resolução.
 Para isso, bastaria encontrar o valor de $\mathbf{x}$ que maximiza o numerador em (\ref{eq:posteriordist}). entretanto, isso exigiria saber os valores dos parâmetros de degradação ($\gamma$, $\theta_k$, $\mathbf{\theta}_k$).
 Como esses parâmetros não estão disponíveis, eles também terão de ser estimados a partir das imagens de baixa resolução $\mathbf{y}_k$. 
-Algumas abordagens procuram otimizar os parâmetros de degradação concomitantemente com a imagem usando a distribuição em (\ref{eq:posteriordist}) (ao que o trabalho de Tipping \cite{tipping2003bayesian} se refere como "abordagem MAP"). No entanto, esta abordagem não leva em consideração a incerteza ao determinar a imagem de alta resolução e as consequências disso na estimação dos parâmetros.
+Algumas abordagens procuram otimizar os parâmetros de degradação concomitantemente com a imagem usando a distribuição em (\ref{eq:posteriordist}) (ao que o trabalho de Tipping \cite{tipping2003bayesian} se refere como ``abordagem MAP''). No entanto, esta abordagem não leva em consideração a incerteza ao determinar a imagem de alta resolução e as consequências disso na estimação dos parâmetros.
 
 Os parâmetros de degradação $\mathbf{s}_k$, $\theta_k$ e $\gamma$ devem ser estimados a partir de uma distribuição marginal que, segundo Pickup \cite{pickup2007bayesian2}, é dada por:
 
